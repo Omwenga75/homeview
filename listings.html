@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Properties - HomeView</title>
+    <meta name="description" content="Browse our full catalog of verified properties at HomeView.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="tenant-dashboard">
+    <header id="navbar">
+        <div class="container" style="display: flex; justify-content: flex-start; align-items: center; gap: 2rem;">
+            <div id="profileNavLink">
+                <div class="user-dp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="user-greeting">
+                    <span class="greeting-text">Good morning,</span>
+                    <span id="userName" class="user-name">Guest</span>
+                </div>
+            </div>
+            <div class="nav-group" style="margin-left: auto;">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="listings.html" class="active">Houses</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <button class="mobile-menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section id="listings">
+            <div class="container">
+                <div class="section-header" id="listingHeader" style="display: none;">
+                    <h2>Explore All <span class="accent">Houses</span></h2>
+                    <span class="view-all" id="housesCount"></span>
+                </div>
+                <div class="listings-grid" id="listingsGrid">
+                    <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-info"><div class="skeleton-line title shimmer"></div><div class="skeleton-line subtitle shimmer"></div><div class="skeleton-line meta shimmer"></div><div class="skeleton-footer"><div class="skeleton-line price shimmer"></div><div class="skeleton-btn shimmer"></div></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-info"><div class="skeleton-line title shimmer"></div><div class="skeleton-line subtitle shimmer"></div><div class="skeleton-line meta shimmer"></div><div class="skeleton-footer"><div class="skeleton-line price shimmer"></div><div class="skeleton-btn shimmer"></div></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-info"><div class="skeleton-line title shimmer"></div><div class="skeleton-line subtitle shimmer"></div><div class="skeleton-line meta shimmer"></div><div class="skeleton-footer"><div class="skeleton-line price shimmer"></div><div class="skeleton-btn shimmer"></div></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-info"><div class="skeleton-line title shimmer"></div><div class="skeleton-line subtitle shimmer"></div><div class="skeleton-line meta shimmer"></div><div class="skeleton-footer"><div class="skeleton-line price shimmer"></div><div class="skeleton-btn shimmer"></div></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-info"><div class="skeleton-line title shimmer"></div><div class="skeleton-line subtitle shimmer"></div><div class="skeleton-line meta shimmer"></div><div class="skeleton-footer"><div class="skeleton-line price shimmer"></div><div class="skeleton-btn shimmer"></div></div></div></div>
+                    <div class="skeleton-card"><div class="skeleton-img shimmer"></div><div class="skeleton-info"><div class="skeleton-line title shimmer"></div><div class="skeleton-line subtitle shimmer"></div><div class="skeleton-line meta shimmer"></div><div class="skeleton-footer"><div class="skeleton-line price shimmer"></div><div class="skeleton-btn shimmer"></div></div></div></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="text">HomeView</span>
+                    </div>
+                    <p>Smart rentals. Trusted hosts. Modern living.</p>
+                    <div class="socials">
+                        <a href="https://www.facebook.com" target="_blank">FB</a>
+                        <a href="https://www.twitter.com" target="_blank">TW</a>
+                        <a href="https://www.instagram.com" target="_blank">IG</a>
+                        <a href="https://www.linkedin.com" target="_blank">LI</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="listings.html">Houses</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="privacy.html">Safety</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with the latest properties.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit">Go</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HomeView Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <a href="index.html" class="bottom-nav-item">
+            <span class="bottom-nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+            </span>
+            <span>Home</span>
+        </a>
+        <a href="listings.html" class="bottom-nav-item active">
+            <span class="bottom-nav-icon">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </span>
+            <span>Search</span>
+        </a>
+        <a href="tenant-dashboard.html" class="bottom-nav-item">
+            <span class="bottom-nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+            </span>
+            <span>Saved</span>
+        </a>
+        <a href="contact.html" class="bottom-nav-item">
+            <span class="bottom-nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            </span>
+            <span>Messages</span>
+        </a>
+        <a href="tenant-dashboard.html" class="bottom-nav-item">
+            <span class="bottom-nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </span>
+            <span>Profile</span>
+        </a>
+    </nav>
+
+    <script src="main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const listingsGrid = document.getElementById('listingsGrid');
+            const housesCount = document.getElementById('housesCount');
+            const listingHeader = document.getElementById('listingHeader');
+
+            async function loadHouses() {
+                // If mock mode is enabled, skip fetch entirely to avoid console errors
+                if (typeof HV_CONFIG !== 'undefined' && HV_CONFIG.USE_MOCK) {
+                    return renderHouses(getMockHouses());
+                }
+
+                try {
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/`);
+                    if (!res.ok) throw new Error('Failed to fetch houses');
+                    const houses = await res.json();
+                    const approvedHouses = houses.filter(h => h.status === 'approved');
+                    renderHouses(approvedHouses);
+                } catch (error) {
+                    console.error('Error loading houses:', error);
+                    renderHouses(getMockHouses()); // Fallback to mock on error
+                }
+            }
+
+            function getMockHouses() {
+                return [
+                    { id: 1, title: "Emerald Luxury 2-Bedroom", location: "Westlands, Nairobi", price: 45000, status: "approved", views: 1250 },
+                    { id: 2, title: "Sapphire Penthouse", location: "Kileleshwa, Nairobi", price: 85000, status: "approved", views: 0 },
+                    { id: 3, title: "Modern Studio", location: "Kilimani, Nairobi", price: 25000, status: "approved", views: 850 }
+                ];
+            }
+
+            function showEmptyState() {
+                listingHeader.style.display = 'none';
+                listingsGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></div>
+                        <h3>No houses found right now</h3>
+                        <p>We couldn't find any properties matching your current criteria. Try adjusting your filters or check back later for new listings!</p>
+                        <button onclick="location.reload()" class="btn btn-primary">Refresh Listings</button>
+                    </div>
+                `;
+            }
+
+            function renderHouses(houses) {
+                listingsGrid.innerHTML = '';
+                if (!houses.length) {
+                    showEmptyState();
+                    return;
+                }
+
+                listingHeader.style.display = 'flex';
+                housesCount.textContent = `${houses.length} Houses Found`;
+                const IMAGES = ['public/images/prop1.png','public/images/prop2.png','public/images/prop3.png','public/images/prop4.png'];
+
+                const html = houses.map(house => {
+                    const imgIndex = (Number(house.id) - 1) % IMAGES.length;
+                    const imgSrc = isNaN(imgIndex) ? IMAGES[0] : IMAGES[imgIndex];
+                    return `
+                    <div class="listing-card" onclick="window.location.href='property-detail.html?id=${house.id}'">
+                        <div class="listing-img">
+                            <img src="${imgSrc}" alt="${house.title}">
+                            <span class="badge">Apartment</span>
+                        </div>
+                        <div class="listing-info">
+                            <div>
+                                <h3>${house.title}</h3>
+                                <p class="location">${house.location}</p>
+                                <div class="listing-meta">
+                                    <span>WiFi</span><span>Details</span>
+                                </div>
+                            </div>
+                            <div class="listing-footer">
+                                <span class="price">Sh. ${house.price.toLocaleString('en-US')}<span class="period">/month</span></span>
+                                <a href="property-detail.html?id=${house.id}" class="btn btn-sm btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                listingsGrid.innerHTML = html;
+            }
+
+            await loadHouses();
+        });
+    </script>
+    <div class="mobile-drawer-backdrop" id="drawerBackdrop"></div>
+    <aside class="mobile-sidebar" id="mobileSidebar" aria-label="Mobile navigation drawer">
+        <button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu">✕</button>
+        <nav>
+            <ul class="drawer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="listings.html">Houses</a></li>
+                <li><a href="contact.html">Messages</a></li>
+                <li><a href="tenant-dashboard.html">Profile</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </aside>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start backend",
+      "type": "shell",
+      "command": "cd backend; node server.js",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Run smoke tests",
+      "type": "shell",
+      "command": "cd backend; node test-smoke.js",
+      "problemMatcher": []
+    }
+  ]
+}

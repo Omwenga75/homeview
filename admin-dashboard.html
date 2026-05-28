@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HomeView</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="admin-dashboard">
+    <header id="navbar">
+        <div class="container mobile-header-bar">
+            <button id="mobileNavToggle" class="mobile-nav-toggle" type="button" aria-label="Open menu">☰</button>
+            <div id="userProfileToggle">
+                <div class="user-dp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="user-greeting">
+                    <span class="greeting-text">Good evening,</span>
+                    <span id="userName" class="user-name">Guest</span>
+                </div>
+            </div>
+            <div class="header-actions" style="margin-left: auto;">
+                <a href="#" class="mobile-link-chip" data-view="overview">Overview</a>
+                <a href="#" class="mobile-link-chip" data-view="profile">Profile</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-top-row">
+                <strong>Admin Menu</strong>
+                <button id="mobileDrawerClose" class="drawer-close" type="button" aria-label="Close menu">✕</button>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="sidebar-link active" data-view="overview">Overview</a></li>
+                <li><a href="#" class="sidebar-link" data-view="users">User Management</a></li>
+                <li><a href="#" class="sidebar-link" data-view="messages">Messages</a></li>
+                <li><a href="#" class="sidebar-link" data-view="transactions">Transactions</a></li>
+                <li><a href="#" class="sidebar-link" data-view="profile">My Profile</a></li>
+                <li><a href="#" class="sidebar-link" data-view="settings">Platform Settings</a></li>
+                <li style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;"><a href="#" class="sidebar-link" id="sidebarLogout" style="color: #EF4444;">Sign Out</a></li>
+            </ul>
+        </aside>
+        <main class="dashboard-main">
+            <div class="dashboard-header" style="margin-bottom: 2rem;">
+                <h1>Platform Control Center</h1>
+                <p>System-wide stats and management tools.</p>
+            </div>
+
+            <div id="adminProfilePanel" class="profile-panel"></div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="label">Total Users</span>
+                    <div class="value">1,240</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Total Houses</span>
+                    <div class="value">458</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Total Revenue</span>
+                    <div class="value">Sh. 2.4M</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">System Health</span>
+                    <div class="value">99.9%</div>
+                </div>
+            </div>
+
+            <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                <div class="section-header" style="margin-bottom: 1.5rem;">
+                    <h2>Pending House Approvals</h2>
+                </div>
+
+                <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Caretaker</th>
+                                <th>House Title</th>
+                                <th>Date Submitted</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nelson Omwenga</td>
+                                <td>Sapphire Penthouse</td>
+                                <td>May 12, 2026</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Approve</button>
+                                    <button class="btn btn-sm btn-secondary" style="background: #F1F5F9; color: var(--text-primary);">Reject</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Jane Doe</td>
+                                <td>Lakefront Villa</td>
+                                <td>May 11, 2026</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary">Approve</button>
+                                    <button class="btn btn-sm btn-secondary" style="background: #F1F5F9; color: var(--text-primary);">Reject</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        // Admin Dashboard specific logic
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check if user is logged in as admin
+            const user = JSON.parse(localStorage.getItem('hv_current_user'));
+            if (!user || user.role !== 'admin') {
+                window.location.href = 'login.html';
+                return;
+            }            // Update welcome name
+            const welcomeName = document.getElementById('welcomeName');
+            if (welcomeName) welcomeName.textContent = user.name.split(' ')[0];
+
+            const mainContent = document.querySelector('.dashboard-main');
+
+            async function getHouses() {
+                // If mock mode is enabled, skip fetch entirely to avoid console errors
+                if (typeof HV_CONFIG !== 'undefined' && HV_CONFIG.USE_MOCK) {
+                    return getMockHouses();
+                }
+
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 1500);
+                    
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/`, { signal: controller.signal }).catch(() => null);
+                    clearTimeout(timeoutId);
+                    
+                    if (!res || !res.ok) throw new Error('Offline');
+                    return await res.json();
+                } catch (error) {
+                    return getMockHouses();
+                }
+            }
+
+            function getMockHouses() {
+                return [
+                    { id: 1, title: "Emerald Luxury 2-Bedroom", location: "Westlands, Nairobi", price: 45000, status: "pending", owner_name: "John Caretaker", submission_date: new Date().toISOString() },
+                    { id: 2, title: "Modern Studio", location: "Kilimani, Nairobi", price: 25000, status: "pending", owner_name: "Jane Host", submission_date: new Date().toISOString() }
+                ];
+            }
+
+
+            async function saveHouse(house) {
+                try {
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            title: house.title,
+                            location: house.location,
+                            price: house.rawPrice,
+                            description: house.description,
+                            owner_name: house.ownerName,
+                            owner_email: house.ownerEmail,
+                            photo_urls: JSON.stringify(house.photos || [])
+                        })
+                    });
+                    if (!res.ok) throw new Error('Failed to save house');
+                    return await res.json();
+                } catch (error) {
+                    console.error('Error saving house:', error);
+                    alert('Failed to submit house. Please try again.');
+                    return null;
+                }
+            }
+
+            async function updateHouseStatus(houseId, status) {
+                try {
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/${houseId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ status })
+                    });
+                    if (!res.ok) throw new Error('Update failed');
+                    return true;
+                } catch (err) {
+                    console.error('Failed to update house status:', err);
+                    alert('Failed to update house status. Please try again.');
+                    return false;
+                }
+            }
+
+            function formatHousePrice(price) {
+                const value = Number(price);
+                return isNaN(value) ? price : `Sh. ${value.toLocaleString('en-US')}`;
+            }
+
+            const adminProfilePanel = document.getElementById('adminProfilePanel');
+            if (adminProfilePanel) {
+                const allHouses = await getHouses();
+                const pendingCount = allHouses.filter(h => h.status === 'pending').length;
+                adminProfilePanel.innerHTML = `
+                    <div class="profile-card profile-card-wide">
+                        <div class="profile-card-avatar"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                        <div class="profile-card-body">
+                            <p class="profile-label">Administrator</p>
+                            <h2>${user.name}</h2>
+                            <p>${user.email || 'admin@homeview.com'}</p>
+                        </div>
+                        <div class="profile-card-meta">
+                            <div><strong>Role</strong><span>Admin</span></div>
+                            <div><strong>Status</strong><span>Online</span></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+
+
+            async function renderAdminView(viewType) {
+                const allHouses = await getHouses();
+                if (viewType === 'overview' || viewType === 'approvals') {
+                    const totalHouses = allHouses.length;
+                    const approvedHouses = allHouses.filter(h => h.status === 'approved');
+                    const pendingHouses = allHouses.filter(h => h.status === 'pending');
+                    const totalRevenue = approvedHouses.reduce((sum, h) => sum + (Number(h.price) || 0), 0);
+
+                    const pendingRows = pendingHouses.length ? pendingHouses.map(h => `
+                        <tr>
+                            <td style="font-weight:600">${h.owner_name || 'Unknown'}</td>
+                            <td>${h.title}</td>
+                            <td>${h.location}</td>
+                            <td style="font-size:0.85rem;color:var(--text-muted)">${new Date(h.submission_date || Date.now()).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary approve-btn" data-id="${h.id}" style="margin-right:0.5rem">Approve</button>
+                                <button class="btn btn-sm reject-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600">Reject</button>
+                            </td>
+                        </tr>`).join('') : `<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted)">No pending approvals — all caught up! ✅</td></tr>`;
+
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>Platform Control Center</h1>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="label">Total Houses</span>
+                                <div class="value">${totalHouses}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Approved Listings</span>
+                                <div class="value">${approvedHouses.length}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Pending Reviews</span>
+                                <div class="value" style="color:${pendingHouses.length > 0 ? '#f59e0b' : '#10b981'}">${pendingHouses.length}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Total Revenue</span>
+                                <div class="value">Sh. ${totalRevenue.toLocaleString('en-US')}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">System Health</span>
+                                <div class="value" style="color:#10b981">99.9%</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Total Users</span>
+                                <div class="value">1,240</div>
+                            </div>
+                        </div>
+
+                        <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); margin-top: 2rem;">
+                            <div class="section-header" style="margin-bottom: 1.5rem; display:flex; justify-content:space-between; align-items:center;">
+                                <h2>Pending House Approvals <span style="font-size:1rem;color:#f59e0b;font-weight:600">(${pendingHouses.length})</span></h2>
+                            </div>
+                            <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
+                                <table>
+                                    <thead><tr><th>Caretaker</th><th>House Title</th><th>Location</th><th>Date Submitted</th><th>Actions</th></tr></thead>
+                                    <tbody>${pendingRows}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else if (viewType === 'add-house') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>Add New House</h1>
+                        </div>
+                        <div style="padding: 0; background: transparent; border: none; box-shadow: none;">
+                            <form id="adminHouseForm" style="display: grid; gap: 1rem;">
+                                <div class="add-house-grid">
+                                    <article class="add-house-card">
+                                        <h3>Basic Details</h3>
+                                        <div class="form-group">
+                                            <label for="adminHouseName">House Name</label>
+                                            <input type="text" id="adminHouseName" placeholder="e.g. Cozy Studio Apartment" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adminHouseType">Property Type</label>
+                                            <input type="text" id="adminHouseType" placeholder="Apartment / Villa / Studio" required>
+                                        </div>
+                                    </article>
+
+                                    <article class="add-house-card">
+                                        <h3>Location & Price</h3>
+                                        <div class="form-group">
+                                            <label for="adminLocation">Location</label>
+                                            <input type="text" id="adminLocation" placeholder="e.g. Westlands, Nairobi" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adminPrice">Monthly Price (Sh.)</label>
+                                            <input type="number" id="adminPrice" placeholder="45000" required>
+                                        </div>
+                                    </article>
+
+                                    <article class="add-house-card">
+                                        <h3>Description</h3>
+                                        <div class="form-group">
+                                            <label for="adminDescription">Overview</label>
+                                            <textarea id="adminDescription" rows="4" placeholder="Describe the house, amenities, and why it stands out." required></textarea>
+                                        </div>
+                                    </article>
+
+                                    <article class="add-house-card">
+                                        <h3>Owner & Media</h3>
+                                        <div class="form-group">
+                                            <label for="adminOwnerName">Owner Name</label>
+                                            <input type="text" id="adminOwnerName" placeholder="Caretaker name" value="${user.name || ''}" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adminOwnerEmail">Owner Email</label>
+                                            <input type="email" id="adminOwnerEmail" placeholder="owner@email.com" value="${user.email || ''}" required>
+                                        </div>
+                                    </article>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: fit-content;">Save House</button>
+                            </form>
+                        </div>
+                    `;
+
+                    const adminHouseForm = document.getElementById('adminHouseForm');
+                    if (adminHouseForm) {
+                        adminHouseForm.addEventListener('submit', async (e) => {
+                            e.preventDefault();
+                            const title = document.getElementById('adminHouseName').value.trim();
+                            const location = document.getElementById('adminLocation').value.trim();
+                            const price = document.getElementById('adminPrice').value.trim();
+                            const description = document.getElementById('adminDescription').value.trim();
+                            const ownerName = document.getElementById('adminOwnerName').value.trim();
+                            const ownerEmail = document.getElementById('adminOwnerEmail').value.trim();
+
+                            if (!title || !location || !price || !description) {
+                                alert('Please fill in all house details before saving.');
+                                return;
+                            }
+
+                            const saved = await saveHouse({
+                                title,
+                                location,
+                                rawPrice: Number(price),
+                                description,
+                                ownerName: ownerName || user.name,
+                                ownerEmail: ownerEmail || user.email,
+                                photos: []
+                            });
+
+                            if (saved) {
+                                alert('House added successfully and sent for review.');
+                                setActiveSidebar('overview');
+                                await renderAdminView('overview');
+                            }
+                        });
+                    }
+                } else if (viewType === 'users') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>User Management</h1>
+                        </div>
+                        <div class="section-card" style="background: white; padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md); text-align: center;">
+                            <p style="font-size: 3rem; margin-bottom: 1rem;"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></p>
+                            <p style="color: var(--text-secondary); font-size: 1.1rem;">User management features coming soon</p>
+                            <p style="color: var(--text-muted); margin-top: 0.5rem;">This will include caretaker and tenant account management.</p>
+                        </div>
+                    `;
+                } else if (viewType === 'messages') {
+                    const messages = JSON.parse(localStorage.getItem('hv_admin_messages') || '[]');
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>User Messages</h1>
+                        </div>
+                        <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                            <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Sender</th>
+                                        <th>Email</th>
+                                        <th>Message</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${messages.reverse().map(msg => `
+                                        <tr>
+                                            <td style="font-weight: 600;">${msg.name}</td>
+                                            <td>${msg.email}</td>
+                                            <td style="max-width: 300px; white-space: normal; line-height: 1.4;">${msg.message}</td>
+                                            <td style="font-size: 0.85rem; color: var(--text-muted);">${new Date(msg.date).toLocaleDateString()}</td>
+                                        </tr>
+                                    `).join('')}
+                                    ${messages.length === 0 ? '<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No messages found.</td></tr>' : ''}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                } else if (viewType === 'transactions') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>Transactions</h1>
+                        </div>
+                        <div class="section-card" style="background: white; padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md); text-align: center;">
+                            <p style="font-size: 3rem; margin-bottom: 1rem;">💰</p>
+                            <p style="color: var(--text-secondary); font-size: 1.1rem;">Transaction tracking coming soon</p>
+                            <p style="color: var(--text-muted); margin-top: 0.5rem;">Real-time payment processing and analytics.</p>
+                        </div>
+                    `;
+                } else if (viewType === 'profile') {
+                    mainContent.innerHTML = `
+                        <div class="profile-section-container" style="max-width: 900px; margin: 0 auto; padding: 1rem 1rem;">
+                            <!-- Premium Identity Header -->
+                            <div class="profile-header-premium" style="background: white; border-radius: 16px; padding: 2rem; margin-bottom: 2rem; box-shadow: var(--shadow-md); border: 1px solid var(--border); position: relative; display: flex; align-items: center; gap: 2.5rem;">
+                                <div class="profile-avatar-wrapper" style="flex-shrink: 0;">
+                                    <div class="profile-avatar-large" style="width: 120px; height: 120px; border: 4px solid #f8fafc; box-shadow: var(--shadow-sm); font-size: 3rem;"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
+                                    <div class="profile-verified-badge" style="width: 32px; height: 32px; font-size: 1rem; bottom: 4px; right: 4px;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                </div>
+                                
+                                <div class="profile-header-info" style="flex: 1;">
+                                    <span class="profile-designation" style="color: var(--primary); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.75rem; display: block;">Executive Administrator</span>
+                                    <h1 style="font-size: 2.2rem; color: var(--text-primary); margin: 0; line-height: 1.1;">${user.name}</h1>
+                                    
+
+                                    
+                                    <div class="profile-meta-chips" style="margin-top: 2rem; display: flex; gap: 0.75rem;">
+                                        <span style="background: #eff6ff; color: #1e40af; padding: 0.5rem 1.2rem; border-radius: 99px; font-size: 0.85rem; font-weight: 600;">System Core Access</span>
+                                        <span style="background: #fff7ed; color: #9a3412; padding: 0.5rem 1.2rem; border-radius: 99px; font-size: 0.85rem; font-weight: 600;">Level 5 Governance</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="profile-grid-sections" style="display: flex; flex-direction: column; gap: 2rem;">
+                                <!-- Official Identity Card -->
+                                <div class="profile-card-premium" style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md);">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem;">
+                                        <span style="font-size: 1.5rem;"></span>
+                                        <h3 style="font-size: 1.25rem; margin: 0; color: var(--text-primary);">Official Identity</h3>
+                                    </div>
+                                    
+                                    <form id="profileEditForm">
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-bottom: 2.5rem;">
+                                            <div class="profile-form-group">
+                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                                    Full Legal Name
+                                                </label>
+                                                <input type="text" id="profileName" class="profile-input-modern" value="${user.name}" style="width: 100%; padding: 1.2rem 1.5rem; background: #f8fafc; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-primary);">
+                                            </div>
+                                            <div class="profile-form-group">
+                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                                    System Email
+                                                </label>
+                                                <input type="email" id="profileEmail" class="profile-input-modern" value="${user.email}" readonly style="width: 100%; padding: 1.2rem 1.5rem; background: #f1f5f9; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-muted); cursor: not-allowed;">
+                                            </div>
+                                        </div>
+
+
+                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;">
+                                            <div class="profile-form-group">
+                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                                    System Contact Number
+                                                </label>
+                                                <input type="text" id="profilePhone" class="profile-input-modern" value="${user.phone || ''}" placeholder="+254 7XX XXX XXX" style="width: 100%; padding: 1.2rem 1.5rem; background: #f8fafc; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-primary);">
+                                            </div>
+                                            <div class="profile-form-group" style="display: flex; align-items: flex-end;">
+                                                <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 14px; padding: 1.2rem; font-weight: 700; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);">Confirm Updates</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <!-- Authority Stats Card -->
+                                <div class="profile-card-premium" style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md);">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem;">
+                                        <span style="font-size: 1.5rem;"></span>
+                                        <h3 style="font-size: 1.25rem; margin: 0; color: var(--text-primary);">Authority Stats</h3>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
+                                        <a href="index.html" style="text-decoration: none; display: block; background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; transition: all 0.2s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+                                            <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Tenant View</span>
+                                            <span style="font-size: 1.75rem; font-weight: 800; color: var(--primary);">Explore</span>
+                                        </a>
+                                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center;">
+                                            <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Health Score</span>
+                                            <span style="font-size: 1.75rem; font-weight: 800; color: #10B981;">99.9%</span>
+                                        </div>
+                                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center;">
+                                            <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Level</span>
+                                            <span style="font-size: 1.75rem; font-weight: 800; color: #6366F1;">Master</span>
+                                        </div>
+                                    </div>
+                                    <div style="margin-top: 2rem; background: #eff6ff; padding: 1.5rem; border-radius: 16px; display: flex; align-items: center; gap: 1rem; color: #1e40af;">
+                                        <span style="font-size: 1.5rem;"></span>
+                                        <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">These credentials define your administrative governance level across the HomeView ecosystem.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const profileForm = document.getElementById('profileEditForm');
+                    if (profileForm) {
+                        profileForm.addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            const updatedData = {
+                                name: document.getElementById('profileName').value,
+                                phone: document.getElementById('profilePhone').value
+                            };
+                            
+                            if (AuthManager.updateProfile(updatedData).success) {
+                                alert('Profile updated successfully!');
+                                window.location.reload();
+                            }
+                        });
+                    }
+                } else if (viewType === 'settings') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>Platform Settings</h1>
+                        </div>
+
+                        <!-- General Settings -->
+                        <div style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md); margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9;">
+                                <span style="font-size: 1.25rem;"></span>
+                                <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-primary);">General</h3>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f8fafc;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Maintenance Mode</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Temporarily disable public access to the platform.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="settMaintenance" style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f8fafc;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">New User Registration</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Allow new users to create accounts on HomeView.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="settRegistration" checked style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Dark Mode (Admin Panel)</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Enable dark theme for the admin dashboard.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="settDarkMode" style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Listing Policies -->
+                        <div style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md); margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9;">
+                                <span style="font-size: 1.25rem;"></span>
+                                <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-primary);">Listing Policies</h3>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f8fafc;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Auto-Approve Listings</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Skip manual review for new property listings.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="settAutoApprove" style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f8fafc;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Location Paywall</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Require payment before revealing property locations.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="settPaywall" checked style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">AI Recommendations</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Enable intelligent property suggestions for tenants.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="settAI" checked style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Notifications & Security -->
+                        <div style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md); margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9;">
+                                <span style="font-size: 1.25rem;"></span>
+                                <h3 style="margin: 0; font-size: 1.15rem; color: var(--text-primary);">Notifications & Security</h3>
+                            </div>
+                            <div style="display: flex; flex-direction: column; gap: 1.25rem;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0; border-bottom: 1px solid #f8fafc;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Email Notifications</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Send email alerts for new listings and messages.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="settEmail" checked style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
+                                    <div>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Two-Factor Authentication</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Require 2FA for all admin and caretaker accounts.</p>
+                                    </div>
+                                    <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
+                                        <input type="checkbox" id="sett2FA" style="opacity: 0; width: 0; height: 0;">
+                                        <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                    `;
+
+                    // Build toggle knobs and wire up auto-save on change
+                    document.querySelectorAll('.settings-toggle').forEach(toggle => {
+                        toggle.innerHTML = '';
+                        const knob = document.createElement('span');
+                        knob.style.cssText = 'position: absolute; width: 20px; height: 20px; background: white; border-radius: 50%; top: 3px; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.15);';
+                        toggle.appendChild(knob);
+                        const input = toggle.previousElementSibling;
+                        const update = () => {
+                            knob.style.left = input.checked ? '25px' : '3px';
+                            toggle.style.background = input.checked ? 'var(--primary)' : '#cbd5e1';
+                        };
+                        update();
+                        input.addEventListener('change', () => {
+                            update();
+                            // Auto-save: show brief toast confirmation
+                            const label = input.closest('div[style*="flex"]').querySelector('p[style*="font-weight: 600"]');
+                            const settingName = label ? label.textContent : 'Setting';
+                            const state = input.checked ? 'enabled' : 'disabled';
+                            let toast = document.getElementById('settingsToast');
+                            if (!toast) {
+                                toast = document.createElement('div');
+                                toast.id = 'settingsToast';
+                                toast.style.cssText = 'position: fixed; bottom: 2rem; right: 2rem; background: #1e293b; color: white; padding: 0.85rem 1.5rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 9999; opacity: 0; transform: translateY(10px); transition: opacity 0.3s, transform 0.3s;';
+                                document.body.appendChild(toast);
+                            }
+                            toast.textContent = `${settingName} ${state}`;
+                            toast.style.opacity = '1';
+                            toast.style.transform = 'translateY(0)';
+                            clearTimeout(toast._timer);
+                            toast._timer = setTimeout(() => {
+                                toast.style.opacity = '0';
+                                toast.style.transform = 'translateY(10px)';
+                            }, 2000);
+                        });
+                    });
+                }
+                if (window.ImageManager) ImageManager.applyProfilePictureToElements();
+            }
+
+            function setActiveSidebar(viewType) {
+                document.querySelectorAll('.sidebar-link').forEach(l => {
+                    l.classList.toggle('active', l.getAttribute('data-view') === viewType);
+                });
+                try {
+                    localStorage.setItem('hv_admin_view', viewType || 'overview');
+                } catch (err) {
+                    console.warn('Could not save admin view:', err);
+                }
+            }
+
+            function openMobileDrawer() {
+                document.querySelector('.sidebar')?.classList.add('open');
+                document.getElementById('mobileDrawerBackdrop')?.classList.add('active');
+                document.body.classList.add('mobile-drawer-open');
+            }
+
+            function closeMobileDrawer() {
+                document.querySelector('.sidebar')?.classList.remove('open');
+                document.getElementById('mobileDrawerBackdrop')?.classList.remove('active');
+                document.body.classList.remove('mobile-drawer-open');
+            }
+
+            document.getElementById('mobileNavToggle')?.addEventListener('click', (e) => {
+                e.stopPropagation();
+                document.querySelector('.sidebar')?.classList.contains('open') ? closeMobileDrawer() : openMobileDrawer();
+            });
+
+            document.getElementById('mobileDrawerBackdrop')?.addEventListener('click', closeMobileDrawer);
+            document.getElementById('mobileDrawerClose')?.addEventListener('click', closeMobileDrawer);
+
+            // Sidebar Navigation - Using direct listeners for maximum reliability
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    const view = link.getAttribute('data-view');
+                    if (view) {
+                        e.preventDefault();
+                        setActiveSidebar(view);
+                        localStorage.setItem('hv_admin_view', view);
+                        await renderAdminView(view);
+                        closeMobileDrawer();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.mobile-link-chip').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const view = link.getAttribute('data-view');
+                    if (view) {
+                        setActiveSidebar(view);
+                        localStorage.setItem('hv_admin_view', view);
+                        await renderAdminView(view);
+                        closeMobileDrawer();
+                    }
+                });
+            });
+
+            // Handle approve/reject buttons
+            mainContent.addEventListener('click', async (e) => {
+                const approveBtn = e.target.closest('.approve-btn');
+                const rejectBtn = e.target.closest('.reject-btn');
+                if (approveBtn) {
+                    const id = approveBtn.getAttribute('data-id');
+                    if (await updateHouseStatus(id, 'approved')) {
+                        alert('✅ House approved and is now live on listings.');
+                        setActiveSidebar('overview');
+                        await renderAdminView('overview');
+                    }
+                } else if (rejectBtn) {
+                    const id = rejectBtn.getAttribute('data-id');
+                    if (await updateHouseStatus(id, 'rejected')) {
+                        alert('❌ House rejected.');
+                        setActiveSidebar('overview');
+                        await renderAdminView('overview');
+                    }
+                }
+            });
+
+            // User Profile Click - Navigate to Profile
+            const userProfileToggle = document.getElementById('userProfileToggle');
+            if (userProfileToggle) {
+                userProfileToggle.addEventListener('click', () => {
+                    setActiveSidebar('profile');
+                    renderAdminView('profile');
+                });
+            }
+
+            // Logout
+            const logoutBtn = document.getElementById('sidebarLogout');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    AuthManager.logout();
+                });
+            }
+
+            // Check for next view flag (from navbar redirect)
+            try {
+                const nextView = localStorage.getItem('hv_next_view');
+                const savedView = localStorage.getItem('hv_admin_view') || 'overview';
+                const initialView = nextView || savedView;
+
+                if (nextView) {
+                    localStorage.removeItem('hv_next_view');
+                }
+
+                setActiveSidebar(initialView);
+                await renderAdminView(initialView);
+            } catch (err) {
+                console.error("Initial render failed:", err);
+            }
+        });
+    </script>
+</body>
+</html>

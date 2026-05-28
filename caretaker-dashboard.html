@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caretaker Dashboard - HomeView</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="caretaker-dashboard">
+    <header id="navbar">
+        <div class="container" style="display: flex; justify-content: flex-start; align-items: center; gap: 2rem;">
+            <button id="mobileNavToggle" class="mobile-nav-toggle" type="button" aria-label="Open menu">☰</button>
+            <div class="user-profile-dropdown" id="userProfileToggle">
+                <div class="user-greeting-wrapper">
+                    <div class="user-dp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="user-greeting">
+                        <span class="greeting-text" id="timeGreeting">Good evening,</span>
+                        <span id="userName" class="user-name">Guest</span>
+                    </div>
+                </div>
+                <div class="profile-menu" id="profileMenu" style="left: 0; right: auto;">
+                    <div class="profile-menu-item" id="goToProfileBtn">
+                        <span></span>
+                        <span>My Profile</span>
+                    </div>
+                    <div class="profile-menu-item" id="logoutBtn">
+                        <span></span>
+                        <span>Sign Out</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions" style="margin-left: auto;">
+                <!-- Other actions can go here -->
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-top-row">
+                <strong>Menu</strong>
+                <button id="mobileDrawerClose" class="drawer-close" type="button" aria-label="Close menu">✕</button>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#" class="sidebar-link active" data-view="dashboard">Dashboard</a></li>
+                <li><a href="#" class="sidebar-link" data-view="houses">My Houses</a></li>
+                <li><a href="#" class="sidebar-link" data-view="add-house">Add New House</a></li>
+                <li><a href="#" class="sidebar-link" data-view="messages">Messages</a></li>
+                <li><a href="#" class="sidebar-link" data-view="profile">Professional Profile</a></li>
+                <li style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;"><a href="#"
+                        class="sidebar-link" id="sidebarLogout" style="color: #EF4444;">Sign Out</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-main">
+            <div class="dashboard-header" style="margin-bottom: 2rem;">
+
+                <h1>Welcome back, <span id="welcomeName">Nelson</span></h1>
+                <p>Manage your properties and track your performance.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="label">Total Houses</span>
+                    <div class="value">12</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Total Views</span>
+                    <div class="value">2,450</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Active Inquiries</span>
+                    <div class="value">8</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Earnings (Monthly)</span>
+                    <div class="value">Sh. 450k</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Location Unlocks</span>
+                    <div class="value">42</div>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Contacted Calls</span>
+                    <div class="value">156</div>
+                </div>
+            </div>
+
+            <div class="section-card"
+                style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
+                <div class="section-header"
+                    style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 class="dashboard-section-title">Recent Houses</h2>
+                    <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
+                </div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>House Name</th>
+                                <th>Location</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Modern Minimalist Studio</td>
+                                <td>Kilimani, Nairobi</td>
+                                <td>Sh. 15,000</td>
+                                <td><span class="status-pill status-approved">Approved</span></td>
+                                <td><button class="btn-text">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Emerald Luxury 2-Bedroom</td>
+                                <td>Westlands, Nairobi</td>
+                                <td>Sh. 45,000</td>
+                                <td><span class="status-pill status-approved">Approved</span></td>
+                                <td><button class="btn-text">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>Sapphire Penthouse</td>
+                                <td>Kileleshwa, Nairobi</td>
+                                <td>Sh. 85,000</td>
+                                <td><span class="status-pill status-pending">Under Review</span></td>
+                                <td><button class="btn-text">Edit</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
+    <nav class="bottom-nav">
+        <a href="#" class="bottom-nav-item active" data-view="dashboard">
+            <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>
+            <span>Dashboard</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="houses">
+            <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span>
+            <span>Houses</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="add-house">
+            <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></span>
+            <span>Add</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="messages">
+            <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span>
+            <span>Messages</span>
+        </a>
+        <a href="#" class="bottom-nav-item" data-view="profile">
+            <span class="bottom-nav-icon"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+            <span>Profile</span>
+        </a>
+    </nav>
+    <script src="main.js"></script>
+    <script>
+        // Caretaker Dashboard specific logic
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check if user is logged in
+            const user = JSON.parse(localStorage.getItem('hv_current_user'));
+            if (!user || user.role !== 'caretaker') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update welcome name
+            document.getElementById('welcomeName').textContent = user.name.split(' ')[0];
+
+            // Sidebar Navigation with event delegation
+            const sidebarMenu = document.querySelector('.sidebar-menu');
+            const mainContent = document.querySelector('.dashboard-main');
+
+            async function getHouses() {
+                // If mock mode is enabled, skip fetch entirely to avoid console errors
+                if (typeof HV_CONFIG !== 'undefined' && HV_CONFIG.USE_MOCK) {
+                    return getMockHouses();
+                }
+
+                try {
+                    // Add a 1.5s timeout to prevent hanging when backend is down
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 1500);
+
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/`, { signal: controller.signal }).catch(() => null);
+                    clearTimeout(timeoutId);
+
+                    if (!res || !res.ok) throw new Error('Offline');
+                    return await res.json();
+                } catch (error) {
+                    return getMockHouses();
+                }
+            }
+
+            function getMockHouses() {
+                return [
+                    { id: 1, title: "Emerald Luxury 2-Bedroom", location: "Westlands, Nairobi", price: 45000, status: "approved", owner_email: user.email, views: 1250 },
+                    { id: 2, title: "Sapphire Penthouse", location: "Kileleshwa, Nairobi", price: 85000, status: "pending", owner_email: user.email, views: 0 },
+                    { id: 3, title: "Modern Studio", location: "Kilimani, Nairobi", price: 25000, status: "approved", owner_email: user.email, views: 850 }
+                ];
+            }
+
+            async function saveHouse(house) {
+                try {
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            title: house.title,
+                            location: house.location,
+                            price: house.rawPrice,
+                            description: house.description,
+                            owner_name: house.ownerName,
+                            owner_email: house.ownerEmail,
+                            photo_urls: JSON.stringify(house.photos || [])
+                        })
+                    });
+                    if (!res.ok) throw new Error('Failed to save house');
+                    return await res.json();
+                } catch (error) {
+                    console.error('Error saving house:', error);
+                    alert('Failed to submit house. Please try again.');
+                    return null;
+                }
+            }
+
+            function formatHousePrice(price) {
+                const value = Number(price);
+                return isNaN(value) ? price : `Sh. ${value.toLocaleString('en-US')}`;
+            }
+
+            function renderHouseRows(houses, includeViews = false) {
+                if (!houses.length) {
+                    const colSpan = includeViews ? 6 : 5;
+                    return `<tr><td colspan="${colSpan}" style="padding: 4rem 2rem; text-align: center; color: #94A3B8;">
+                        <div style="font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.5;">🏠</div>
+                        <p style="font-size: 1.1rem; font-weight: 500; margin-bottom: 0.25rem;">No house listings yet</p>
+                        <p style="font-size: 0.9rem; opacity: 0.8;">Submit a new property and it will be sent for review.</p>
+                    </td></tr>`;
+                }
+
+                return houses.map(house => {
+                    const statusLabel = house.status === 'approved' ? 'Approved' : house.status === 'pending' ? 'Pending Review' : 'Rejected';
+                    const statusClass = house.status === 'approved' ? 'status-approved' : house.status === 'pending' ? 'status-pending' : 'status-rejected';
+                    return `
+                        <tr>
+                            <td>${house.title}</td>
+                            <td>${house.location}</td>
+                            <td>${formatHousePrice(house.price)}</td>
+                            <td><span class="status-pill ${statusClass}">${statusLabel}</span></td>
+                            ${includeViews ? `<td>${house.views || 0}</td>` : ''}
+                            <td><button class="btn-text">Edit</button></td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            async function getCurrentUserHouses() {
+                const allHouses = await getHouses();
+                return allHouses.filter(house => house.owner_email === user.email);
+            }
+
+            async function renderView(viewType) {
+                const userHouses = await getCurrentUserHouses();
+                const recentHouses = userHouses.slice(0, 3);
+                const totalHouses = userHouses.length;
+                const pendingCount = userHouses.filter(house => house.status === 'pending').length;
+
+                if (viewType === 'dashboard') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>Welcome back, <span>${user.name.split(' ')[0]}</span></h1>
+                            <p>Manage your properties and track your performance.</p>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="label">Your Listings</span>
+                                <div class="value">${totalHouses}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Pending Review</span>
+                                <div class="value">${pendingCount}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Approved Listings</span>
+                                <div class="value">${userHouses.filter(h => h.status === 'approved').length}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Estimated Revenue</span>
+                                <div class="value">Sh. ${userHouses.filter(h => h.status === 'approved').reduce((sum, house) => sum + Number(house.price || 0), 0).toLocaleString('en-US')}</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Review Speed</span>
+                                <div class="value">Fast</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Real-time Updates</span>
+                                <div class="value">Enabled</div>
+                            </div>
+                        </div>
+                        <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <h2 class="dashboard-section-title">Recent Houses</h2>
+                                <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
+                            </div>
+                            <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
+                                <table>
+                                    <thead><tr><th>House Name</th><th>Location</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
+                                    <tbody>${renderHouseRows(recentHouses, false)}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else if (viewType === 'houses') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>My Houses</h1>
+                        </div>
+                        <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                                <h2 class="dashboard-section-title">Houses</h2>
+                                <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
+                            </div>
+                            <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
+                                <table>
+                                    <thead><tr><th>House Name</th><th>Location</th><th>Price</th><th>Status</th><th>Views</th><th>Actions</th></tr></thead>
+                                    <tbody>${renderHouseRows(userHouses, true)}</tbody>
+                                </table>
+                            </div>
+                        </div>
+                    `;
+                } else if (viewType === 'add-house') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>Add New House</h1>
+                        </div>
+                        <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
+                            <form id="houseForm" style="max-width: 600px;">
+                                <div class="form-group">
+                                    <label>Property Photos (minimum 5)</label>
+                                    <div class="photo-upload-grid">
+                                        <label class="photo-upload-box">
+                                            <input type="file" id="photo1" name="photo1" accept="image/*" required>
+                                        </label>
+                                        <label class="photo-upload-box">
+                                            <input type="file" id="photo2" name="photo2" accept="image/*" required>
+                                        </label>
+                                        <label class="photo-upload-box">
+                                            <input type="file" id="photo3" name="photo3" accept="image/*" required>
+                                        </label>
+                                        <label class="photo-upload-box">
+                                            <input type="file" id="photo4" name="photo4" accept="image/*" required>
+                                        </label>
+                                        <label class="photo-upload-box">
+                                            <input type="file" id="photo5" name="photo5" accept="image/*" required>
+                                        </label>
+                                    </div>
+                                    <small style="display: block; margin-top: 0.5rem; color: var(--text-secondary);">Click each square to upload at least 5 property images. This listing will be sent for review before it goes live.</small>
+                                </div>
+                                <div class="form-group">
+                                    <label for="houseName">House Name</label>
+                                    <input type="text" id="houseName" placeholder="e.g., Cozy Studio Apartment" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="location">Location</label>
+                                    <input type="text" id="location" placeholder="e.g., Westlands, Nairobi" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="price">Monthly Price (Sh.)</label>
+                                    <input type="number" id="price" placeholder="45000" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea id="description" placeholder="Describe the property, amenities, location, and guest experience." rows="4"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit for Approval</button>
+                            </form>
+                        </div>
+                    `;
+
+                    const houseForm = document.getElementById('houseForm');
+                    if (houseForm) {
+                        houseForm.addEventListener('submit', async (event) => {
+                            event.preventDefault();
+                            const title = houseForm.querySelector('#houseName').value.trim();
+                            const location = houseForm.querySelector('#location').value.trim();
+                            const price = houseForm.querySelector('#price').value.trim();
+                            const description = houseForm.querySelector('#description').value.trim();
+                            if (!title || !location || !price) {
+                                alert('Please fill in the required fields before submitting.');
+                                return;
+                            }
+
+                            const newHouse = {
+                                ownerName: user.name,
+                                ownerEmail: user.email,
+                                title,
+                                location,
+                                rawPrice: Number(price),
+                                description,
+                                photos: [] // For now, empty; can add file upload later
+                            };
+
+                            const saved = await saveHouse(newHouse);
+                            if (saved) {
+                                alert('Your house listing has been submitted for review. It will appear on your dashboard once approved.');
+                                setActiveSidebar('houses');
+                                await renderView('houses');
+                            }
+                        });
+                    }
+                } else if (viewType === 'messages') {
+                    mainContent.innerHTML = `
+                        <div class="dashboard-header" style="margin-bottom: 2rem;">
+                            <h1>Messages</h1>
+                        </div>
+                        <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; padding: 4rem 2rem;">
+                            <p style="font-size: 3rem; margin-bottom: 1rem;"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></p>
+                            <p style="color: var(--text-secondary); font-size: 1.1rem;">No messages yet</p>
+                            <p style="color: var(--text-muted); margin-top: 0.5rem;">When tenants reach out about your properties, messages will appear here.</p>
+                        </div>
+                    `;
+                } else if (viewType === 'profile') {
+                    mainContent.innerHTML = `
+                        <div class="profile-section-container" style="max-width: 1000px; margin: 0 auto; padding: 2rem 1rem;">
+                            <!-- Premium Identity Header -->
+                            <div class="profile-header-premium" style="background: white; border-radius: 24px; padding: 3rem; margin-bottom: 2.5rem; box-shadow: var(--shadow-md); border: 1px solid var(--border); position: relative; display: flex; align-items: center; gap: 3rem;">
+                                <div class="profile-avatar-wrapper" style="flex-shrink: 0;">
+                                    <div class="profile-avatar-large" style="width: 160px; height: 160px; border: 6px solid #f8fafc; box-shadow: var(--shadow-sm); font-size: 4rem;"><svg viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                                    <div class="profile-verified-badge" style="width: 42px; height: 42px; font-size: 1.2rem; bottom: 8px; right: 8px;"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+                                </div>
+                                
+                                <div class="profile-header-info" style="flex: 1;">
+                                    <span class="profile-designation" style="color: var(--primary); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.75rem; display: block;">Verified Caretaker</span>
+                                    <h1 style="font-size: 2rem; color: var(--text-primary); margin: 0; line-height: 1.1;">${user.name}</h1>
+                                    
+                                    <div style="display: flex; gap: 2rem; margin-top: 1.5rem; color: var(--text-secondary); font-size: 1rem;">
+                                        <div style="display: flex; align-items: center; gap: 0.6rem;">
+                                            Joined ${user.joinedAt ? new Date(user.joinedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'May 2026'}
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="profile-meta-chips" style="margin-top: 2rem; display: flex; gap: 0.75rem;">
+                                        <span style="background: #eff6ff; color: #1e40af; padding: 0.5rem 1.2rem; border-radius: 99px; font-size: 0.85rem; font-weight: 600;">Top Rated Caretaker</span>
+                                        <span style="background: #fff7ed; color: #9a3412; padding: 0.5rem 1.2rem; border-radius: 99px; font-size: 0.85rem; font-weight: 600;">5+ Years Experience</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="profile-grid-sections" style="display: flex; flex-direction: column; gap: 2.5rem;">
+                                <!-- Professional Portfolio -->
+                                <div class="profile-card-premium" style="background: white; border-radius: 24px; padding: 3rem; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2.5rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1.5rem;">
+                                        <span style="font-size: 1.75rem;"></span>
+                                        <h3 style="font-size: 1.5rem; margin: 0; color: var(--text-primary);">Professional Portfolio</h3>
+                                    </div>
+                                    
+                                    <form id="profileEditForm">
+                                        <div class="profile-field-grid">
+                                            <div class="profile-form-group">
+                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                                    Full Name
+                                                </label>
+                                                <div style="position: relative;">
+                                                    <input type="text" id="profileName" class="profile-input-modern" value="${user.name}" style="width: 100%; padding: 1.2rem 1.5rem; background: #f8fafc; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-primary); transition: all 0.3s ease;">
+                                                </div>
+                                            </div>
+                                            <div class="profile-form-group">
+                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                                    Work Email
+                                                </label>
+                                                <div style="position: relative;">
+                                                    <input type="email" id="profileEmail" class="profile-input-modern" value="${user.email}" readonly style="width: 100%; padding: 1.2rem 1.5rem; background: #f1f5f9; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-muted); cursor: not-allowed;">
+                                                </div>
+                                            </div>
+                                            <div class="profile-form-group">
+                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                                                    Primary Phone
+                                                </label>
+                                                <div style="position: relative;">
+                                                    <input type="text" id="profilePhone" class="profile-input-modern" value="${user.phone || ''}" style="width: 100%; padding: 1.2rem 1.5rem; background: #f8fafc; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-primary); transition: all 0.3s ease;" placeholder="+254 7XX XXX XXX">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+
+                                        
+                                        <div style="display: flex; justify-content: flex-end; margin-top: 3rem; border-top: 1px solid #f1f5f9; padding-top: 2rem;">
+                                            <button type="submit" class="btn btn-primary" style="border-radius: 14px; padding: 1.2rem 3rem; font-weight: 700; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);">Save Updates</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const profileForm = document.getElementById('profileEditForm');
+                    if (profileForm) {
+                        profileForm.addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            const updatedData = {
+                                name: document.getElementById('profileName').value,
+                                phone: document.getElementById('profilePhone').value
+                            };
+
+                            if (AuthManager.updateProfile(updatedData).success) {
+                                alert('Professional profile updated!');
+                                window.location.reload();
+                            }
+                        });
+                    }
+                }
+                if (window.ImageManager) ImageManager.applyProfilePictureToElements();
+            }
+
+            function setActiveSidebar(viewType) {
+                document.querySelectorAll('.sidebar-link').forEach(l => {
+                    l.classList.toggle('active', l.getAttribute('data-view') === viewType);
+                });
+            }
+
+            // Sidebar Navigation - Using direct listeners for maximum reliability
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    const view = link.getAttribute('data-view');
+                    if (view) {
+                        e.preventDefault();
+                        setActiveSidebar(view);
+                        localStorage.setItem('hv_caretaker_view', view);
+                        await renderView(view);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.bottom-nav-item').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    const view = btn.getAttribute('data-view');
+                    if (!view) return;
+                    e.preventDefault();
+                    document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.toggle('active', item === btn));
+                    setActiveSidebar(view);
+                    localStorage.setItem('hv_caretaker_view', view);
+                    await renderView(view);
+                });
+            });
+
+            mainContent.addEventListener('click', async (e) => {
+                const addButton = e.target.closest('.js-add-house-btn');
+                if (!addButton) return;
+                e.preventDefault();
+                setActiveSidebar('add-house');
+                localStorage.setItem('hv_caretaker_view', 'add-house');
+                await renderView('add-house');
+            });
+
+            // Check for next view flag (from navbar redirect) or restore saved view after refresh
+            try {
+                const nextView = localStorage.getItem('hv_next_view');
+                const savedView = localStorage.getItem('hv_caretaker_view') || 'dashboard';
+                const initialView = nextView || savedView;
+
+                if (nextView) {
+                    localStorage.removeItem('hv_next_view');
+                }
+
+                setActiveSidebar(initialView);
+                document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.toggle('active', item.getAttribute('data-view') === initialView));
+                await renderView(initialView);
+            } catch (err) {
+                console.error("Initial render failed:", err);
+            }
+
+            // User Profile Dropdown + Navigation
+            const userProfileToggle = document.getElementById('userProfileToggle');
+            const profileMenu = document.getElementById('profileMenu');
+            const goToProfileBtn = document.getElementById('goToProfileBtn');
+
+            if (userProfileToggle && profileMenu) {
+                userProfileToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    profileMenu.classList.toggle('active');
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.user-profile-dropdown')) {
+                        profileMenu.classList.remove('active');
+                    }
+                });
+            }
+
+            if (goToProfileBtn) {
+                goToProfileBtn.addEventListener('click', () => {
+                    profileMenu.classList.remove('active');
+                    setActiveSidebar('profile');
+                    localStorage.setItem('hv_caretaker_view', 'profile');
+                    renderView('profile');
+                });
+            }
+
+            // Logout button
+            const logoutBtns = [document.getElementById('logoutBtn'), document.getElementById('sidebarLogout')];
+            logoutBtns.forEach(btn => {
+                if (btn) {
+                    btn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        AuthManager.logout();
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

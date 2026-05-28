@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up | HomeView - Join the Premium Platform</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="auth-page">
+    <main class="auth-card-container">
+        <div class="auth-card">
+            <a href="index.html" class="auth-logo">
+            <span class="text">HomeView</span>
+        </a>
+        <h2>Create an account to view property locations</h2>
+
+        <form class="auth-form">
+
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="John Doe" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="johndoe@gmail.com" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-field">
+                    <input type="password" id="password" placeholder="••••" required>
+                    <button type="button" class="password-toggle" data-password-toggle="password" aria-label="Show password">👁️</button>
+                </div>
+            </div>
+
+            <div id="roleGroup" class="form-group" style="text-align: center; display: none;">
+                <label>Join as:</label>
+                <div class="role-selector" style="display: flex; gap: 2rem; margin-top: 0.8rem; justify-content: center;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 500;">
+                        <input type="radio" name="role" value="tenant"> Tenant
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-weight: 500;">
+                        <input type="radio" name="role" value="caretaker"> Caretaker
+                    </label>
+                </div>
+            </div>
+            <div id="selectedRoleDisplay" style="text-align: center; margin-bottom: 1rem; font-weight: 600; color: var(--primary); display: none;"></div>
+
+            <button type="submit" class="auth-submit-btn">Create Account</button>
+        </form>
+
+        <p class="auth-footer-text">
+            Already have an account? <a href="login.html">Sign in</a>
+        </p>
+    </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="text">HomeView</span>
+                    </div>
+                    <p>Smart rentals. Trusted hosts. Modern living.</p>
+                    <div class="socials">
+                        <a href="#">FB</a>
+                        <a href="#">TW</a>
+                        <a href="#">IG</a>
+                        <a href="#">LI</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with the latest properties.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit">Go</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HomeView Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

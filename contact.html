@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | HomeView</title>
+    <meta name="description" content="Get in touch with HomeView support for help listing properties or finding a rental.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="tenant-dashboard">
+    <header id="navbar">
+        <div class="container">
+            <div class="logo" id="profileNavLink" style="cursor: pointer;">
+                <div class="user-dp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="user-greeting">
+                    <span class="greeting-text">Good morning,</span>
+                    <span id="userName" class="user-name">Guest</span>
+                </div>
+            </div>
+            <div class="nav-group">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="listings.html">Houses</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html" class="active">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+            <button class="mobile-menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-hero">
+            <div class="container">
+                <div class="section-title">
+                    <h1>Connect with HomeView</h1>
+                    <p>Our dedicated support team is committed to providing a seamless experience. Whether you’re inquiring about a premium listing, managing your rental portfolio, or requiring technical assistance, we are here to provide professional and timely guidance.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <div class="container">
+                <div class="contact-layout">
+                    <div class="contact-panel">
+                        <h3>Customer Excellence</h3>
+                        <p>Our advisors are available for tenant inquiries, host onboarding, and comprehensive property verification.</p>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon"></div>
+                            <div class="contact-info">
+                                <label>Email</label>
+                                <span>support@homeview.example</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon"></div>
+                            <div class="contact-info">
+                                <label>Phone</label>
+                                <span>+254 700 000 000</span>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-icon"></div>
+                            <div class="contact-info">
+                                <label>Office</label>
+                                <span>Nairobi, Kenya</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-card">
+                        <h3>Send us a message</h3>
+                        <form class="contact-form" id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" placeholder="Your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" placeholder="you@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" name="message" placeholder="How can we help?" rows="3"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" style="padding: 60px 0; background: #F8FAFC;">
+            <div class="container">
+                <div class="section-title" style="margin-bottom: 2rem; text-align: center;">
+                    <h2>Frequently Asked <span class="accent">Questions</span></h2>
+                </div>
+                <div class="faq-grid">
+                    <div class="faq-card">
+                        <h4>How long does verification take?</h4>
+                        <p>Typically, property verifications are completed within 24-48 business hours after submission.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>Is my payment secure?</h4>
+                        <p>Yes, all payments are processed securely through our M-Pesa integration with end-to-end encryption.</p>
+                    </div>
+                    <div class="faq-card">
+                        <h4>Do you offer discounts for multiple unlocks?</h4>
+                        <p>Yes, for users looking to explore multiple properties, we offer bundled credits at a reduced rate.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="text">HomeView</span>
+                    </div>
+                    <p>Smart rentals. Trusted hosts. Modern living.</p>
+                    <div class="socials">
+                        <a href="https://www.facebook.com" target="_blank">FB</a>
+                        <a href="https://www.twitter.com" target="_blank">TW</a>
+                        <a href="https://www.instagram.com" target="_blank">IG</a>
+                        <a href="https://www.linkedin.com" target="_blank">LI</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="listings.html">Houses</a></li>
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="contact.html">Help Center</a></li>
+                        <li><a href="privacy.html">Safety</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with the latest properties.</p>
+                    <form class="newsletter-form" id="newsletterForm">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit">Go</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HomeView. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <div class="mobile-drawer-backdrop" id="drawerBackdrop"></div>
+    <aside class="mobile-sidebar" id="mobileSidebar" aria-label="Mobile navigation drawer">
+        <button class="drawer-close" id="drawerClose" type="button" aria-label="Close menu">✕</button>
+        <nav>
+            <ul class="drawer-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="listings.html">Houses</a></li>
+                <li><a href="contact.html">Messages</a></li>
+                <li><a href="tenant-dashboard.html">Profile</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+        </nav>
+    </aside>
+    <script src="main.js"></script>
+</body>
+</html>

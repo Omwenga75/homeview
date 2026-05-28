@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Set User</title>
+</head>
+<body>
+    <script>
+        localStorage.setItem('hv_current_user', JSON.stringify({
+            name: 'Admin User',
+            email: 'admin@example.com',
+            role: 'admin'
+        }));
+        document.body.innerText = 'Admin user set. Go to admin dashboard.';
+    </script>
+</body>
+</html>

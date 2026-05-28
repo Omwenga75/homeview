@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Post</title>
+</head>
+<body>
+    <div id="result"></div>
+    <script>
+        fetch('http://127.0.0.1:8000/houses/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title: 'Test House',
+                location: 'Nairobi, Kenya',
+                price: 25000,
+                description: 'A beautiful test house',
+                owner_name: 'Nelson Omwenga',
+                owner_email: 'nelson@example.com'
+            })
+        })
+        .then(response => {
+            document.getElementById('result').innerText += 'Status: ' + response.status + '\n';
+            return response.json();
+        })
+        .then(data => {
+            document.getElementById('result').innerText += 'Response: ' + JSON.stringify(data) + '\n';
+        })
+        .catch(error => {
+            document.getElementById('result').innerText += 'Error: ' + error + '\n';
+        });
+    </script>
+</body>
+</html>

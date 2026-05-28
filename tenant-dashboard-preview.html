@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - HomeView</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="tenant-dashboard">
+    <header id="navbar">
+        <div class="container mobile-header-bar">
+            <button id="mobileNavToggle" class="mobile-nav-toggle" type="button" aria-label="Open menu">☰</button>
+            <div id="userProfileToggle">
+                <div class="user-dp">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="user-greeting">
+                    <span class="greeting-text">Good morning,</span>
+                    <span id="userName" class="user-name">Test Tenant</span>
+                </div>
+            </div>
+            <div class="header-actions" style="margin-left: auto;">
+                <a href="#" class="mobile-link-chip" data-view="profile">My Profile</a>
+                <a href="listings.html" class="mobile-link-chip">Browse Houses</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-drawer-backdrop" id="mobileDrawerBackdrop"></div>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-top-row">
+                <strong>Menu</strong>
+                <button id="mobileDrawerClose" class="drawer-close" type="button" aria-label="Close menu">✕</button>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="index.html" class="sidebar-link">Home</a></li>
+                <li><a href="listings.html" class="sidebar-link">Browse Houses</a></li>
+                <li><a href="#" class="sidebar-link active" data-view="profile">My Profile</a></li>
+                <li><a href="#" class="sidebar-link" data-view="saved">Saved Properties</a></li>
+                <li><a href="#" class="sidebar-link" data-view="unlocked">Unlocked Locations</a></li>
+                <li style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;"><a href="#" class="sidebar-link" id="sidebarLogout" style="color: #EF4444;">Sign Out</a></li>
+            </ul>
+        </aside>
+
+        <main class="dashboard-main" id="tenantMain" style="padding: 2rem;">
+            <div class="profile-section-container">
+                <div class="profile-header-premium">
+                    <div class="profile-avatar-wrapper">
+                        <div class="profile-avatar-large"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                    </div>
+                    <div class="profile-header-info">
+                        <span class="profile-designation">HomeView Member</span>
+                        <h1>Test Tenant</h1>
+                        <div class="profile-meta-chips">
+                            <div class="profile-chip">Verified Tenant</div>
+                            <div class="profile-chip">Active Member</div>
+                            <div class="profile-chip">Joined May 2026</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dashboard-form">
+                    <div class="profile-left-column">
+                        <div class="profile-card-premium">
+                            <h3>Personal Information</h3>
+                            <form id="profileEditForm">
+                                <div class="profile-form-grid">
+                                    <div class="profile-form-group">
+                                        <label>Full Name</label>
+                                        <input type="text" id="profileName" class="profile-input-modern" value="Test Tenant">
+                                    </div>
+                                    <div class="profile-form-group">
+                                        <label>Email Address</label>
+                                        <input type="email" id="profileEmail" class="profile-input-modern" value="test@homeview.com" readonly style="opacity: 0.7; cursor: not-allowed;">
+                                    </div>
+                                </div>
+                                <div class="profile-form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" id="profilePhone" class="profile-input-modern" value="+254 712 345 678" placeholder="+254 7XX XXX XXX">
+                                </div>
+                                <div class="profile-actions-bar">
+                                    <button type="submit" class="btn btn-primary" style="border-radius: 12px; padding: 0.8rem 2rem;">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        // Test preview mode - no auth check
+        console.log("Tenant Dashboard Preview Mode - Drawer Testing");
+    </script>
+</body>
+</html>
