@@ -3528,9 +3528,10 @@ td {
         z-index: 1100;
         box-shadow: 0 18px 36px rgba(15, 23, 42, 0.18);
         position: fixed;
-        top: 80px;
+        top: 0;
         left: 0;
-        height: calc(100vh - 80px);
+        height: 100%;
+        overscroll-behavior: contain;
         border-top-left-radius: 0;
         border-top-right-radius: 0;
         border-right: 1px solid var(--border);
@@ -3550,7 +3551,7 @@ td {
     .sidebar-top-row {
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1rem 0.75rem;
+        padding: calc(1rem + env(safe-area-inset-top, 10px)) 1rem 0.75rem;
         margin-bottom: 0.75rem;
         border-bottom: 1px solid var(--border);
         background: white;
@@ -4653,6 +4654,7 @@ button.bottom-nav-item {
     
     .profile-meta-chips {
         justify-content: center;
+        flex-wrap: wrap;
     }
     
     .profile-grid-sections {
