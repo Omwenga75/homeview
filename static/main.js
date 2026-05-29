@@ -722,6 +722,30 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', closeMobileDrawer);
     });
 
+    // Bottom Nav "More" button — opens the appropriate left drawer
+    const bottomNavMoreBtn = document.getElementById('bottomNavMore');
+    if (bottomNavMoreBtn) {
+        bottomNavMoreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dashSidebar = document.querySelector('.dashboard-container .sidebar');
+            const mobileDrawerBg = document.getElementById('mobileDrawerBackdrop');
+            const mobSidebar = document.getElementById('mobileSidebar');
+            const drawerBg = document.getElementById('drawerBackdrop');
+
+            if (dashSidebar) {
+                // Dashboard pages — open the dashboard sidebar
+                dashSidebar.classList.add('open');
+                if (mobileDrawerBg) mobileDrawerBg.classList.add('active');
+                document.body.classList.add('mobile-drawer-open');
+            } else if (mobSidebar) {
+                // Public pages — open the mobile sidebar
+                mobSidebar.classList.add('open');
+                if (drawerBg) drawerBg.classList.add('active');
+                document.body.classList.add('mobile-drawer-open');
+            }
+        });
+    }
+
     // Dashboard Drawer Toggle (for tenant-dashboard, admin-dashboard, caretaker-dashboard)
     const mobileNavToggle = document.getElementById('mobileNavToggle');
     const mobileDrawerBackdrop = document.getElementById('mobileDrawerBackdrop');

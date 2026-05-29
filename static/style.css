@@ -4178,7 +4178,7 @@ footer .logo .text {
     right: 0;
     background: rgba(15, 23, 42, 0.98); /* Navy solid for perfect integration */
     backdrop-filter: blur(15px);
-    padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
+    padding: 20px 0 calc(20px + env(safe-area-inset-bottom, 0px));
     justify-content: space-around;
     align-items: center;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
@@ -4197,6 +4197,15 @@ footer .logo .text {
     font-size: 0.75rem;
     font-weight: 500;
     flex: 1;
+}
+
+/* Reset native button styles for the More nav item */
+button.bottom-nav-item {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: inherit;
+    outline: none;
 }
 
 .bottom-nav-item.active {
