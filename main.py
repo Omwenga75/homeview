@@ -26,6 +26,8 @@ def render_html(filename: str):
 app = FastAPI(
     title="HomeView API",
     description="Backend for HomeView property management system",
+    openapi_url="/openapi.json",
+    docs_url="/docs"
 )
 
 @app.on_event("startup")
