@@ -278,9 +278,13 @@ header .container a {
 .nav-group {
     display: flex;
     align-items: center;
-    gap: 0;
-    flex-shrink: 0;
-    margin-left: auto;
+    gap: 2rem;
+    flex: 1;
+    justify-content: space-between;
+}
+
+.nav-group nav {
+    margin: 0 auto;
 }
 
 .nav-links {
