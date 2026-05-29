@@ -794,8 +794,9 @@ body.mobile-drawer-open {
     border-radius: 24px;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
-    max-width: 520px;
+    max-width: 380px;
     margin-left: auto;
+    animation: float 6s ease-in-out infinite;
 }
 
 .image-wrapper img {
