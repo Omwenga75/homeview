@@ -205,30 +205,33 @@
                 housesCount.textContent = `${houses.length} Houses Found`;
                 const IMAGES = ['images/prop1.png','images/prop2.png','images/prop3.png','images/prop4.png'];
 
-                const html = houses.map(house => {
+                let html = '';
+                houses.forEach(house => {
                     const imgIndex = (Number(house.id) - 1) % IMAGES.length;
                     const imgSrc = isNaN(imgIndex) ? IMAGES[0] : IMAGES[imgIndex];
-                    return '' +
-                        '<div class="listing-card" onclick="window.location.href=\'property-detail.html?id=' + house.id + '\'">' +
-                            '<div class="listing-img">' +
-                                '<img src="' + imgSrc + '" alt="' + house.title + '">' +
-                                '<span class="badge">Apartment</span>' +
-                            '</div>' +
-                            '<div class="listing-info">' +
-                                '<div>' +
-                                    '<h3>' + house.title + '</h3>' +
-                                    '<p class="location">' + house.location + '</p>' +
-                                    '<div class="listing-meta">' +
-                                        '<span>WiFi</span><span>Details</span>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="listing-footer">' +
-                                    '<span class="price">Sh. ' + Number(house.price).toLocaleString('en-US') + '<span class="period">/month</span></span>' +
-                                    '<a href="property-detail.html?id=' + house.id + '" class="btn btn-sm btn-primary">View Details</a>' +
-                                '</div>' +
-                            '</div>' +
-                        '</div>';
-                }).join('');
+                    html += '<div class="listing-card">';
+                    html += '<a class="listing-link" href="property-detail.html?id=' + house.id + '">';
+                    html += '<div class="listing-img">';
+                    html += '<img src="' + imgSrc + '" alt="' + house.title + '">';
+                    html += '<span class="badge">Apartment</span>';
+                    html += '</div>';
+                    html += '<div class="listing-info">';
+                    html += '<div>';
+                    html += '<h3>' + house.title + '</h3>';
+                    html += '<p class="location">' + house.location + '</p>';
+                    html += '<div class="listing-meta">';
+                    html += '<span>WiFi</span><span>Details</span>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '<div class="listing-footer">';
+                    html += '<span class="price">Sh. ' + Number(house.price).toLocaleString('en-US') + '<span class="period">/month</span></span>';
+                    html += '<button type="button" class="btn btn-sm btn-primary">View Details</button>';
+                    html += '</div>';
+                    html += '</div>';
+                    html += '</a>';
+                    html += '</div>';
+                });
+
                 listingsGrid.innerHTML = html;
             }
 
