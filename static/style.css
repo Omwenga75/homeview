@@ -780,7 +780,7 @@ body.mobile-drawer-open {
     max-width: 600px;
     height: auto;
     filter: drop-shadow(0 30px 60px rgba(0,0,0,0.15));
-    animation: float 6s ease-in-out infinite;
+    animation: float 15s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -797,7 +797,7 @@ body.mobile-drawer-open {
     max-width: 380px;
     margin-left: auto;
     margin-top: 40px;
-    animation: float 6s ease-in-out infinite;
+    animation: float 15s ease-in-out infinite;
 }
 
 .image-wrapper img {
@@ -935,7 +935,7 @@ body.mobile-drawer-open {
     gap: 1rem;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     border: 1px solid rgba(0, 0, 0, 0.08);
-    animation: floating 3s ease-in-out infinite;
+    animation: floating 8s ease-in-out infinite;
 }
 
 @keyframes floating {
@@ -3903,7 +3903,7 @@ body.mobile-drawer-open {
     font-size: 4rem;
     margin-bottom: 1.5rem;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.05));
-    animation: float 3s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite;
 }
 
 .empty-state h3 {
