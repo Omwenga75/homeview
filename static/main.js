@@ -1148,7 +1148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     botBubble.className = 'chat-bubble bot';
                     
                     const query = text.toLowerCase();
-                    let response = "I'm sorry, I'm still learning. For specific inquiries, please visit our Contact Us page or reach out to our support team directly!";
+                    let response = "I'm sorry, I didn't quite catch that. For specific inquiries, please visit our Contact Us page or reach out to our support team directly at +254111307585 for immediate assistance!";
 
                     if (query.includes('price') || query.includes('cost') || query.includes('pay') || query.includes('600')) {
                         response = "Unlocking a precise property location costs exactly KSh. 600. This is a one-time fee per property to ensure secure and verified access for our users.";
