@@ -14,8 +14,62 @@
       "dest": "main.py"
     },
     {
-      "src": "/(.*)",
+      "src": "/auth/(.*)",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
       "dest": "main.py"
+    },
+    {
+      "src": "/houses/(.*)",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
+      "dest": "main.py"
+    },
+    {
+      "src": "/houses",
+      "headers": {
+        "Cache-Control": "no-cache, no-store, must-revalidate"
+      },
+      "dest": "main.py"
+    },
+    {
+      "src": "/docs",
+      "dest": "main.py"
+    },
+    {
+      "src": "/openapi.json",
+      "dest": "main.py"
+    },
+    {
+      "src": "/static/(.*)",
+      "headers": {
+        "cache-control": "public, immutable, max-age=31536000"
+      }
+    },
+    {
+      "src": "/(.*)\.html",
+      "headers": {
+        "cache-control": "no-cache"
+      }
+    },
+    {
+      "src": "/(.*)\.js",
+      "headers": {
+        "cache-control": "no-cache"
+      }
+    },
+    {
+      "src": "/(.*)\.css",
+      "headers": {
+        "cache-control": "public, max-age=86400"
+      }
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html",
+      "status": 200
     }
   ]
 }

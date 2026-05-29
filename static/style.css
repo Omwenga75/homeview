@@ -271,9 +271,32 @@ header .container a {
     color: var(--primary);
     text-decoration: none;
     flex-shrink: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
 }
 
-.logo .icon { font-size: 1.8rem; }
+.logo:hover {
+    background-color: var(--glass-bg-accent);
+    transform: translateY(-2px);
+}
+
+.logo .icon { 
+    font-size: 1.8rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo .text {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.5px;
+}
 
 .nav-group {
     display: flex;

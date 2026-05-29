@@ -253,8 +253,9 @@ async def update_profile_pic(user_id: str, profile_pic: schemas.ProfilePicUpdate
     return {"success": True}
 
 
-# Mount static files at root (must be after all API routes)
-app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+# For local development only: serve static files
+if not os.environ.get("VERCEL"):
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
 
 
 # For local development
