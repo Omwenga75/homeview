@@ -5202,3 +5202,30 @@ footer .logo .text {
     }
 }
 
+/* Fix for buttons and text overflowing on small screens */
+@media (max-width: 768px) {
+    .btn, button, .btn-sm, .btn-large, input[type="submit"], input[type="button"], .btn-text {
+        white-space: normal !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+        height: auto !important;
+        min-height: 44px;
+        line-height: 1.4 !important;
+        padding-top: 0.6rem !important;
+        padding-bottom: 0.6rem !important;
+        max-width: 100%;
+    }
+
+    /* Prevent general text from causing horizontal scrolling or getting cut */
+    p, h1, h2, h3, h4, h5, h6, span, a, label {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+    }
+    
+    /* Ensure containers don't overflow */
+    .container, .card, .panel, .form-group {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+}
