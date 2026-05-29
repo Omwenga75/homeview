@@ -796,6 +796,7 @@ body.mobile-drawer-open {
     box-shadow: var(--shadow-lg);
     max-width: 380px;
     margin-left: auto;
+    margin-top: 40px;
     animation: float 6s ease-in-out infinite;
 }
 
