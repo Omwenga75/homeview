@@ -199,7 +199,7 @@
 
                 listingHeader.style.display = 'flex';
                 housesCount.textContent = `${houses.length} Houses Found`;
-                const IMAGES = ['public/images/prop1.png','public/images/prop2.png','public/images/prop3.png','public/images/prop4.png'];
+                const IMAGES = ['images/prop1.png','images/prop2.png','images/prop3.png','images/prop4.png'];
 
                 const html = houses.map(house => {
                     const imgIndex = (Number(house.id) - 1) % IMAGES.length;
