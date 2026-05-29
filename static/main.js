@@ -756,8 +756,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             numberElements.forEach(el => {
                 const target = parseFloat(el.getAttribute('data-target'));
+                if (Number.isNaN(target)) {
+                    el.textContent = el.textContent || '0';
+                    return;
+                }
                 const suffix = el.getAttribute('data-suffix') || '';
-                const decimals = parseInt(el.getAttribute('data-decimals') || 0);
+                const decimals = parseInt(el.getAttribute('data-decimals') || 0, 10);
                 const duration = 2000; // 2 seconds
                 const frameRate = 30; 
                 const totalFrames = Math.round(duration / (1000 / frameRate));

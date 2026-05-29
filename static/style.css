@@ -313,7 +313,7 @@ header .container a {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 3.5rem;
+    gap: 1.5rem;
     align-items: center;
     flex-shrink: 0;
 }
@@ -629,7 +629,7 @@ body.mobile-drawer-open {
 }
 
 .hero-content {
-    margin-top: -40px;
+    margin-top: 0;
 }
 
 .hero-content h1 {
