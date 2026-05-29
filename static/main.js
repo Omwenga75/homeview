@@ -1,8 +1,8 @@
 // HomeView Interactive Scripts
 
 const HV_CONFIG = {
-    USE_MOCK: false, // Activated real FastAPI/PostgreSQL backend
-    API_BASE: 'http://127.0.0.1:8000'
+    USE_MOCK: false,
+    API_BASE: ''  // Empty = relative URLs (works on localhost and Vercel)
 };
 
 // --- Managers ---

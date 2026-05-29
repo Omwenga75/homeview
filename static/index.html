@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeView - Find Your Perfect Home | Smart Property Management</title>
+    <meta name="description" content="HomeView is the smartest way to find rentals and manage properties. Verified hosts, seamless bookings, and modern living.">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="renter-dashboard">
+    <header id="navbar">
+        <div class="container">
+            <div class="logo">
+                <span class="text">HomeView</span>
+            </div>
+            <div class="nav-group">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="listings.html">Houses</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <a href="login.html" class="btn btn-auth-login" id="loginBtn">Log In</a>
+                    <a href="signup.html" class="btn btn-auth-signup" id="signupBtn">Sign Up</a>
+                    <div class="user-profile-dropdown" id="userDropdownContainer" style="display: none;">
+                        <div class="user-profile-nav" id="userProfileToggle">
+                            <span id="userIcon">👤</span>
+                            <span id="userName">User</span>
+                        </div>
+                        <div class="profile-menu" id="profileMenu">
+                            <div class="profile-menu-item" id="logoutBtn">
+                                <span>🚪</span>
+                                <span>Sign Out</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Mobile App UI Components -->
+    <div class="mobile-search-bar">
+        <div class="search-input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search City, ZIP or Address...">
+        </div>
+    </div>
+
+    <div class="mobile-filters">
+        <div class="filter-chip">Price ⌄</div>
+        <div class="filter-chip">Beds ⌄</div>
+        <div class="filter-chip">Type ⌄</div>
+        <div class="filter-chip">New</div>
+    </div>
+
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="reveal">Find Your <span class="accent">Dream Home</span> in Seconds.</h1>
+                    <p class="reveal-delay">Discover verified properties, unlock precise locations, and connect with trusted hosts in one beautiful platform.</p>
+                    <div class="cta-group reveal-delay-2">
+                        <a href="#" class="btn btn-large btn-primary">Get Started</a>
+                        <a href="#" class="btn btn-large btn-secondary">Learn More</a>
+                    </div>
+                </div>
+                <div class="hero-image reveal-right">
+                    <div class="image-wrapper">
+                        <img src="public/images/hero.png" alt="Luxury Interior">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section id="stats">
+            <div class="container">
+                <div class="stat-item">
+                    <span class="number">10k+</span>
+                    <span class="label">Properties</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">5k+</span>
+                    <span class="label">Verified Hosts</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">50k+</span>
+                    <span class="label">Happy Renters</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">4.9/5</span>
+                    <span class="label">User Rating</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Listings Preview -->
+        <section id="listings" style="display: none;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Featured <span class="accent">Houses</span></h2>
+                    <a href="listings.html" class="view-all">View All Houses →</a>
+                </div>
+                <div class="listings-grid" id="featuredListingsGrid">
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <div class="container">
+                <div class="section-title section-title-singleline">
+                    <h2>Smart Features for <span class="accent">Modern Living</span></h2>
+                    <p>Everything you need to find properties and unlock their precise locations.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Smart Filters</h3>
+                        <p>Find exactly what you're looking for with our advanced search and filtering system.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Verified Hosts</h3>
+                        <p>We verify every host and property to ensure your safety and peace of mind.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💳</div>
+                        <h3>Secure Payments</h3>
+                        <p>Unlock precise property locations instantly for just KSh. 600 via M-Pesa.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h3>Direct Chat</h3>
+                        <p>Communicate directly with caretakers and hosts through our built-in real-time chat.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="text">HomeView</span>
+                    </div>
+                    <p>Smart rentals. Trusted hosts. Modern living.</p>
+                    <div class="socials">
+                        <a href="#">FB</a>
+                        <a href="#">TW</a>
+                        <a href="#">IG</a>
+                        <a href="#">LI</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Newsletter</h4>
+                    <p>Stay updated with the latest properties.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Your email">
+                        <button type="submit">Go</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 HomeView Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <span class="bottom-nav-item active">
+            <span>Home</span>
+        </span>
+        <span class="bottom-nav-item">
+            <span>Houses</span>
+        </span>
+        <span class="bottom-nav-item">
+            <span>Saved</span>
+        </span>
+        <span class="bottom-nav-item">
+            <span>Messages</span>
+        </span>
+        <span class="bottom-nav-item">
+            <span>Profile</span>
+        </span>
+    </nav>
+
+    <script src="main.js"></script>
+</body>
+</html>

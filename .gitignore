@@ -1,4 +1,27 @@
-node_modules/
-*.db
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
 .env
+.venv
+venv/
+env/
+ENV/
+
+# Database
+*.db
+
+# Node (legacy backend)
+node_modules/
+
+# Vercel
+.vercel
+
+# OS
 .DS_Store
+
+# IDE
+.vscode/
+
+# Alembic
+alembic_debug.txt
