@@ -750,6 +750,44 @@ document.addEventListener('DOMContentLoaded', () => {
     let hasAnimated = false;
 
     if (statsSection && numberElements.length > 0) {
+        const fetchStats = async () => {
+            let props = 0, hosts = 0, renters = 0;
+            if (HV_CONFIG.USE_MOCK) {
+                const houses = JSON.parse(localStorage.getItem('hv_houses') || '[]');
+                const users = JSON.parse(localStorage.getItem('hv_users') || '[]');
+                props = houses.length;
+                hosts = users.filter(u => u.role === 'caretaker').length;
+                renters = users.filter(u => u.role === 'tenant').length;
+            } else {
+                try {
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/api/stats`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        props = data.properties;
+                        hosts = data.hosts;
+                        renters = data.renters;
+                    }
+                } catch (e) {}
+            }
+            
+            if (props > 0) document.getElementById('stat-properties').setAttribute('data-target', props);
+            if (hosts > 0) document.getElementById('stat-hosts').setAttribute('data-target', hosts);
+            if (renters > 0) document.getElementById('stat-renters').setAttribute('data-target', renters);
+            
+            if (props > 0 || hosts > 0 || renters > 0) {
+                document.getElementById('stat-properties').setAttribute('data-suffix', '');
+                document.getElementById('stat-hosts').setAttribute('data-suffix', '');
+                document.getElementById('stat-renters').setAttribute('data-suffix', '');
+            }
+            
+            if (hasAnimated) {
+                if (props > 0) document.getElementById('stat-properties').textContent = props;
+                if (hosts > 0) document.getElementById('stat-hosts').textContent = hosts;
+                if (renters > 0) document.getElementById('stat-renters').textContent = renters;
+            }
+        };
+        fetchStats();
+
         const animateNumbers = () => {
             if (hasAnimated) return;
             hasAnimated = true;

@@ -247,6 +247,7 @@ header .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
     width: 100%;
     max-width: 100%;
     flex-wrap: nowrap;
@@ -307,7 +308,15 @@ header .container a {
 }
 
 .nav-group nav {
-    margin: 0 auto;
+    /* Centering handled by media query below */
+}
+
+@media (min-width: 993px) {
+    header nav {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 .nav-links {

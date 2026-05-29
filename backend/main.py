@@ -59,6 +59,18 @@ def read_houses(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     houses = crud.get_houses(db, skip=skip, limit=limit)
     return houses
 
+@app.get("/api/stats")
+def get_stats(db: Session = Depends(get_db)):
+    properties_count = db.query(models.House).count()
+    hosts_count = db.query(models.User).filter(models.User.role == "caretaker").count()
+    renters_count = db.query(models.User).filter(models.User.role == "tenant").count()
+    return {
+        "properties": properties_count,
+        "hosts": hosts_count,
+        "renters": renters_count,
+        "rating": 4.9
+    }
+
 @app.get("/houses/{house_id}", response_model=schemas.House)
 def read_house(house_id: int, db: Session = Depends(get_db)):
     db_house = crud.get_house(db, house_id=house_id)
