@@ -548,7 +548,7 @@ header .container a {
 }
 
 .mobile-sidebar nav {
-    margin-top: 0.5rem;
+    margin-top: 3rem;
 }
 
 .drawer-links {
@@ -3074,9 +3074,6 @@ footer {
     .listing-info h3 {
         font-size: 1rem;
         margin-bottom: 0.2rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
     }
 
     .listing-meta {
@@ -3863,7 +3860,7 @@ body.mobile-drawer-open {
     }
 
     .chat-input-area {
-        padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+        padding-bottom: calc(3rem + env(safe-area-inset-bottom, 20px)) !important;
     }
 }
 
@@ -5110,7 +5107,7 @@ button.bottom-nav-item {
         }
 
         .chat-input-area {
-            padding-bottom: calc(1.25rem + env(safe-area-inset-bottom, 0px)) !important;
+            padding-bottom: calc(3rem + env(safe-area-inset-bottom, 20px)) !important;
         }
     }
 
