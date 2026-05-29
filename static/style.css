@@ -1313,17 +1313,18 @@ body.mobile-drawer-open {
 
 /* Skeleton Loader */
 .skeleton-card {
-    background: #FFFFFF;
-    border-radius: 20px;
+    background: var(--white);
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
     display: flex;
     flex-direction: column;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(148, 163, 184, 0.22);
+    height: 320px;
 }
 
 .skeleton-img {
-    height: 240px;
+    height: 48%;
     background: #F1F5F9;
     width: 100%;
 }

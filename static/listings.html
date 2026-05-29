@@ -162,15 +162,28 @@
                     return renderHouses(getMockHouses());
                 }
 
+                // Show cached houses immediately to prevent waiting on network
+                const cached = localStorage.getItem('hv_cached_houses');
+                if (cached) {
+                    try {
+                        renderHouses(JSON.parse(cached));
+                    } catch (e) {}
+                }
+
                 try {
                     const res = await fetch(`${HV_CONFIG.API_BASE}/houses/`);
                     if (!res.ok) throw new Error('Failed to fetch houses');
                     const houses = await res.json();
                     const approvedHouses = houses.filter(h => h.status === 'approved');
+                    
+                    // Update cache and render fresh data
+                    localStorage.setItem('hv_cached_houses', JSON.stringify(approvedHouses));
                     renderHouses(approvedHouses);
                 } catch (error) {
                     console.error('Error loading houses:', error);
-                    renderHouses(getMockHouses()); // Fallback to mock on error
+                    if (!cached) {
+                        renderHouses(getMockHouses()); // Fallback to mock on error if no cache
+                    }
                 }
             }
 
