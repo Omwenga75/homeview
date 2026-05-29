@@ -959,16 +959,31 @@ body.mobile-drawer-open {
 
 /* Stats Section */
 #stats {
-    padding: 2.5rem 0;
-    background: var(--primary-light);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    padding: 4rem 0;
 }
 
 #stats .container {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
     text-align: center;
+}
+
+.stat-item {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.05);
+    flex: 1;
+    min-width: 200px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.08);
 }
 
 .stat-item .number {
