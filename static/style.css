@@ -4178,7 +4178,7 @@ footer .logo .text {
     right: 0;
     background: rgba(15, 23, 42, 0.98); /* Navy solid for perfect integration */
     backdrop-filter: blur(15px);
-    padding: 12px 0 calc(12px + env(safe-area-inset-bottom, 0px));
+    padding: 16px 0 calc(16px + env(safe-area-inset-bottom, 0px));
     justify-content: space-around;
     align-items: center;
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
@@ -5095,7 +5095,7 @@ footer .logo .text {
             position: fixed !important;
             inset: 0 !important;
             width: 100vw !important;
-            height: 100vh !important;
+            height: 100dvh !important; /* Use dvh to adjust for mobile keyboard */
             max-height: none !important;
             top: 0 !important;
             right: 0 !important;

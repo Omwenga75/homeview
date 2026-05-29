@@ -1116,6 +1116,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const closeBtn = document.getElementById('closeChat');
         const chatBody = document.getElementById('chatBody');
 
+        if (input && chatBody) {
+            input.addEventListener('focus', () => {
+                setTimeout(() => {
+                    input.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 300); // Wait for mobile keyboard to fully open
+            });
+        }
+
         if (trigger && window) {
             trigger.addEventListener('click', () => {
                 window.classList.toggle('active');
