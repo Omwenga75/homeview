@@ -463,36 +463,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update Auth UI in Navbar
     const updateNavbarAuth = () => {
-        const greetingContainers = document.querySelectorAll('.user-greeting');
         const user = AuthManager.getCurrentUser();
-        
+
         const hour = new Date().getHours();
         let greeting = 'Good evening,';
         if (hour < 12) greeting = 'Good morning,';
         else if (hour < 18) greeting = 'Good afternoon,';
 
-        greetingContainers.forEach(container => {
+        // Update any .user-greeting containers on the page
+        document.querySelectorAll('.user-greeting').forEach(container => {
             const greetingText = container.querySelector('.greeting-text');
-            const userNameText = container.querySelector('.user-name, #userName');
-            
+            const userNameText = container.querySelector('.user-name, #userName, #navUserName');
             if (greetingText) greetingText.textContent = greeting;
             if (userNameText) {
-                if (user) {
-                    userNameText.textContent = user.name.split(' ')[0];
-                } else {
-                    userNameText.textContent = 'Guest';
-                }
+                userNameText.textContent = user ? user.name.split(' ')[0] : 'Guest';
             }
         });
 
-        // --- UI State Management ---
+        // --- index.html: toggle Login/Signup vs DP+Greeting ---
+        const loginBtn     = document.getElementById('loginBtn');
+        const signupBtn    = document.getElementById('signupBtn');
+        const navUserProfile = document.getElementById('navUserProfile');
+        const navUserName  = document.getElementById('navUserName');
+        const navDashLink  = document.getElementById('navDashboardLink');
+
+        if (loginBtn && signupBtn && navUserProfile) {
+            if (user) {
+                loginBtn.style.display    = 'none';
+                signupBtn.style.display   = 'none';
+                navUserProfile.style.display = 'flex';
+                if (navUserName) navUserName.textContent = user.name.split(' ')[0];
+                if (navDashLink) {
+                    if (user.role === 'admin') navDashLink.href = 'admin-dashboard.html';
+                    else if (user.role === 'caretaker') navDashLink.href = 'caretaker-dashboard.html';
+                    else navDashLink.href = 'tenant-dashboard.html';
+                }
+                // Apply profile picture to navUserDp
+                if (window.ImageManager) ImageManager.initAutoApply();
+            } else {
+                loginBtn.style.display    = '';
+                signupBtn.style.display   = '';
+                navUserProfile.style.display = 'none';
+            }
+        }
+
+        // --- Hero CTA ---
         const heroCTA = document.getElementById('heroCTA');
         if (user && heroCTA) {
             heroCTA.textContent = 'Explore Houses';
             heroCTA.href = 'listings.html';
         }
-
-        if (window.ImageManager) ImageManager.initAutoApply();
     };
 
     // Initial Sync and UI update
@@ -500,15 +520,36 @@ document.addEventListener('DOMContentLoaded', () => {
         await AuthManager.syncSession();
         updateNavbarAuth();
     };
-    
+
     init();
 
-    const userProfileToggle = document.getElementById('userProfileToggle');
-    const profileMenu = document.getElementById('profileMenu');
+    // Nav user profile click → go to dashboard; menu toggle
+    const navUserProfile = document.getElementById('navUserProfile');
+    const navUserMenu    = document.getElementById('navUserMenu');
     const isDashboard = window.location.pathname.includes('-dashboard.html');
 
+    if (navUserProfile && navUserMenu) {
+        navUserProfile.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navUserMenu.classList.toggle('active');
+        });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#navUserProfile')) {
+                navUserMenu.classList.remove('active');
+            }
+        });
+    }
+
+    const navLogoutBtn = document.getElementById('navLogoutBtn');
+    if (navLogoutBtn) {
+        navLogoutBtn.addEventListener('click', () => AuthManager.logout());
+    }
+
+    // Legacy dropdown support (kept for safety)
+    const userProfileToggle = document.getElementById('userProfileToggle');
+    const profileMenu = document.getElementById('profileMenu');
+
     if (userProfileToggle && profileMenu && !isDashboard) {
-        // On non-dashboard pages: clicking DP redirects to dashboard profile
         userProfileToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             const user = AuthManager.getCurrentUser();
@@ -522,7 +563,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 profileMenu.classList.toggle('active');
             }
         });
-
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.user-profile-dropdown')) {
                 profileMenu.classList.remove('active');
@@ -530,7 +570,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Profile DP click on public pages (user-dp + greeting area)
     const profileNavLink = document.getElementById('profileNavLink');
     if (profileNavLink && !isDashboard) {
         profileNavLink.addEventListener('click', () => {

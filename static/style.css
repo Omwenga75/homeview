@@ -304,7 +304,7 @@ header .container a {
     align-items: center;
     gap: 2rem;
     flex: 1;
-    justify-content: space-between;
+    justify-content: flex-end;
 }
 
 .nav-group nav {
@@ -356,6 +356,113 @@ header .container a {
     align-items: center;
     gap: 1rem;
     flex-shrink: 0;
+    margin-left: auto;
+}
+
+/* Nav user profile (logged-in state in header) */
+.nav-user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.45rem 0.9rem 0.45rem 0.55rem;
+    border-radius: 999px;
+    background: var(--primary-light);
+    border: 1px solid var(--glass-border-accent);
+    cursor: pointer;
+    position: relative;
+    transition: background 0.25s ease, box-shadow 0.25s ease;
+    user-select: none;
+}
+
+.nav-user-profile:hover {
+    background: rgba(16, 185, 129, 0.18);
+    box-shadow: 0 2px 12px rgba(16, 185, 129, 0.18);
+}
+
+.nav-user-profile .user-dp {
+    width: 36px;
+    height: 36px;
+    border: 2px solid var(--primary);
+    box-shadow: none;
+}
+
+.nav-user-profile .user-dp svg {
+    width: 18px;
+    height: 18px;
+}
+
+.nav-user-profile .user-greeting {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    line-height: 1.2;
+}
+
+.nav-user-profile .greeting-text {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.nav-user-profile .user-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+/* Dropdown menu for logged-in nav profile */
+.nav-user-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 190px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    padding: 0.5rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s ease;
+    z-index: 1300;
+}
+
+.nav-user-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.nav-user-menu a,
+.nav-user-menu div {
+    display: block;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+    text-decoration: none;
+}
+
+.nav-user-menu a:hover,
+.nav-user-menu div:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+}
+
+.nav-user-menu #navLogoutBtn {
+    color: var(--danger);
+    margin-top: 0.25rem;
+    border-top: 1px solid var(--border);
+    padding-top: 0.65rem;
+}
+
+.nav-user-menu #navLogoutBtn:hover {
+    background: rgba(239,68,68,0.08);
+    color: var(--danger);
 }
 
 .mobile-header-bar {
