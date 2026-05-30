@@ -165,7 +165,7 @@
     <script src="main.js"></script>
     <script>
         // Caretaker Dashboard specific logic
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Check if user is logged in
             const user = JSON.parse(localStorage.getItem('hv_current_user'));
             if (!user || user.role !== 'caretaker') {
@@ -276,7 +276,7 @@
                             </div>
                             <div class="stat-card">
                                 <span class="label">Estimated Revenue</span>
-                                <div class="value">Sh. ${userHouses.filter(h => h.status === 'approved').reduce((sum, house) => sum + Number(h.price || 0), 0).toLocaleString('en-US')}</div>
+                                <div class="value">Sh. ${userHouses.filter(h => h.status === 'approved').reduce((sum, house) => sum + Number(house.price || 0), 0).toLocaleString('en-US')}</div>
                             </div>
                             <div class="stat-card">
                                 <span class="label">Review Speed</span>

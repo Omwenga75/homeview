@@ -187,10 +187,7 @@
             }
 
             function getMockHouses() {
-                return [
-                    { id: 1, title: "Emerald Luxury 2-Bedroom", location: "Westlands, Nairobi", price: 45000, status: "pending", owner_name: "John Caretaker", submission_date: new Date().toISOString() },
-                    { id: 2, title: "Modern Studio", location: "Kilimani, Nairobi", price: 25000, status: "pending", owner_name: "Jane Host", submission_date: new Date().toISOString() }
-                ];
+                return [];
             }
 
 
@@ -234,6 +231,20 @@
                 }
             }
 
+            async function deleteHouse(houseId) {
+                try {
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/${houseId}`, {
+                        method: 'DELETE'
+                    });
+                    if (!res.ok) throw new Error('Delete failed');
+                    return true;
+                } catch (err) {
+                    console.error('Failed to delete house:', err);
+                    alert('Failed to delete house. Please try again.');
+                    return false;
+                }
+            }
+
             function formatHousePrice(price) {
                 const value = Number(price);
                 return isNaN(value) ? price : `Sh. ${value.toLocaleString('en-US')}`;
@@ -269,17 +280,38 @@
                     const pendingHouses = allHouses.filter(h => h.status === 'pending');
                     const totalRevenue = approvedHouses.reduce((sum, h) => sum + (Number(h.price) || 0), 0);
 
-                    const pendingRows = pendingHouses.length ? pendingHouses.map(h => `
+                    const allHousesRows = allHouses.length ? allHouses.map(h => {
+                        const statusColor = h.status === 'approved' ? '#10b981' : (h.status === 'suspended' ? '#f59e0b' : (h.status === 'pending' ? '#3b82f6' : '#ef4444'));
+                        const statusLabel = h.status ? h.status.charAt(0).toUpperCase() + h.status.slice(1) : 'Pending';
+                        
+                        let actionsHtml = '';
+                        if (h.status === 'pending') {
+                            actionsHtml = `
+                                <button class="btn btn-sm btn-primary approve-btn" data-id="${h.id}" style="margin-right:0.5rem">Approve</button>
+                                <button class="btn btn-sm reject-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Reject</button>
+                            `;
+                        } else if (h.status === 'approved') {
+                            actionsHtml = `
+                                <button class="btn btn-sm suspend-btn" data-id="${h.id}" style="background:#fef3c7;color:#d97706;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Suspend</button>
+                            `;
+                        } else if (h.status === 'suspended') {
+                            actionsHtml = `
+                                <button class="btn btn-sm activate-btn" data-id="${h.id}" style="background:#d1fae5;color:#059669;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Activate</button>
+                            `;
+                        }
+                        
+                        // Delete button is always available
+                        actionsHtml += `<button class="btn btn-sm delete-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600">Delete</button>`;
+
+                        return `
                         <tr>
                             <td style="font-weight:600">${h.owner_name || 'Unknown'}</td>
                             <td>${h.title}</td>
                             <td>${h.location}</td>
-                            <td style="font-size:0.85rem;color:var(--text-muted)">${new Date(h.submission_date || Date.now()).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'})}</td>
-                            <td>
-                                <button class="btn btn-sm btn-primary approve-btn" data-id="${h.id}" style="margin-right:0.5rem">Approve</button>
-                                <button class="btn btn-sm reject-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600">Reject</button>
-                            </td>
-                        </tr>`).join('') : `<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted)">No pending approvals — all caught up! ✅</td></tr>`;
+                            <td><span style="display:inline-block;padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.8rem;font-weight:600;background:${statusColor}20;color:${statusColor}">${statusLabel}</span></td>
+                            <td>${actionsHtml}</td>
+                        </tr>`;
+                    }).join('') : `<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted)">No houses found in the system.</td></tr>`;
 
                     mainContent.innerHTML = `
                         <div class="dashboard-header" style="margin-bottom: 2rem;">
@@ -314,12 +346,12 @@
 
                         <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); margin-top: 2rem;">
                             <div class="section-header" style="margin-bottom: 1.5rem; display:flex; justify-content:space-between; align-items:center;">
-                                <h2>Pending House Approvals <span style="font-size:1rem;color:#f59e0b;font-weight:600">(${pendingHouses.length})</span></h2>
+                                <h2>All Houses Management <span style="font-size:1rem;color:var(--primary);font-weight:600">(${allHouses.length})</span></h2>
                             </div>
                             <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
                                 <table>
-                                    <thead><tr><th>Caretaker</th><th>House Title</th><th>Location</th><th>Date Submitted</th><th>Actions</th></tr></thead>
-                                    <tbody>${pendingRows}</tbody>
+                                    <thead><tr><th>Caretaker</th><th>House Title</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
+                                    <tbody>${allHousesRows}</tbody>
                                 </table>
                             </div>
                         </div>
@@ -788,23 +820,45 @@
                 });
             });
 
-            // Handle approve/reject buttons
+            // Handle approve/reject/suspend/activate/delete buttons
             mainContent.addEventListener('click', async (e) => {
                 const approveBtn = e.target.closest('.approve-btn');
                 const rejectBtn = e.target.closest('.reject-btn');
+                const suspendBtn = e.target.closest('.suspend-btn');
+                const activateBtn = e.target.closest('.activate-btn');
+                const deleteBtn = e.target.closest('.delete-btn');
+                
                 if (approveBtn) {
                     const id = approveBtn.getAttribute('data-id');
                     if (await updateHouseStatus(id, 'approved')) {
                         alert('✅ House approved and is now live on listings.');
-                        setActiveSidebar('overview');
                         await renderAdminView('overview');
                     }
                 } else if (rejectBtn) {
                     const id = rejectBtn.getAttribute('data-id');
                     if (await updateHouseStatus(id, 'rejected')) {
                         alert('❌ House rejected.');
-                        setActiveSidebar('overview');
                         await renderAdminView('overview');
+                    }
+                } else if (suspendBtn) {
+                    const id = suspendBtn.getAttribute('data-id');
+                    if (await updateHouseStatus(id, 'suspended')) {
+                        alert('⏸️ House suspended.');
+                        await renderAdminView('overview');
+                    }
+                } else if (activateBtn) {
+                    const id = activateBtn.getAttribute('data-id');
+                    if (await updateHouseStatus(id, 'approved')) {
+                        alert('▶️ House activated and is now live.');
+                        await renderAdminView('overview');
+                    }
+                } else if (deleteBtn) {
+                    const id = deleteBtn.getAttribute('data-id');
+                    if (confirm('Are you sure you want to permanently delete this house?')) {
+                        if (await deleteHouse(id)) {
+                            alert('🗑️ House deleted successfully.');
+                            await renderAdminView('overview');
+                        }
                     }
                 }
             });

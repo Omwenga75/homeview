@@ -451,6 +451,10 @@ const ImageManager = {
 // --- UI Logic ---
 
 document.addEventListener('DOMContentLoaded', () => {
+    // Clear legacy cached/hardcoded houses
+    localStorage.removeItem('hv_cached_houses');
+    localStorage.removeItem('hv_houses');
+
     // Navbar Effect - Always applied to match other pages like About Us
     const navbar = document.getElementById('navbar');
     if (navbar) {
