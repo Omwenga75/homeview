@@ -165,6 +165,8 @@ const PropertyManager = {
     isUnlocked(propertyId) {
         const user = AuthManager.getCurrentUser();
         if (!user) return false;
+        // Admins and caretakers always have location access — no payment needed
+        if (user.role === 'admin' || user.role === 'caretaker') return true;
         const unlocked = JSON.parse(localStorage.getItem(`hv_unlocked_${user.id}`) || '[]');
         return unlocked.includes(propertyId);
     },
@@ -1061,8 +1063,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = 'login.html';
                 return;
             }
+
+            // Admins and caretakers get free access — skip payment
+            const currentUser = AuthManager.getCurrentUser();
+            if (currentUser && (currentUser.role === 'admin' || currentUser.role === 'caretaker')) {
+                const currentPropertyId = window._hvPropertyId || "emerald_luxury_2br";
+                PropertyManager.unlock(currentPropertyId);
+                location.reload();
+                return;
+            }
             
-            // Show M-Pesa Modal
+            // Show M-Pesa Modal for tenants
             const modal = document.getElementById('paymentModal');
             modal.classList.add('active');
         });
