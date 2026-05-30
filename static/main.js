@@ -709,6 +709,32 @@ document.addEventListener('DOMContentLoaded', () => {
             // Click listener for instant feedback (especially for anchors)
             link.addEventListener('click', () => setActive(link));
         });
+
+        // Dynamic active state highlighting for mobile bottom navigation bar
+        const bottomNavItems = document.querySelectorAll('.bottom-nav-item');
+        bottomNavItems.forEach(item => {
+            item.classList.remove('active');
+            const href = item.getAttribute('href');
+            if (!href) return;
+            const linkPage = href.split("/").pop();
+            const text = item.textContent.trim().toLowerCase();
+
+            if (isIndex && linkPage === 'index.html') {
+                item.classList.add('active');
+            } else if (!isIndex) {
+                if (linkPage === page) {
+                    item.classList.add('active');
+                } else if (page === 'property-detail.html' && linkPage === 'listings.html') {
+                    // Property detail page is a child of Listings/Houses
+                    item.classList.add('active');
+                } else if (page.includes('-dashboard.html') && linkPage.includes('-dashboard.html')) {
+                    // On dashboard pages, profile should be highlighted (Saved can also be highlighted if needed, but Profile is standard)
+                    if (text === 'profile') {
+                        item.classList.add('active');
+                    }
+                }
+            }
+        });
     };
     highlightActiveLink();
 
