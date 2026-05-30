@@ -162,13 +162,16 @@
             <div class="mpesa-header">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/M-PESA_LOGO-01.svg/1200px-M-PESA_LOGO-01.svg.png" alt="M-Pesa" class="mpesa-logo">
                 <h3>Unlock Location</h3>
-                <div class="payment-amount">KSh. 600.00</div>
+                <div class="payment-amount">600.00</div>
             </div>
 
             <form id="mpesaForm" class="mpesa-form">
                 <div class="form-group">
                     <label for="mpesaPhone">M-Pesa Phone Number</label>
-                    <input type="tel" id="mpesaPhone" placeholder="07xxxxxxxx" required pattern="^(07|01)\d{8}$">
+                    <div class="phone-input-wrapper">
+                        <span class="phone-prefix">+254</span>
+                        <input type="tel" id="mpesaPhone" placeholder="712345678" required pattern="^(7|1|07|01)\d{8}$">
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-large" style="width: 100%;">Pay Securely</button>
             </form>
