@@ -142,7 +142,7 @@
             </span>
             <span>Houses</span>
         </a>
-        <a href="tenant-dashboard.html" class="bottom-nav-item">
+        <a href="caretaker-dashboard.html" class="bottom-nav-item">
             <span class="bottom-nav-icon">
                 <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
             </span>
@@ -154,7 +154,7 @@
             </span>
             <span>Messages</span>
         </a>
-        <a href="tenant-dashboard.html" class="bottom-nav-item">
+        <a href="caretaker-dashboard.html" class="bottom-nav-item">
             <span class="bottom-nav-icon">
                 <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </span>
@@ -437,9 +437,22 @@
                                         <span>Property approval status updates</span>
                                     </label>
                                 </div>
+                                <div style="border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2rem;">
+                                    <h3 style="margin-bottom: 1rem;">Switch View</h3>
+                                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Browse HomeView as a tenant to see how your listed properties appear to renters.</p>
+                                    <button id="viewAsTenantBtn" class="btn btn-primary" style="border-radius: 12px; padding: 0.8rem 2rem;">View as Tenant</button>
+                                </div>
                             </div>
                         </div>
                     `;
+
+                    const viewAsTenantBtn = document.getElementById('viewAsTenantBtn');
+                    if (viewAsTenantBtn) {
+                        viewAsTenantBtn.addEventListener('click', () => {
+                            localStorage.setItem('hv_caretaker_viewing_as_tenant', 'true');
+                            window.location.href = 'tenant-dashboard.html';
+                        });
+                    }
                 }
             }
 

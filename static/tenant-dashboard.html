@@ -102,7 +102,24 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const user = JSON.parse(localStorage.getItem('hv_current_user'));
-            if (!user || user.role !== 'tenant') {
+            const viewingAsTenant = localStorage.getItem('hv_caretaker_viewing_as_tenant');
+
+            // Allow caretakers only if they explicitly chose "View as Tenant"
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            if (user.role === 'caretaker') {
+                if (viewingAsTenant) {
+                    // Clear the flag so next visit goes back to caretaker dashboard
+                    localStorage.removeItem('hv_caretaker_viewing_as_tenant');
+                } else {
+                    // Not explicitly switching — send them back to their dashboard
+                    window.location.href = 'caretaker-dashboard.html';
+                    return;
+                }
+            } else if (user.role !== 'tenant') {
                 window.location.href = 'login.html';
                 return;
             }
