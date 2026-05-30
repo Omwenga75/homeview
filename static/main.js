@@ -519,6 +519,27 @@ document.addEventListener('DOMContentLoaded', () => {
             heroCTA.textContent = 'Explore Houses';
             heroCTA.href = 'listings.html';
         }
+
+        // --- Rewrite dashboard links for admin/caretaker roles ---
+        // Admins and caretakers should never land on the tenant dashboard.
+        // Their "Profile" / "Saved" links point to their own dashboards.
+        if (user && (user.role === 'admin' || user.role === 'caretaker')) {
+            const dashHref = user.role === 'admin' ? 'admin-dashboard.html' : 'caretaker-dashboard.html';
+
+            // Bottom nav links
+            document.querySelectorAll('.bottom-nav-item').forEach(link => {
+                if (link.getAttribute('href') === 'tenant-dashboard.html') {
+                    link.href = dashHref;
+                }
+            });
+
+            // Mobile drawer links
+            document.querySelectorAll('.drawer-links a').forEach(link => {
+                if (link.getAttribute('href') === 'tenant-dashboard.html') {
+                    link.href = dashHref;
+                }
+            });
+        }
     };
 
     // Initial Sync and UI update
