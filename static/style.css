@@ -5489,4 +5489,24 @@ button.bottom-nav-item {
     box-shadow: 0 0 0 4px var(--primary-light);
 }
 
-
+/* Amenities Selection Cards */
+.amenity-card {
+    display: block;
+    cursor: pointer;
+}
+.amenity-card .amenity-content {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-align: center;
+    background: var(--bg-secondary, #F8FAFC);
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+.amenity-card input[type="checkbox"]:checked + .amenity-content {
+    border-color: var(--primary);
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: 500;
+}

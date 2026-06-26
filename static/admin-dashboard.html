@@ -399,13 +399,7 @@
                                         </div>
                                     </article>
 
-                                    <article class="add-house-card">
-                                        <h3>Description</h3>
-                                        <div class="form-group">
-                                            <label for="adminDescription">Overview</label>
-                                            <textarea id="adminDescription" rows="4" placeholder="Describe the house, amenities, and why it stands out." required></textarea>
-                                        </div>
-                                    </article>
+
 
                                     <article class="add-house-card">
                                         <h3>Owner & Media</h3>
@@ -435,11 +429,11 @@
                             const county = document.getElementById('adminCounty').value.trim();
                             
                             const price = document.getElementById('adminPrice').value.trim();
-                            const description = document.getElementById('adminDescription').value.trim();
+                            const description = `A beautiful ${houseType} located in ${estate}, ${county}. Available for Sh. ${price} per month.`;
                             const ownerName = document.getElementById('adminOwnerName').value.trim();
                             const ownerEmail = document.getElementById('adminOwnerEmail').value.trim();
 
-                            if (!houseType || !estate || !county || !price || !description) {
+                            if (!houseType || !estate || !county || !price) {
                                 alert('Please fill in all house details before saving.');
                                 return;
                             }

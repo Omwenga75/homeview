@@ -17,6 +17,7 @@ class House(Base):
     submission_date = Column(DateTime, default=datetime.datetime.utcnow)
     views = Column(Integer, default=0)
     photo_urls = Column(Text)  # JSON string of URLs
+    amenities = Column(Text, default="[]")  # JSON string of amenities
 
 
 class User(Base):

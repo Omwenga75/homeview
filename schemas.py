@@ -11,6 +11,7 @@ class HouseBase(BaseModel):
     owner_name: str
     owner_email: str
     photo_urls: Optional[str] = None
+    amenities: Optional[str] = None
 
 
 class HouseCreate(HouseBase):
@@ -27,6 +28,7 @@ class HouseUpdate(BaseModel):
     views: Optional[int] = None
     owner_name: Optional[str] = None
     owner_email: Optional[str] = None
+    amenities: Optional[str] = None
 
 
 class House(HouseBase):

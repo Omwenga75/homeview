@@ -205,7 +205,8 @@
                             description: house.description,
                             owner_name: house.ownerName,
                             owner_email: house.ownerEmail,
-                            photo_urls: JSON.stringify(house.photos || [])
+                            photo_urls: JSON.stringify(house.photos || []),
+                            amenities: JSON.stringify(house.amenities || [])
                         })
                     });
                     if (!res.ok) throw new Error('Failed to save house');
@@ -379,10 +380,52 @@
                                     <label for="price">Monthly Price (Sh.)</label>
                                     <input type="number" id="price" placeholder="45000" required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea id="description" placeholder="Describe the property, amenities, location, and guest experience." rows="4"></textarea>
+                                <div class="form-group" style="grid-column: 1 / -1; margin-top: 1rem;">
+                                    <label>Amenities (Select all that apply)</label>
+                                    <div class="amenities-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-top: 0.5rem;">
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="WiFi" style="display: none;">
+                                            <div class="amenity-content">📶 WiFi</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Parking" style="display: none;">
+                                            <div class="amenity-content">🚗 Parking</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Water" style="display: none;">
+                                            <div class="amenity-content">💧 Water</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Security" style="display: none;">
+                                            <div class="amenity-content">🛡️ Security</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Borehole" style="display: none;">
+                                            <div class="amenity-content">🚰 Borehole</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Balcony" style="display: none;">
+                                            <div class="amenity-content">🌅 Balcony</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Gym" style="display: none;">
+                                            <div class="amenity-content">🏋️ Gym</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Pool" style="display: none;">
+                                            <div class="amenity-content">🏊 Pool</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="CCTV" style="display: none;">
+                                            <div class="amenity-content">📹 CCTV</div>
+                                        </label>
+                                        <label class="amenity-card">
+                                            <input type="checkbox" name="amenity" value="Tokens" style="display: none;">
+                                            <div class="amenity-content">⚡ Tokens</div>
+                                        </label>
+                                    </div>
                                 </div>
+
                                 <button type="submit" class="btn btn-primary">Submit for Approval</button>
                             </form>
                         </div>
@@ -398,7 +441,14 @@
                             const estate = houseForm.querySelector('#estate').value.trim();
                             const county = houseForm.querySelector('#county').value.trim();
                             const price = houseForm.querySelector('#price').value.trim();
-                            const description = houseForm.querySelector('#description').value.trim();
+                            
+                            const amenityCheckboxes = houseForm.querySelectorAll('input[name="amenity"]:checked');
+                            const amenities = Array.from(amenityCheckboxes).map(cb => cb.value);
+                            
+                            let description = `A beautiful ${houseType} located in ${estate}, ${county}. Available for Sh. ${price} per month.`;
+                            if (amenities.length > 0) {
+                                description += ` Features include: ${amenities.join(', ')}.`;
+                            }
                             
                             if (!houseType || !estate || !county || !price) {
                                 alert('Please fill in the required fields before submitting.');
@@ -415,6 +465,7 @@
                                 location,
                                 rawPrice: Number(price),
                                 description,
+                                amenities,
                                 photos: [] // For now, empty; can add file upload later
                             };
 
