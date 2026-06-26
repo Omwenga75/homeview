@@ -1037,7 +1037,7 @@ body.mobile-drawer-open {
 }
 
 .page-hero {
-    padding: 80px 0 40px;
+    padding: 120px 0 60px;
     background: transparent;
 }
 
@@ -1359,7 +1359,7 @@ body.mobile-drawer-open {
 
 /* Listings Section */
 #listings {
-    padding: 80px 0;
+    padding: 100px 0 80px;
 }
 
 .section-header {
@@ -3931,7 +3931,7 @@ body.mobile-drawer-open {
     background: var(--bg);
     position: relative;
     z-index: 90;
-    margin-top: 80px;
+    margin-top: 60px; /* Matches mobile header height */
     border-bottom: 1px solid var(--border);
 }
 
@@ -4785,9 +4785,9 @@ button.bottom-nav-item {
         background-color: var(--text-primary) !important;
     }
 
-    /* ---- HERO SECTION — fix text pushed too high ---- */
+    /* ---- HERO SECTION — consistent spacing below 60px mobile header ---- */
     #hero {
-        padding-top: 200px !important;
+        padding-top: 90px !important;
         padding-bottom: 48px !important;
         min-height: auto !important;
     }
