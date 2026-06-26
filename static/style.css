@@ -5413,3 +5413,51 @@ button.bottom-nav-item {
         transform: scale(1) translateY(0);
     }
 }
+
+/* =============================================================
+   STANDARDIZED SPACING BELOW FIXED HEADER
+   Ensures consistent layout spacing and prevents header overlap
+   ============================================================= */
+
+/* For all non-dashboard content pages: index, listings, about, contact, privacy, terms, property-detail */
+#hero,
+#listings,
+.page-hero,
+#property-detail {
+    padding-top: 120px !important; /* 40px content offset below the 80px fixed header */
+}
+
+/* Dashboard pages container top offset to perfectly align with non-dashboard pages */
+.dashboard-container {
+    padding-top: 80px !important; /* Fixed header offset */
+}
+.dashboard-main {
+    padding-top: 2.5rem !important; /* 40px content offset below the 80px fixed header */
+}
+
+/* Align headers and footers to the 1200px grid on desktop */
+@media (min-width: 993px) {
+    header .container {
+        max-width: 1200px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* Responsive mobile adjustments (header height decreases to 60px) */
+@media (max-width: 768px) {
+    #hero,
+    #listings,
+    .page-hero,
+    #property-detail {
+        padding-top: 100px !important; /* 40px content offset below the 60px fixed header */
+    }
+    
+    .dashboard-container {
+        padding-top: 60px !important; /* Mobile fixed header offset */
+    }
+    .dashboard-main {
+        padding: 2.5rem 0.9rem 140px !important; /* 40px top padding (2.5rem), matches 40px gap */
+    }
+}
+
