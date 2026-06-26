@@ -51,80 +51,7 @@
         </aside>
 
         <main class="dashboard-main">
-            <div class="dashboard-header" style="margin-bottom: 2rem;">
-                <h1>Welcome back, <span id="welcomeName">Nelson</span></h1>
-                <p>Manage your properties and track your performance.</p>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <span class="label">Total Houses</span>
-                    <div class="value">12</div>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Total Views</span>
-                    <div class="value">2,450</div>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Active Inquiries</span>
-                    <div class="value">8</div>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Earnings (Monthly)</span>
-                    <div class="value">Sh. 450k</div>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Location Unlocks</span>
-                    <div class="value">42</div>
-                </div>
-                <div class="stat-card">
-                    <span class="label">Contacted Calls</span>
-                    <div class="value">156</div>
-                </div>
-            </div>
-
-            <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
-                <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                    <h2 class="dashboard-section-title">Recent Houses</h2>
-                    <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
-                </div>
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>House Name</th>
-                                <th>Location</th>
-                                <th>Price</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Modern Minimalist Studio</td>
-                                <td>Kilimani, Nairobi</td>
-                                <td>Sh. 15,000</td>
-                                <td><span class="status-pill status-approved">Approved</span></td>
-                                <td><button class="btn-text">Edit</button></td>
-                            </tr>
-                            <tr>
-                                <td>Emerald Luxury 2-Bedroom</td>
-                                <td>Westlands, Nairobi</td>
-                                <td>Sh. 45,000</td>
-                                <td><span class="status-pill status-approved">Approved</span></td>
-                                <td><button class="btn-text">Edit</button></td>
-                            </tr>
-                            <tr>
-                                <td>Sapphire Penthouse</td>
-                                <td>Kileleshwa, Nairobi</td>
-                                <td>Sh. 85,000</td>
-                                <td><span class="status-pill status-pending">Under Review</span></td>
-                                <td><button class="btn-text">Edit</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- Content will be rendered dynamically by JS -->
         </main>
     </div>
 
@@ -549,6 +476,7 @@
                 document.querySelectorAll('.bottom-nav-item').forEach(l => {
                     l.classList.toggle('active', l.getAttribute('data-view') === viewType);
                 });
+                window.location.hash = viewType;
             }
 
             if (sidebarMenu) {
@@ -586,8 +514,11 @@
                 await renderView('add-house');
             });
 
-            setActiveNavigation('dashboard');
-            await renderView('dashboard');
+            const initialView = window.location.hash.replace('#', '') || 'dashboard';
+            const validViews = ['dashboard', 'houses', 'add-house', 'messages', 'settings'];
+            const viewToLoad = validViews.includes(initialView) ? initialView : 'dashboard';
+            setActiveNavigation(viewToLoad);
+            await renderView(viewToLoad);
 
             // User Profile Dropdown Toggle
             const userProfileToggle = document.getElementById('userProfileToggle');
