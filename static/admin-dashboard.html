@@ -367,20 +367,48 @@
                                     <article class="add-house-card">
                                         <h3>Basic Details</h3>
                                         <div class="form-group">
-                                            <label for="adminHouseName">House Name</label>
-                                            <input type="text" id="adminHouseName" placeholder="e.g. Cozy Studio Apartment" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="adminHouseType">Property Type</label>
-                                            <input type="text" id="adminHouseType" placeholder="Apartment / Villa / Studio" required>
+                                            <label for="adminHouseType">House Type</label>
+                                            <select id="adminHouseType" required>
+                                                <option value="" disabled selected>Select House Type</option>
+                                                <option value="Bedsitter">Bedsitter</option>
+                                                <option value="Single Room">Single Room</option>
+                                                <option value="Double Room">Double Room</option>
+                                                <option value="Studio">Studio</option>
+                                                <option value="1 Bedroom">1 Bedroom</option>
+                                                <option value="2 Bedroom">2 Bedroom</option>
+                                                <option value="3 Bedroom">3 Bedroom</option>
+                                                <option value="4 Bedroom">4 Bedroom</option>
+                                                <option value="Penthouse">Penthouse</option>
+                                                <option value="Townhouse">Townhouse</option>
+                                                <option value="Villa">Villa</option>
+                                            </select>
                                         </div>
                                     </article>
 
                                     <article class="add-house-card">
                                         <h3>Location & Price</h3>
                                         <div class="form-group">
-                                            <label for="adminLocation">Location</label>
-                                            <input type="text" id="adminLocation" placeholder="e.g. Westlands, Nairobi" required>
+                                            <label for="adminEstate">Estate / Area (where the house is)</label>
+                                            <input type="text" id="adminEstate" placeholder="e.g. Kileleshwa" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="adminCounty">County / City</label>
+                                            <select id="adminCounty" required>
+                                                <option value="" disabled selected>Select County/City</option>
+                                                <option value="Nairobi">Nairobi</option>
+                                                <option value="Mombasa">Mombasa</option>
+                                                <option value="Kiambu">Kiambu</option>
+                                                <option value="Nakuru">Nakuru</option>
+                                                <option value="Kisumu">Kisumu</option>
+                                                <option value="Kajiado">Kajiado</option>
+                                                <option value="Machakos">Machakos</option>
+                                                <option value="Uasin Gishu">Uasin Gishu</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" id="adminOtherCountyGroup" style="display: none;">
+                                            <label for="adminOtherCounty">Specify County / City</label>
+                                            <input type="text" id="adminOtherCounty" placeholder="Specify county/city">
                                         </div>
                                         <div class="form-group">
                                             <label for="adminPrice">Monthly Price (Sh.)</label>
@@ -413,21 +441,47 @@
                         </div>
                     `;
 
+                    // Other county visibility toggle
+                    const adminCounty = document.getElementById('adminCounty');
+                    const adminOtherCountyGroup = document.getElementById('adminOtherCountyGroup');
+                    const adminOtherCounty = document.getElementById('adminOtherCounty');
+                    if (adminCounty && adminOtherCountyGroup) {
+                        adminCounty.addEventListener('change', () => {
+                            if (adminCounty.value === 'Other') {
+                                adminOtherCountyGroup.style.display = 'block';
+                                if (adminOtherCounty) adminOtherCounty.setAttribute('required', 'required');
+                            } else {
+                                adminOtherCountyGroup.style.display = 'none';
+                                if (adminOtherCounty) {
+                                    adminOtherCounty.removeAttribute('required');
+                                    adminOtherCounty.value = '';
+                                }
+                            }
+                        });
+                    }
+
                     const adminHouseForm = document.getElementById('adminHouseForm');
                     if (adminHouseForm) {
                         adminHouseForm.addEventListener('submit', async (e) => {
                             e.preventDefault();
-                            const title = document.getElementById('adminHouseName').value.trim();
-                            const location = document.getElementById('adminLocation').value.trim();
+                            const houseType = document.getElementById('adminHouseType').value;
+                            const estate = document.getElementById('adminEstate').value.trim();
+                            const countySelectVal = document.getElementById('adminCounty').value;
+                            const otherCountyVal = document.getElementById('adminOtherCounty') ? document.getElementById('adminOtherCounty').value.trim() : '';
+                            const county = countySelectVal === 'Other' ? otherCountyVal : countySelectVal;
+                            
                             const price = document.getElementById('adminPrice').value.trim();
                             const description = document.getElementById('adminDescription').value.trim();
                             const ownerName = document.getElementById('adminOwnerName').value.trim();
                             const ownerEmail = document.getElementById('adminOwnerEmail').value.trim();
 
-                            if (!title || !location || !price || !description) {
+                            if (!houseType || !estate || !county || !price || !description) {
                                 alert('Please fill in all house details before saving.');
                                 return;
                             }
+
+                            const title = `${houseType} in ${estate}`;
+                            const location = `${estate}, ${county}`;
 
                             const saved = await saveHouse({
                                 title,

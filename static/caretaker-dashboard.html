@@ -349,12 +349,44 @@
                                     <small style="display: block; margin-top: 0.5rem; color: var(--text-secondary);">Click each square to upload at least 5 property images. This listing will be sent for review before it goes live.</small>
                                 </div>
                                 <div class="form-group">
-                                    <label for="houseName">House Name</label>
-                                    <input type="text" id="houseName" placeholder="e.g., Cozy Studio Apartment" required>
+                                    <label for="houseType">House Type</label>
+                                    <select id="houseType" required>
+                                        <option value="" disabled selected>Select House Type</option>
+                                        <option value="Bedsitter">Bedsitter</option>
+                                        <option value="Single Room">Single Room</option>
+                                        <option value="Double Room">Double Room</option>
+                                        <option value="Studio">Studio</option>
+                                        <option value="1 Bedroom">1 Bedroom</option>
+                                        <option value="2 Bedroom">2 Bedroom</option>
+                                        <option value="3 Bedroom">3 Bedroom</option>
+                                        <option value="4 Bedroom">4 Bedroom</option>
+                                        <option value="Penthouse">Penthouse</option>
+                                        <option value="Townhouse">Townhouse</option>
+                                        <option value="Villa">Villa</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="location">Location</label>
-                                    <input type="text" id="location" placeholder="e.g., Westlands, Nairobi" required>
+                                    <label for="estate">Estate / Area (where the house is)</label>
+                                    <input type="text" id="estate" placeholder="e.g. Kileleshwa" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="county">County / City</label>
+                                    <select id="county" required>
+                                        <option value="" disabled selected>Select County/City</option>
+                                        <option value="Nairobi">Nairobi</option>
+                                        <option value="Mombasa">Mombasa</option>
+                                        <option value="Kiambu">Kiambu</option>
+                                        <option value="Nakuru">Nakuru</option>
+                                        <option value="Kisumu">Kisumu</option>
+                                        <option value="Kajiado">Kajiado</option>
+                                        <option value="Machakos">Machakos</option>
+                                        <option value="Uasin Gishu">Uasin Gishu</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="otherCountyGroup" style="display: none;">
+                                    <label for="otherCounty">Specify County / City</label>
+                                    <input type="text" id="otherCounty" placeholder="Specify county/city">
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Monthly Price (Sh.)</label>
@@ -369,18 +401,44 @@
                         </div>
                     `;
 
+                    // Other county visibility toggle
+                    const countySelect = document.getElementById('county');
+                    const otherCountyGroup = document.getElementById('otherCountyGroup');
+                    const otherCountyInput = document.getElementById('otherCounty');
+                    if (countySelect && otherCountyGroup) {
+                        countySelect.addEventListener('change', () => {
+                            if (countySelect.value === 'Other') {
+                                otherCountyGroup.style.display = 'block';
+                                if (otherCountyInput) otherCountyInput.setAttribute('required', 'required');
+                            } else {
+                                otherCountyGroup.style.display = 'none';
+                                if (otherCountyInput) {
+                                    otherCountyInput.removeAttribute('required');
+                                    otherCountyInput.value = '';
+                                }
+                            }
+                        });
+                    }
+
                     const houseForm = document.getElementById('houseForm');
                     if (houseForm) {
                         houseForm.addEventListener('submit', async (event) => {
                             event.preventDefault();
-                            const title = houseForm.querySelector('#houseName').value.trim();
-                            const location = houseForm.querySelector('#location').value.trim();
+                            const houseType = houseForm.querySelector('#houseType').value;
+                            const estate = houseForm.querySelector('#estate').value.trim();
+                            const countySelectVal = houseForm.querySelector('#county').value;
+                            const otherCountyVal = houseForm.querySelector('#otherCounty') ? houseForm.querySelector('#otherCounty').value.trim() : '';
+                            const county = countySelectVal === 'Other' ? otherCountyVal : countySelectVal;
                             const price = houseForm.querySelector('#price').value.trim();
                             const description = houseForm.querySelector('#description').value.trim();
-                            if (!title || !location || !price) {
+                            
+                            if (!houseType || !estate || !county || !price) {
                                 alert('Please fill in the required fields before submitting.');
                                 return;
                             }
+
+                            const title = `${houseType} in ${estate}`;
+                            const location = `${estate}, ${county}`;
 
                             const newHouse = {
                                 ownerName: user.name,
