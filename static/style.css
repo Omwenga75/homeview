@@ -243,6 +243,14 @@ header.scrolled {
     padding: 0 1.5rem;
 }
 
+/* Home Page specific header background matching the top hero section's mint/green color */
+body.renter-dashboard header,
+body.renter-dashboard header.scrolled {
+    background: #ECFDF5 !important;
+    border-bottom: 1px solid rgba(16, 185, 129, 0.12) !important;
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.04) !important;
+}
+
 header .container {
     display: flex;
     justify-content: space-between;
