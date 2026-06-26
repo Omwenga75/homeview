@@ -4779,7 +4779,7 @@ button.bottom-nav-item {
 
     /* ---- HERO SECTION — fix text pushed too high ---- */
     #hero {
-        padding-top: 160px !important;
+        padding-top: 200px !important;
         padding-bottom: 48px !important;
         min-height: auto !important;
     }
