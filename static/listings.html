@@ -237,7 +237,9 @@
                     html += '<div class="listing-info">';
                     html += '<div>';
                     html += '<h3>' + house.title + '</h3>';
-                    html += '<p class="location">' + house.location + '</p>';
+                    const isUnlocked = typeof PropertyManager !== 'undefined' && PropertyManager.isUnlocked(String(house.id));
+                    const locationText = isUnlocked ? house.location : '🔒 Location Locked';
+                    html += '<p class="location">' + locationText + '</p>';
                     html += '<div class="listing-meta">';
                     html += '<span>WiFi</span><span>Details</span>';
                     html += '</div>';

@@ -1090,6 +1090,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const checkStatus = () => {
             initMap(); // Always init map, but keep blurred
             const currentPropertyId = window._hvPropertyId || "emerald_luxury_2br";
+            const locText = document.querySelector('.location');
             if (PropertyManager.isUnlocked(currentPropertyId)) {
                 document.querySelector('.location-overlay').style.display = 'none';
                 document.getElementById('propertyMap').style.filter = 'none';
@@ -1099,8 +1100,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 unlockBtn.disabled = true;
                 
                 // Show real address
-                const locText = document.querySelector('.location');
-                if (locText) locText.innerHTML = "45 Rhapta Road, Westlands, Nairobi";
+                if (locText) {
+                    if (currentPropertyId === "emerald_luxury_2br" || currentPropertyId === "1") {
+                        locText.innerHTML = "45 Rhapta Road, Westlands, Nairobi";
+                    }
+                }
+            } else {
+                if (locText) {
+                    locText.innerHTML = "🔒 Location Locked";
+                }
             }
         };
         checkStatus();
