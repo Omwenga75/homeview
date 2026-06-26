@@ -387,28 +387,15 @@
 
                                     <article class="add-house-card">
                                         <h3>Location & Price</h3>
-                                        <div class="form-group">
-                                            <label for="adminEstate">Estate / Area (where the house is)</label>
-                                            <input type="text" id="adminEstate" placeholder="e.g. Kileleshwa" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="adminCounty">County / City</label>
-                                            <select id="adminCounty" required>
-                                                <option value="" disabled selected>Select County/City</option>
-                                                <option value="Nairobi">Nairobi</option>
-                                                <option value="Mombasa">Mombasa</option>
-                                                <option value="Kiambu">Kiambu</option>
-                                                <option value="Nakuru">Nakuru</option>
-                                                <option value="Kisumu">Kisumu</option>
-                                                <option value="Kajiado">Kajiado</option>
-                                                <option value="Machakos">Machakos</option>
-                                                <option value="Uasin Gishu">Uasin Gishu</option>
-                                                <option value="Other">Other</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group" id="adminOtherCountyGroup" style="display: none;">
-                                            <label for="adminOtherCounty">Specify County / City</label>
-                                            <input type="text" id="adminOtherCounty" placeholder="Specify county/city">
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                            <div class="form-group">
+                                                <label for="adminEstate">Estate / Area</label>
+                                                <input type="text" id="adminEstate" placeholder="e.g. Kileleshwa" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="adminCounty">County / City</label>
+                                                <input type="text" id="adminCounty" placeholder="e.g. Nairobi" required>
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="adminPrice">Monthly Price (Sh.)</label>
@@ -441,24 +428,7 @@
                         </div>
                     `;
 
-                    // Other county visibility toggle
-                    const adminCounty = document.getElementById('adminCounty');
-                    const adminOtherCountyGroup = document.getElementById('adminOtherCountyGroup');
-                    const adminOtherCounty = document.getElementById('adminOtherCounty');
-                    if (adminCounty && adminOtherCountyGroup) {
-                        adminCounty.addEventListener('change', () => {
-                            if (adminCounty.value === 'Other') {
-                                adminOtherCountyGroup.style.display = 'block';
-                                if (adminOtherCounty) adminOtherCounty.setAttribute('required', 'required');
-                            } else {
-                                adminOtherCountyGroup.style.display = 'none';
-                                if (adminOtherCounty) {
-                                    adminOtherCounty.removeAttribute('required');
-                                    adminOtherCounty.value = '';
-                                }
-                            }
-                        });
-                    }
+
 
                     const adminHouseForm = document.getElementById('adminHouseForm');
                     if (adminHouseForm) {
@@ -466,9 +436,7 @@
                             e.preventDefault();
                             const houseType = document.getElementById('adminHouseType').value;
                             const estate = document.getElementById('adminEstate').value.trim();
-                            const countySelectVal = document.getElementById('adminCounty').value;
-                            const otherCountyVal = document.getElementById('adminOtherCounty') ? document.getElementById('adminOtherCounty').value.trim() : '';
-                            const county = countySelectVal === 'Other' ? otherCountyVal : countySelectVal;
+                            const county = document.getElementById('adminCounty').value.trim();
                             
                             const price = document.getElementById('adminPrice').value.trim();
                             const description = document.getElementById('adminDescription').value.trim();

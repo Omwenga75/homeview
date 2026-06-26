@@ -365,28 +365,15 @@
                                         <option value="Villa">Villa</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="estate">Estate / Area (where the house is)</label>
-                                    <input type="text" id="estate" placeholder="e.g. Kileleshwa" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="county">County / City</label>
-                                    <select id="county" required>
-                                        <option value="" disabled selected>Select County/City</option>
-                                        <option value="Nairobi">Nairobi</option>
-                                        <option value="Mombasa">Mombasa</option>
-                                        <option value="Kiambu">Kiambu</option>
-                                        <option value="Nakuru">Nakuru</option>
-                                        <option value="Kisumu">Kisumu</option>
-                                        <option value="Kajiado">Kajiado</option>
-                                        <option value="Machakos">Machakos</option>
-                                        <option value="Uasin Gishu">Uasin Gishu</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="otherCountyGroup" style="display: none;">
-                                    <label for="otherCounty">Specify County / City</label>
-                                    <input type="text" id="otherCounty" placeholder="Specify county/city">
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="form-group">
+                                        <label for="estate">Estate / Area</label>
+                                        <input type="text" id="estate" placeholder="e.g. Kileleshwa" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="county">County / City</label>
+                                        <input type="text" id="county" placeholder="e.g. Nairobi" required>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="price">Monthly Price (Sh.)</label>
@@ -401,24 +388,7 @@
                         </div>
                     `;
 
-                    // Other county visibility toggle
-                    const countySelect = document.getElementById('county');
-                    const otherCountyGroup = document.getElementById('otherCountyGroup');
-                    const otherCountyInput = document.getElementById('otherCounty');
-                    if (countySelect && otherCountyGroup) {
-                        countySelect.addEventListener('change', () => {
-                            if (countySelect.value === 'Other') {
-                                otherCountyGroup.style.display = 'block';
-                                if (otherCountyInput) otherCountyInput.setAttribute('required', 'required');
-                            } else {
-                                otherCountyGroup.style.display = 'none';
-                                if (otherCountyInput) {
-                                    otherCountyInput.removeAttribute('required');
-                                    otherCountyInput.value = '';
-                                }
-                            }
-                        });
-                    }
+
 
                     const houseForm = document.getElementById('houseForm');
                     if (houseForm) {
@@ -426,9 +396,7 @@
                             event.preventDefault();
                             const houseType = houseForm.querySelector('#houseType').value;
                             const estate = houseForm.querySelector('#estate').value.trim();
-                            const countySelectVal = houseForm.querySelector('#county').value;
-                            const otherCountyVal = houseForm.querySelector('#otherCounty') ? houseForm.querySelector('#otherCounty').value.trim() : '';
-                            const county = countySelectVal === 'Other' ? otherCountyVal : countySelectVal;
+                            const county = houseForm.querySelector('#county').value.trim();
                             const price = houseForm.querySelector('#price').value.trim();
                             const description = houseForm.querySelector('#description').value.trim();
                             
