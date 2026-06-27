@@ -600,7 +600,8 @@ header .container a {
 
 #profileNavLink:hover,
 #userProfileToggle:hover {
-    background: rgba(16, 185, 129, 0.25);
+    filter: brightness(0.95);
+    transform: translateY(-1px);
 }
 
 .user-greeting-wrapper {
