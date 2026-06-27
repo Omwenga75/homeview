@@ -61,7 +61,7 @@
                 <li><a href="#" class="sidebar-link" data-view="houses">My Houses</a></li>
                 <li><a href="#" class="sidebar-link" data-view="add-house">Add New House</a></li>
                 <li><a href="#" class="sidebar-link" data-view="messages">Messages</a></li>
-                <li><a href="#" class="sidebar-link" data-view="settings">Settings</a></li>
+                <li><a href="#" class="sidebar-link" data-view="profile">My Profile</a></li>
                 <li style="margin-top: 2rem; border-top: 1px solid var(--border); padding-top: 1rem;"><a href="#" class="sidebar-link" id="sidebarLogout" style="color: #EF4444;">Sign Out</a></li>
             </ul>
         </aside>
@@ -97,11 +97,11 @@
             </span>
             <span>Messages</span>
         </a>
-        <a href="#" class="bottom-nav-item" data-view="settings">
+        <a href="#" class="bottom-nav-item" data-view="profile">
             <span class="bottom-nav-icon">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </span>
-            <span>Settings</span>
+            <span>Profile</span>
         </a>
     </nav>
 
@@ -133,12 +133,12 @@
                     if (profileMenu) profileMenu.classList.remove('active');
                     
                     document.querySelectorAll('.sidebar-link').forEach(l => {
-                        l.classList.toggle('active', l.getAttribute('data-view') === 'settings');
+                        l.classList.toggle('active', l.getAttribute('data-view') === 'profile');
                     });
                     document.querySelectorAll('.bottom-nav-item').forEach(l => {
-                        l.classList.toggle('active', l.getAttribute('data-view') === 'settings');
+                        l.classList.toggle('active', l.getAttribute('data-view') === 'profile');
                     });
-                    renderView('settings');
+                    renderView('profile');
                 });
             }
 
@@ -466,46 +466,71 @@
                             <p style="color: var(--text-muted); margin-top: 0.5rem;">When renters reach out about your properties, messages will appear here.</p>
                         </div>
                     `;
-                } else if (viewType === 'settings') {
+                } else if (viewType === 'profile') {
+                    const user = AuthManager.getCurrentUser();
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Settings</h1>
-                            <p>Manage your account preferences.</p>
-                        </div>
-                        <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
-                            <div style="max-width: 600px;">
-                                <div style="margin-bottom: 2rem;">
-                                    <h3 style="margin-bottom: 1rem;">Account Information</h3>
-                                    <p style="color: var(--text-secondary);"><strong>Name:</strong> ${user.name}</p>
-                                    <p style="color: var(--text-secondary);"><strong>Email:</strong> ${user.email}</p>
-                                    <p style="color: var(--text-secondary);"><strong>Role:</strong> Caretaker</p>
+                        <div class="profile-section-container">
+                            <div class="profile-header-premium">
+                                <div class="profile-avatar-wrapper">
+                                    <div class="profile-avatar-large"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                                    <div class="profile-verified-badge"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
                                 </div>
-                                <div style="border-top: 1px solid var(--border); padding-top: 2rem;">
-                                    <h3 style="margin-bottom: 1rem;">Notifications</h3>
-                                    <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer;">
-                                        <input type="checkbox" checked>
-                                        <span>Email notifications for new inquiries</span>
-                                    </label>
-                                    <label style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; cursor: pointer;">
-                                        <input type="checkbox" checked>
-                                        <span>Property approval status updates</span>
-                                    </label>
+                                <div class="profile-header-info">
+                                    <span class="profile-designation">HomeView Caretaker</span>
+                                    <h1>${user.name}</h1>
+                                    <div class="profile-meta-chips">
+                                        <div class="profile-chip">Verified Caretaker</div>
+                                        <div class="profile-chip">Active Member</div>
+                                        <div class="profile-chip">Joined ${user.joinedAt ? new Date(user.joinedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'May 2026'}</div>
+                                    </div>
                                 </div>
-                                <div style="border-top: 1px solid var(--border); padding-top: 2rem; margin-top: 2rem;">
-                                    <h3 style="margin-bottom: 1rem;">Switch View</h3>
-                                    <p style="color: var(--text-secondary); margin-bottom: 1rem;">Browse HomeView as a tenant to see how your listed properties appear to renters.</p>
-                                    <button id="viewAsTenantBtn" class="btn btn-primary" style="border-radius: 12px; padding: 0.8rem 2rem;">View as Tenant</button>
+                            </div>
+                            <div class="dashboard-form">
+                                <div class="profile-left-column">
+                                    <div class="profile-card-premium">
+                                        <h3>Personal Information</h3>
+                                        <form id="profileEditForm">
+                                            <div class="profile-form-grid">
+                                                <div class="profile-form-group">
+                                                    <label>Full Name</label>
+                                                    <input type="text" id="profileName" class="profile-input-modern" value="${user.name}">
+                                                </div>
+                                                <div class="profile-form-group">
+                                                    <label>Email Address</label>
+                                                    <input type="email" id="profileEmail" class="profile-input-modern" value="${user.email}" readonly style="opacity: 0.7; cursor: not-allowed;">
+                                                </div>
+                                            </div>
+                                            <div class="profile-form-group">
+                                                <label>Phone Number</label>
+                                                <input type="text" id="profilePhone" class="profile-input-modern" value="${user.phone || ''}" placeholder="+254 7XX XXX XXX">
+                                            </div>
+                                            <div class="profile-actions-bar">
+                                                <button type="submit" class="btn btn-primary" style="border-radius: 12px; padding: 0.8rem 2rem;">Save Changes</button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     `;
 
-                    const viewAsTenantBtn = document.getElementById('viewAsTenantBtn');
-                    if (viewAsTenantBtn) {
-                        viewAsTenantBtn.addEventListener('click', () => {
-                            window.location.href = 'index.html';
+                    const profileForm = document.getElementById('profileEditForm');
+                    if (profileForm) {
+                        profileForm.addEventListener('submit', (e) => {
+                            e.preventDefault();
+                            const updatedData = {
+                                name: document.getElementById('profileName').value,
+                                bio: '',
+                                phone: document.getElementById('profilePhone').value
+                            };
+                            
+                            if (AuthManager.updateProfile(updatedData).success) {
+                                alert('Profile updated successfully!');
+                                window.location.reload();
+                            }
                         });
                     }
+                    if (window.ImageManager) ImageManager.applyProfilePictureToElements();
                 }
             }
 
