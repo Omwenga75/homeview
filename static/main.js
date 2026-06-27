@@ -500,8 +500,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 navUserProfile.style.display = 'flex';
                 if (navUserName) navUserName.textContent = user.name.split(' ')[0];
                 if (navDashLink) {
+                    const viewingAsTenant = localStorage.getItem('hv_caretaker_viewing_as_tenant') === '1';
                     if (user.role === 'admin') navDashLink.href = 'admin-dashboard.html';
-                    else if (user.role === 'caretaker') navDashLink.href = 'caretaker-dashboard.html';
+                    else if (user.role === 'caretaker' && !viewingAsTenant) navDashLink.href = 'caretaker-dashboard.html';
                     else navDashLink.href = 'tenant-dashboard.html';
                 }
                 // Apply profile picture to navUserDp
@@ -523,7 +524,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Rewrite dashboard links for admin/caretaker roles ---
         // Admins and caretakers should never land on the tenant dashboard.
         // Their "Profile" / "Saved" links point to their own dashboards.
-        if (user && (user.role === 'admin' || user.role === 'caretaker')) {
+        const viewingAsTenant = localStorage.getItem('hv_caretaker_viewing_as_tenant') === '1';
+        if (user && (user.role === 'admin' || (user.role === 'caretaker' && !viewingAsTenant))) {
             const dashHref = user.role === 'admin' ? 'admin-dashboard.html' : 'caretaker-dashboard.html';
 
             // Bottom nav links
@@ -582,8 +584,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = AuthManager.getCurrentUser();
             if (user) {
                 let redirect = 'tenant-dashboard.html';
+                const viewingAsTenant = localStorage.getItem('hv_caretaker_viewing_as_tenant') === '1';
                 if (user.role === 'admin') redirect = 'admin-dashboard.html';
-                else if (user.role === 'caretaker') redirect = 'caretaker-dashboard.html';
+                else if (user.role === 'caretaker' && !viewingAsTenant) redirect = 'caretaker-dashboard.html';
                 localStorage.setItem('hv_next_view', 'profile');
                 window.location.href = redirect;
             } else {
@@ -603,8 +606,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const user = AuthManager.getCurrentUser();
             if (user) {
                 let redirect = 'tenant-dashboard.html';
+                const viewingAsTenant = localStorage.getItem('hv_caretaker_viewing_as_tenant') === '1';
                 if (user.role === 'admin') redirect = 'admin-dashboard.html';
-                else if (user.role === 'caretaker') redirect = 'caretaker-dashboard.html';
+                else if (user.role === 'caretaker' && !viewingAsTenant) redirect = 'caretaker-dashboard.html';
                 localStorage.setItem('hv_next_view', 'profile');
                 window.location.href = redirect;
             } else {

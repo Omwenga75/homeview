@@ -278,9 +278,12 @@
             // Check for next view flag (from navbar redirect) or restore saved view after refresh
             const nextView = localStorage.getItem('hv_next_view');
             const savedView = localStorage.getItem('hv_tenant_view') || 'profile';
-            const initialView = nextView || savedView;
+            let initialView = nextView || savedView;
             if (nextView) {
                 localStorage.removeItem('hv_next_view');
+            }
+            if (!['profile', 'saved', 'unlocked'].includes(initialView)) {
+                initialView = 'profile';
             }
             setActiveSidebar(initialView);
             renderView(initialView);
