@@ -1074,7 +1074,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const lat = -1.2658;
             const lng = 36.8077;
             
-            map = L.map('propertyMap').setView([lat, lng], 16);
+            map = L.map('propertyMap', {
+                scrollWheelZoom: false
+            }).setView([lat, lng], 16);
             
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
