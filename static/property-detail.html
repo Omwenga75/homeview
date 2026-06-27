@@ -68,8 +68,26 @@
                     <p class="location" style="font-size: 1.1rem; color: var(--text-secondary); margin-bottom: 2rem;">Nairobi, Westlands</p>
                 </div>
                 
-                <div class="property-gallery">
-                    <img src="images/prop2.png" alt="Property Main Image" class="main-image">
+                <div class="property-gallery-complex">
+                    <div class="gallery-top">
+                        <div class="gallery-main">
+                            <img src="images/prop2.png" alt="Property Main Image">
+                        </div>
+                        <div class="gallery-side">
+                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800" alt="Bedroom">
+                            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800" alt="Bathroom">
+                        </div>
+                    </div>
+                    <div class="gallery-bottom">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=400" alt="Living Room">
+                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=400" alt="Kitchen">
+                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=400" alt="Balcony">
+                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=400" alt="Dining">
+                        <div class="gallery-more">
+                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=400" alt="Exterior">
+                            <div class="overlay"><span>+7 photos</span></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="property-content-grid">
@@ -242,7 +260,7 @@
         if (hostNameEl && house.owner_name) hostNameEl.textContent = house.owner_name.split(' ')[0];
 
         // Update property image (cycle based on house id)
-        const imgEl = document.querySelector('.property-gallery .main-image');
+        const imgEl = document.querySelector('.gallery-main img');
         if (imgEl) imgEl.src = IMAGES[(Number(house.id) - 1) % IMAGES.length];
 
         // Update the unlock button to use real house ID
