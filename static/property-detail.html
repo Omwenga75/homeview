@@ -263,6 +263,20 @@
         const imgEl = document.querySelector('.gallery-main img');
         if (imgEl) imgEl.src = IMAGES[(Number(house.id) - 1) % IMAGES.length];
 
+        // Gallery click interaction
+        const galleryContainer = document.querySelector('.property-gallery-complex');
+        if (galleryContainer && imgEl) {
+            galleryContainer.addEventListener('click', (e) => {
+                if (e.target.tagName === 'IMG' && !e.target.closest('.gallery-main')) {
+                    imgEl.style.opacity = '0.6';
+                    setTimeout(() => {
+                        imgEl.src = e.target.src;
+                        imgEl.style.opacity = '1';
+                    }, 150);
+                }
+            });
+        }
+
         // Update the unlock button to use real house ID
         const unlockBtn = document.getElementById('unlockLocationBtn');
         if (unlockBtn) unlockBtn.setAttribute('data-house-id', house.id);

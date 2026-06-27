@@ -2779,6 +2779,7 @@ footer {
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    cursor: pointer;
     transition: transform 0.3s ease;
 }
 .gallery-top img:hover {
@@ -2797,6 +2798,7 @@ footer {
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
+    cursor: pointer;
     transition: filter 0.3s ease;
 }
 .gallery-more {
