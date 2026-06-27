@@ -30,6 +30,10 @@
                         </div>
                     </div>
                     <div class="profile-menu" id="profileMenu">
+                        <div class="profile-menu-item" id="goToProfileBtn">
+                            <span>👤</span>
+                            <span>My Profile</span>
+                        </div>
                         <a href="index.html" class="profile-menu-item" id="tenantViewBtn" style="text-decoration: none; color: inherit;" onclick="localStorage.setItem('hv_caretaker_viewing_as_tenant','1'); localStorage.setItem('hv_next_view','home')">
                             <span>👀</span>
                             <span>Tenant View</span>
@@ -121,6 +125,22 @@
             const API_BASE = '';
             const sidebarMenu = document.querySelector('.sidebar-menu');
             const mainContent = document.querySelector('.dashboard-main');
+
+            const goToProfileBtn = document.getElementById('goToProfileBtn');
+            if (goToProfileBtn) {
+                goToProfileBtn.addEventListener('click', () => {
+                    const profileMenu = document.getElementById('profileMenu');
+                    if (profileMenu) profileMenu.classList.remove('active');
+                    
+                    document.querySelectorAll('.sidebar-link').forEach(l => {
+                        l.classList.toggle('active', l.getAttribute('data-view') === 'settings');
+                    });
+                    document.querySelectorAll('.bottom-nav-item').forEach(l => {
+                        l.classList.toggle('active', l.getAttribute('data-view') === 'settings');
+                    });
+                    renderView('settings');
+                });
+            }
 
             async function getHouses() {
                 try {

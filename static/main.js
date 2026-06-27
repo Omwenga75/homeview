@@ -499,11 +499,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 signupBtn.style.display   = 'none';
                 navUserProfile.style.display = 'flex';
                 if (navUserName) navUserName.textContent = user.name.split(' ')[0];
-                if (navDashLink) {
-                    const viewingAsTenant = localStorage.getItem('hv_caretaker_viewing_as_tenant') === '1';
-                    if (user.role === 'admin') navDashLink.href = 'admin-dashboard.html';
-                    else if (user.role === 'caretaker' && !viewingAsTenant) navDashLink.href = 'caretaker-dashboard.html';
-                    else navDashLink.href = 'tenant-dashboard.html';
+                const navUserMenu = document.getElementById('navUserMenu');
+                if (navUserMenu) {
+                    if (user.role === 'admin') {
+                        navUserMenu.innerHTML = `
+                            <a href="admin-dashboard.html" id="navDashboardLink">My Dashboard</a>
+                            <div id="navLogoutBtn">Sign Out</div>
+                        `;
+                    } else if (user.role === 'caretaker') {
+                        navUserMenu.innerHTML = `
+                            <a href="caretaker-dashboard.html" id="navDashboardLink">My Dashboard</a>
+                            <div id="navLogoutBtn">Sign Out</div>
+                        `;
+                    } else {
+                        // Tenant
+                        navUserMenu.innerHTML = `
+                            <a href="tenant-dashboard.html" id="navDashboardLink">My Profile</a>
+                            <div id="navLogoutBtn">Sign Out</div>
+                        `;
+                    }
+                    
+                    // Re-attach logout listener for the new button
+                    const newLogoutBtn = document.getElementById('navLogoutBtn');
+                    if (newLogoutBtn) {
+                        newLogoutBtn.addEventListener('click', () => AuthManager.logout());
+                    }
                 }
                 // Apply profile picture to navUserDp
                 if (window.ImageManager) ImageManager.initAutoApply();
