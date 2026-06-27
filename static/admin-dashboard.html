@@ -783,10 +783,10 @@
                 document.querySelectorAll('.bottom-nav-item').forEach(l => {
                     l.classList.toggle('active', l.getAttribute('data-view') === viewType);
                 });
-                try {
-                    localStorage.setItem('hv_admin_view', viewType || 'overview');
-                } catch (err) {
-                    console.warn('Could not save admin view:', err);
+                
+                // Update URL hash without jumping
+                if (window.location.hash.replace('#', '') !== viewType) {
+                    window.history.replaceState(null, null, '#' + viewType);
                 }
             }
 
@@ -912,11 +912,14 @@
             // Check for next view flag (from navbar redirect)
             try {
                 const nextView = localStorage.getItem('hv_next_view');
-                const savedView = localStorage.getItem('hv_admin_view') || 'overview';
-                const initialView = nextView || savedView;
+                const hashView = window.location.hash.replace('#', '');
+                const initialView = nextView || hashView || 'overview';
 
                 if (nextView) {
                     localStorage.removeItem('hv_next_view');
+                    window.history.replaceState(null, null, '#' + nextView);
+                } else if (!window.location.hash) {
+                    window.history.replaceState(null, null, '#' + initialView);
                 }
 
                 setActiveNavigation(initialView);
