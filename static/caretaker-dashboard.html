@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="profile-menu" id="profileMenu">
-                        <a href="tenant-dashboard.html" class="profile-menu-item" style="text-decoration: none; color: inherit;">
+                        <a href="tenant-dashboard.html" class="profile-menu-item" id="tenantViewBtn" style="text-decoration: none; color: inherit;" onclick="localStorage.setItem('hv_caretaker_viewing_as_tenant','1')">
                             <span>👀</span>
                             <span>Tenant View</span>
                         </a>
@@ -107,6 +107,8 @@
         document.addEventListener('DOMContentLoaded', async () => {
             // Check if user is logged in
             const user = JSON.parse(localStorage.getItem('hv_current_user'));
+            // Clear tenant view flag since we're back on caretaker dashboard
+            localStorage.removeItem('hv_caretaker_viewing_as_tenant');
             if (!user || user.role !== 'caretaker') {
                 window.location.href = 'login.html';
                 return;

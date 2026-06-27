@@ -111,10 +111,7 @@
             }
 
             if (user.role === 'caretaker') {
-                if (viewingAsTenant) {
-                    // Clear the flag so next visit goes back to caretaker dashboard
-                    localStorage.removeItem('hv_caretaker_viewing_as_tenant');
-                } else {
+                if (!viewingAsTenant) {
                     // Not explicitly switching — send them back to their dashboard
                     window.location.href = 'caretaker-dashboard.html';
                     return;
