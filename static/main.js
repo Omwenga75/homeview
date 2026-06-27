@@ -18,7 +18,8 @@ const AuthManager = {
                 });
                 const data = await response.json();
                 if (!response.ok) return { success: false, message: data.detail || data.error || 'Signup failed' };
-                return this.login(email, password);
+                // Don't auto-login — redirect to login page with email pre-filled
+                return { success: true, redirect: `login.html?email=${encodeURIComponent(email)}` };
             } catch (err) {
                 return { success: false, message: 'Backend unavailable. Using local storage...' };
             }
@@ -39,7 +40,8 @@ const AuthManager = {
         };
         users.push(newUser);
         localStorage.setItem('hv_users', JSON.stringify(users));
-        return await this.login(email, password);
+        // Don't auto-login — redirect to login page with email pre-filled
+        return { success: true, redirect: `login.html?email=${encodeURIComponent(email)}` };
     },
 
     async updateProfile(data) {
@@ -1040,7 +1042,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 const res = await AuthManager.signup(nameEl.value, email, password, roleEl.value);
                 if (res.success) {
-                    alert('Account created successfully!');
+                    alert('Account created successfully! Please sign in with your credentials.');
                     window.location.href = res.redirect || 'login.html';
                 } else {
                     alert(res.message);
