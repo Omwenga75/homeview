@@ -70,23 +70,24 @@
                 
                 <div class="property-gallery-complex">
                     <div class="gallery-top">
-                        <div class="gallery-main">
-                            <img src="images/prop2.png" alt="Property Main Image">
+                        <div class="gallery-main" style="position: relative;">
+                            <img src="images/prop2.png" alt="Property Main Image" data-index="1">
+                            <div class="photo-counter" id="photoCounter">1/8</div>
                         </div>
                         <div class="gallery-side">
-                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800" alt="Bedroom">
-                            <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800" alt="Bathroom">
+                            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800" alt="Bedroom" data-index="2">
+                            <div class="gallery-more" id="expandGalleryBtn">
+                                <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=800" alt="Bathroom" data-index="3">
+                                <div class="overlay" id="galleryOverlay"><span>+5 photos</span></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="gallery-bottom">
-                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=400" alt="Living Room">
-                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=400" alt="Kitchen">
-                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=400" alt="Balcony">
-                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=400" alt="Dining">
-                        <div class="gallery-more">
-                            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=400" alt="Exterior">
-                            <div class="overlay"><span>+7 photos</span></div>
-                        </div>
+                    <div class="gallery-bottom" id="extendedGallery" style="display: none;">
+                        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&q=80&w=400" alt="Living Room" data-index="4">
+                        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&q=80&w=400" alt="Kitchen" data-index="5">
+                        <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&q=80&w=400" alt="Balcony" data-index="6">
+                        <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=400" alt="Dining" data-index="7">
+                        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=400" alt="Exterior" data-index="8">
                     </div>
                 </div>
 
@@ -265,10 +266,27 @@
 
         // Gallery click interaction
         const galleryContainer = document.querySelector('.property-gallery-complex');
+        const photoCounter = document.getElementById('photoCounter');
+        const overlay = document.getElementById('galleryOverlay');
+        const extendedGallery = document.getElementById('extendedGallery');
+        
         if (galleryContainer && imgEl) {
             galleryContainer.addEventListener('click', (e) => {
+                // Expand gallery if +5 overlay clicked
+                if (e.target.closest('#expandGalleryBtn') || e.target.closest('.overlay')) {
+                    if (overlay) overlay.style.display = 'none';
+                    if (extendedGallery) extendedGallery.classList.add('show');
+                }
+                
+                // Swap image and update counter
                 if (e.target.tagName === 'IMG' && !e.target.closest('.gallery-main')) {
                     imgEl.style.opacity = '0.6';
+                    
+                    const newIndex = e.target.getAttribute('data-index');
+                    if (newIndex && photoCounter) {
+                        photoCounter.textContent = `${newIndex}/8`;
+                    }
+                    
                     setTimeout(() => {
                         imgEl.src = e.target.src;
                         imgEl.style.opacity = '1';

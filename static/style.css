@@ -2786,10 +2786,18 @@ footer {
     transform: scale(1.02);
 }
 .gallery-bottom {
-    display: grid;
+    display: none;
     grid-template-columns: repeat(5, 1fr);
     gap: 12px;
     height: 130px;
+}
+.gallery-bottom.show {
+    display: grid;
+    animation: fadeInSlide 0.3s ease forwards;
+}
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 .gallery-bottom > img {
     min-height: 0;
@@ -2833,6 +2841,21 @@ footer {
 }
 .gallery-more:hover .overlay {
     background: rgba(0, 0, 0, 0.6);
+}
+
+.photo-counter {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(0, 0, 0, 0.65);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 10;
+    backdrop-filter: blur(4px);
 }
 
 @media (max-width: 992px) {
