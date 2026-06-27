@@ -2051,7 +2051,7 @@ footer {
     margin-bottom: 60px;
 }
 
-.footer-brand .logo { margin-top: 0; margin-bottom: 2rem; font-size: 1rem; font-weight: 700; font-family: 'Outfit', sans-serif; }
+.footer-brand .logo { margin-top: 0; margin-bottom: 2rem; font-size: 1rem; font-weight: 700; font-family: 'Outfit', sans-serif; padding: 0; }
 .footer-brand p { color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem; }
 
 .socials { display: flex; gap: 1rem; }
@@ -2070,7 +2070,18 @@ footer {
 
 .socials a:hover { background: var(--primary); color: #ffffff; }
 
-.footer-links h4 { margin-top: 0; margin-bottom: 2rem; font-size: 1rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #ffffff; }
+.footer-links h4 {
+    margin-top: 0;
+    margin-bottom: 2rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
 .footer-links ul { list-style: none; }
 .footer-links ul li { margin-bottom: 1rem; }
 .footer-links ul li a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
@@ -4302,9 +4313,16 @@ footer {
 }
 
 .footer-links h4 {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
+    margin-top: 0;
     margin-bottom: 2rem;
-    font-weight: 600;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .footer-links ul {
@@ -4327,9 +4345,16 @@ footer {
 }
 
 .footer-newsletter h4 {
-    font-size: 1.1rem;
+    font-size: 1.6rem;
+    margin-top: 0;
     margin-bottom: 2rem;
-    font-weight: 600;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .newsletter-form {
