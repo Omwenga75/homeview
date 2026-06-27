@@ -2786,30 +2786,7 @@ footer {
 .gallery-top img:hover {
     transform: scale(1.02);
 }
-.gallery-bottom {
-    display: none;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 12px;
-    height: 130px;
-}
-.gallery-bottom.show {
-    display: grid;
-    animation: fadeInSlide 0.3s ease forwards;
-}
-@keyframes fadeInSlide {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-.gallery-bottom > img {
-    min-height: 0;
-    min-width: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: filter 0.3s ease;
-}
+
 .gallery-more {
     position: relative;
     border-radius: 8px;
@@ -2844,19 +2821,125 @@ footer {
     background: rgba(0, 0, 0, 0.6);
 }
 
-.photo-counter {
+
+/* ---- Gallery Viewer Lightbox ---- */
+.gallery-viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.92);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+.gallery-viewer.open {
+    opacity: 1;
+    display: flex !important;
+}
+.gallery-viewer-close {
     position: absolute;
-    bottom: 16px;
-    right: 16px;
-    background: rgba(0, 0, 0, 0.65);
+    top: 20px;
+    right: 28px;
     color: white;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    pointer-events: none;
-    z-index: 10;
+    font-size: 2.5rem;
+    cursor: pointer;
+    z-index: 10001;
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+.gallery-viewer-close:hover {
+    transform: scale(1.2);
+}
+.gallery-viewer-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 900px;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    padding: 60px 20px 10px;
+}
+.gallery-viewer-main img {
+    max-width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 12px;
+    transition: opacity 0.3s ease;
+}
+.gallery-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
     backdrop-filter: blur(4px);
+}
+.gallery-nav:hover {
+    background: rgba(255,255,255,0.3);
+}
+.gallery-nav-prev { left: 12px; }
+.gallery-nav-next { right: 12px; }
+
+.gallery-viewer-counter {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    padding: 12px 0 8px;
+    letter-spacing: 2px;
+}
+.gallery-viewer-thumbs {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px 30px;
+    overflow-x: auto;
+    max-width: 100%;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+}
+.gallery-viewer-thumbs::-webkit-scrollbar {
+    height: 4px;
+}
+.gallery-viewer-thumbs::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.3);
+    border-radius: 4px;
+}
+.gallery-viewer-thumbs .thumb {
+    width: 80px;
+    height: 60px;
+    min-width: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    opacity: 0.5;
+    transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.gallery-viewer-thumbs .thumb:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
+.gallery-viewer-thumbs .thumb.active {
+    border-color: #3b82f6;
+    opacity: 1;
+    transform: scale(1.08);
 }
 
 @media (max-width: 992px) {
@@ -2869,14 +2952,24 @@ footer {
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 1fr;
     }
-    .gallery-bottom {
-        display: none;
+    .gallery-viewer-main img {
+        max-height: 50vh;
+    }
+    .gallery-viewer-thumbs .thumb {
+        width: 60px;
+        height: 45px;
+        min-width: 60px;
     }
 }
 
 @media (max-width: 768px) {
     .gallery-top {
         grid-template-rows: 250px 150px;
+    }
+    .gallery-nav {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
     }
 }
 .property-content-grid {
