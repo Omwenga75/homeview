@@ -2070,7 +2070,7 @@ footer {
 
 .socials a:hover { background: var(--primary); color: #ffffff; }
 
-.footer-links h4 { margin-top: 0; margin-bottom: 2rem; font-size: 1rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: var(--text-primary); }
+.footer-links h4 { margin-top: 0; margin-bottom: 2rem; font-size: 1rem; font-weight: 700; font-family: 'Outfit', sans-serif; color: #ffffff; }
 .footer-links ul { list-style: none; }
 .footer-links ul li { margin-bottom: 1rem; }
 .footer-links ul li a { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
