@@ -221,44 +221,44 @@
 
             async function renderAdminView(viewType) {
                 const allHouses = await getHouses();
+                const allHousesRows = allHouses.length ? allHouses.map(h => {
+                    const statusColor = h.status === 'approved' ? '#10b981' : (h.status === 'suspended' ? '#f59e0b' : (h.status === 'pending' ? '#3b82f6' : '#ef4444'));
+                    const statusLabel = h.status ? h.status.charAt(0).toUpperCase() + h.status.slice(1) : 'Pending';
+                    
+                    let actionsHtml = '';
+                    if (h.status === 'pending') {
+                        actionsHtml = `
+                            <button class="btn btn-sm btn-primary approve-btn" data-id="${h.id}" style="margin-right:0.5rem">Approve</button>
+                            <button class="btn btn-sm reject-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Reject</button>
+                        `;
+                    } else if (h.status === 'approved') {
+                        actionsHtml = `
+                            <button class="btn btn-sm suspend-btn" data-id="${h.id}" style="background:#fef3c7;color:#d97706;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Suspend</button>
+                        `;
+                    } else if (h.status === 'suspended') {
+                        actionsHtml = `
+                            <button class="btn btn-sm activate-btn" data-id="${h.id}" style="background:#d1fae5;color:#059669;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Activate</button>
+                        `;
+                    }
+                    
+                    // Delete button is always available
+                    actionsHtml += `<button class="btn btn-sm delete-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600">Delete</button>`;
+
+                    return `
+                    <tr>
+                        <td style="font-weight:600">${h.owner_name || 'Unknown'}</td>
+                        <td>${h.title}</td>
+                        <td>${h.location}</td>
+                        <td><span style="display:inline-block;padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.8rem;font-weight:600;background:${statusColor}20;color:${statusColor}">${statusLabel}</span></td>
+                        <td>${actionsHtml}</td>
+                    </tr>`;
+                }).join('') : `<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted)">No houses found in the system.</td></tr>`;
+
                 if (viewType === 'overview' || viewType === 'approvals') {
                     const totalHouses = allHouses.length;
                     const approvedHouses = allHouses.filter(h => h.status === 'approved');
                     const pendingHouses = allHouses.filter(h => h.status === 'pending');
                     const totalRevenue = approvedHouses.reduce((sum, h) => sum + (Number(h.price) || 0), 0);
-
-                    const allHousesRows = allHouses.length ? allHouses.map(h => {
-                        const statusColor = h.status === 'approved' ? '#10b981' : (h.status === 'suspended' ? '#f59e0b' : (h.status === 'pending' ? '#3b82f6' : '#ef4444'));
-                        const statusLabel = h.status ? h.status.charAt(0).toUpperCase() + h.status.slice(1) : 'Pending';
-                        
-                        let actionsHtml = '';
-                        if (h.status === 'pending') {
-                            actionsHtml = `
-                                <button class="btn btn-sm btn-primary approve-btn" data-id="${h.id}" style="margin-right:0.5rem">Approve</button>
-                                <button class="btn btn-sm reject-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Reject</button>
-                            `;
-                        } else if (h.status === 'approved') {
-                            actionsHtml = `
-                                <button class="btn btn-sm suspend-btn" data-id="${h.id}" style="background:#fef3c7;color:#d97706;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Suspend</button>
-                            `;
-                        } else if (h.status === 'suspended') {
-                            actionsHtml = `
-                                <button class="btn btn-sm activate-btn" data-id="${h.id}" style="background:#d1fae5;color:#059669;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600;margin-right:0.5rem">Activate</button>
-                            `;
-                        }
-                        
-                        // Delete button is always available
-                        actionsHtml += `<button class="btn btn-sm delete-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600">Delete</button>`;
-
-                        return `
-                        <tr>
-                            <td style="font-weight:600">${h.owner_name || 'Unknown'}</td>
-                            <td>${h.title}</td>
-                            <td>${h.location}</td>
-                            <td><span style="display:inline-block;padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.8rem;font-weight:600;background:${statusColor}20;color:${statusColor}">${statusLabel}</span></td>
-                            <td>${actionsHtml}</td>
-                        </tr>`;
-                    }).join('') : `<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted)">No houses found in the system.</td></tr>`;
 
                     mainContent.innerHTML = `
                         <div class="dashboard-header" style="margin-bottom: 2rem;">
@@ -450,6 +450,7 @@
                                     ${messages.length === 0 ? '<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No messages found.</td></tr>' : ''}
                                 </tbody>
                             </table>
+                            </div>
                         </div>
                     `;
                 } else if (viewType === 'transactions') {
@@ -556,14 +557,15 @@
 
                     const profileForm = document.getElementById('profileEditForm');
                     if (profileForm) {
-                        profileForm.addEventListener('submit', (e) => {
+                        profileForm.addEventListener('submit', async (e) => {
                             e.preventDefault();
                             const updatedData = {
                                 name: document.getElementById('profileName').value,
                                 phone: document.getElementById('profilePhone').value
                             };
                             
-                            if (AuthManager.updateProfile(updatedData).success) {
+                            const res = await AuthManager.updateProfile(updatedData);
+                            if (res.success) {
                                 alert('Profile updated successfully!');
                                 window.location.reload();
                             }

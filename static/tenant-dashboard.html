@@ -182,15 +182,16 @@
 
                     const profileForm = document.getElementById('profileEditForm');
                     if (profileForm) {
-                        profileForm.addEventListener('submit', (e) => {
+                        profileForm.addEventListener('submit', async (e) => {
                             e.preventDefault();
                             const updatedData = {
                                 name: document.getElementById('profileName').value,
-                                bio: document.getElementById('profileBio').value,
+                                bio: '',
                                 phone: document.getElementById('profilePhone').value
                             };
                             
-                            if (AuthManager.updateProfile(updatedData).success) {
+                            const res = await AuthManager.updateProfile(updatedData);
+                            if (res.success) {
                                 alert('Profile updated successfully!');
                                 window.location.reload();
                             }
