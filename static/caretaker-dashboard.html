@@ -189,14 +189,16 @@
                     return `<div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: #64748B; background: white; border-radius: 16px; border: 1px solid var(--border);">No house listings yet. Submit a new property and it will be sent for review.</div>`;
                 }
 
+                const IMAGES = ['images/prop1.png','images/prop2.png','images/prop3.png','images/prop4.png'];
                 return houses.map(house => {
+                    const imgIndex = (Number(house.id) - 1) % IMAGES.length;
+                    const imgSrc = isNaN(imgIndex) ? IMAGES[0] : IMAGES[imgIndex];
                     const statusLabel = house.status === 'approved' ? 'Approved' : house.status === 'pending' ? 'Pending Review' : 'Rejected';
                     const statusClass = house.status === 'approved' ? 'status-approved' : house.status === 'pending' ? 'status-pending' : 'status-rejected';
                     return `
                         <div style="background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;">
-                            <div style="height: 110px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; position: relative;">
+                            <div style="height: 110px; background: url('${imgSrc}') center/cover no-repeat; position: relative;">
                                 <span style="position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.75rem; padding: 0.2rem 0.5rem;" class="status-pill ${statusClass}">${statusLabel}</span>
-                                <span style="font-size: 2rem; opacity: 0.5;">🏠</span>
                             </div>
                             <div style="padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.5rem;">
                                 <div>
