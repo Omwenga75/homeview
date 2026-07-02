@@ -105,9 +105,14 @@ h1, h2, h3, .logo .text, .auth-logo .text {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 96%;
     margin: 0 auto;
     padding: 0 1.5rem;
+}
+@media (min-width: 2560px) {
+    .container {
+        max-width: 2400px;
+    }
 }
 
 /* Utilities */
@@ -1415,7 +1420,7 @@ body.mobile-drawer-open {
 
 .listings-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
         gap: 1.35rem;
         align-items: stretch;
 }
@@ -4512,7 +4517,7 @@ button.bottom-nav-item {
     grid-template-columns: 1fr 1.5fr;
     gap: 4rem;
     margin: 1rem auto 3rem;
-    max-width: 1200px;
+    max-width: 1920px;
     align-items: start;
     padding: 0 2rem;
 }
@@ -5700,12 +5705,17 @@ button.bottom-nav-item {
     padding-top: 2.5rem !important; /* 40px content offset below the 80px fixed header */
 }
 
-/* Align headers and footers to the 1200px grid on desktop */
+/* Align headers and footers to the main grid on desktop */
 @media (min-width: 993px) {
     header .container {
-        max-width: 1200px !important;
+        max-width: 96% !important;
         margin-left: auto !important;
         margin-right: auto !important;
+    }
+}
+@media (min-width: 2560px) {
+    header .container {
+        max-width: 2400px !important;
     }
 }
 
