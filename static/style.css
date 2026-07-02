@@ -5785,3 +5785,31 @@ button.bottom-nav-item {
     color: var(--primary-dark);
     font-weight: 500;
 }
+
+/* Ultra-wide / Smart TV Scaling */
+@media (min-width: 1440px) {
+    html {
+        font-size: 18px;
+    }
+    .mockup-img {
+        max-width: 700px;
+    }
+}
+
+@media (min-width: 1920px) {
+    html {
+        font-size: 22px;
+    }
+    .mockup-img {
+        max-width: 900px;
+    }
+}
+
+@media (min-width: 2560px) {
+    html {
+        font-size: 26px;
+    }
+    .mockup-img {
+        max-width: 1200px;
+    }
+}
