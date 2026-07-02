@@ -275,9 +275,7 @@
                     const totalRevenue = approvedHouses.reduce((sum, h) => sum + (Number(h.price) || 0), 0);
 
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Platform Control Center</h1>
-                        </div>
+
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <span class="label">Total Houses</span>
@@ -319,9 +317,7 @@
                     `;
                 } else if (viewType === 'houses') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Houses Management</h1>
-                        </div>
+
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                             <h2 class="dashboard-section-title">All Houses <span style="font-size:1rem;color:var(--primary);font-weight:600">(${allHouses.length})</span></h2>
                         </div>
@@ -331,9 +327,7 @@
                     `;
                 } else if (viewType === 'add-house') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Add New House</h1>
-                        </div>
+
                         <div style="padding: 0; background: transparent; border: none; box-shadow: none;">
                             <form id="adminHouseForm" style="display: grid; gap: 1rem;">
                                 <div class="add-house-grid">
@@ -433,9 +427,7 @@
                     }
                 } else if (viewType === 'users') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>User Management</h1>
-                        </div>
+
                         <div class="section-card" style="background: white; padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md); text-align: center;">
                             <p style="font-size: 3rem; margin-bottom: 1rem;"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></p>
                             <p style="color: var(--text-secondary); font-size: 1.1rem;">User management features coming soon</p>
@@ -445,9 +437,7 @@
                 } else if (viewType === 'messages') {
                     const messages = JSON.parse(localStorage.getItem('hv_admin_messages') || '[]');
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>User Messages</h1>
-                        </div>
+
                         <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
                             <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
                             <table>
@@ -476,9 +466,7 @@
                     `;
                 } else if (viewType === 'transactions') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Transactions</h1>
-                        </div>
+
                         <div class="section-card" style="background: white; padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md); text-align: center;">
                             <p style="font-size: 3rem; margin-bottom: 1rem;">💰</p>
                             <p style="color: var(--text-secondary); font-size: 1.1rem;">Transaction tracking coming soon</p>
@@ -520,40 +508,7 @@
                             </div>
 
                             <div class="profile-grid-sections" style="display: flex; flex-direction: column; gap: 2rem;">
-                                <!-- Official Identity -->
-                                <div>
-                                    <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-primary);">Official Identity</h3>
-                                    
-                                    <form id="profileEditForm">
-                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-bottom: 2.5rem;">
-                                            <div class="profile-form-group">
-                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                                                    Full Legal Name
-                                                </label>
-                                                <input type="text" id="profileName" class="profile-input-modern" value="${user.name}" style="width: 100%; padding: 1.2rem 1.5rem; background: #f8fafc; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-primary);">
-                                            </div>
-                                            <div class="profile-form-group">
-                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                                                    Admin Email
-                                                </label>
-                                                <input type="email" id="profileEmail" class="profile-input-modern" value="${user.email}" readonly style="width: 100%; padding: 1.2rem 1.5rem; background: #f1f5f9; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-muted); cursor: not-allowed;">
-                                            </div>
-                                        </div>
 
-
-                                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem;">
-                                            <div class="profile-form-group">
-                                                <label style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                                                    Admin Contact Number
-                                                </label>
-                                                <input type="text" id="profilePhone" class="profile-input-modern" value="${user.phone || ''}" placeholder="+254 7XX XXX XXX" style="width: 100%; padding: 1.2rem 1.5rem; background: #f8fafc; border-radius: 16px; border: 1.5px solid #e2e8f0; font-size: 1rem; color: var(--text-primary);">
-                                            </div>
-                                            <div class="profile-form-group" style="display: flex; align-items: flex-end;">
-                                                <button type="submit" class="btn btn-primary" style="width: 100%; border-radius: 14px; padding: 1.2rem; font-weight: 700; font-size: 1.1rem; box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);">Confirm Updates</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
 
                                 <!-- Authority Stats Cards -->
                                 <div>
@@ -580,27 +535,10 @@
                         </div>
                     `;
 
-                    const profileForm = document.getElementById('profileEditForm');
-                    if (profileForm) {
-                        profileForm.addEventListener('submit', async (e) => {
-                            e.preventDefault();
-                            const updatedData = {
-                                name: document.getElementById('profileName').value,
-                                phone: document.getElementById('profilePhone').value
-                            };
-                            
-                            const res = await AuthManager.updateProfile(updatedData);
-                            if (res.success) {
-                                alert('Profile updated successfully!');
-                                window.location.reload();
-                            }
-                        });
-                    }
+
                 } else if (viewType === 'settings') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Platform Settings</h1>
-                        </div>
+
 
                         <!-- General Settings -->
                         <div style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md); margin-bottom: 1.5rem;">
