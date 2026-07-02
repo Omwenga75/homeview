@@ -184,24 +184,32 @@
                 return isNaN(value) ? price : `Sh. ${value.toLocaleString('en-US')}`;
             }
 
-            function renderHouseRows(houses, includeViews = false) {
+            function renderHouseCards(houses, includeViews = false) {
                 if (!houses.length) {
-                    const colSpan = includeViews ? 6 : 5;
-                    return `<tr><td colspan="${colSpan}" style="padding: 2rem; text-align: center; color: #64748B;">No house listings yet. Submit a new property and it will be sent for review.</td></tr>`;
+                    return `<div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: #64748B; background: white; border-radius: 16px; border: 1px solid var(--border);">No house listings yet. Submit a new property and it will be sent for review.</div>`;
                 }
 
                 return houses.map(house => {
                     const statusLabel = house.status === 'approved' ? 'Approved' : house.status === 'pending' ? 'Pending Review' : 'Rejected';
                     const statusClass = house.status === 'approved' ? 'status-approved' : house.status === 'pending' ? 'status-pending' : 'status-rejected';
                     return `
-                        <tr>
-                            <td>${house.title}</td>
-                            <td>${house.location}</td>
-                            <td>${formatHousePrice(house.price)}</td>
-                            <td><span class="status-pill ${statusClass}">${statusLabel}</span></td>
-                            ${includeViews ? `<td>${house.views || 0}</td>` : ''}
-                            <td><button class="btn-text">Edit</button></td>
-                        </tr>
+                        <div style="background: white; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;">
+                            <div style="height: 160px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <span style="position: absolute; top: 1rem; right: 1rem;" class="status-pill ${statusClass}">${statusLabel}</span>
+                                <span style="font-size: 3rem; opacity: 0.5;">🏠</span>
+                            </div>
+                            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.75rem;">
+                                <div>
+                                    <h3 style="margin: 0; font-size: 1.2rem; color: var(--text-primary); font-weight: 600;">${house.title}</h3>
+                                    <div style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">📍 ${house.location}</div>
+                                </div>
+                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin-top: auto; padding-top: 0.5rem;">${formatHousePrice(house.price)}<span style="font-size:0.85rem; color:var(--text-muted); font-weight:400;">/mo</span></div>
+                                ${includeViews ? `<div style="color: var(--text-secondary); font-size: 0.85rem;">👁️ ${house.views || 0} views</div>` : ''}
+                                <div style="border-top: 1px solid var(--border); margin-top: 0.75rem; padding-top: 0.75rem;">
+                                    <button class="btn btn-sm" style="width: 100%; background: #f8fafc; color: var(--text-primary); border: 1px solid var(--border);">Edit Property</button>
+                                </div>
+                            </div>
+                        </div>
                     `;
                 }).join('');
             }
@@ -258,17 +266,12 @@
                                 <div class="value">Enabled</div>
                             </div>
                         </div>
-                        <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
-                            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                                <h2 class="dashboard-section-title">Recent Houses</h2>
-                                <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
-                            </div>
-                            <div class="table-container">
-                                <table>
-                                    <thead><tr><th>House Name</th><th>Location</th><th>Price</th><th>Status</th><th>Actions</th></tr></thead>
-                                    <tbody>${renderHouseRows(recentHouses, false)}</tbody>
-                                </table>
-                            </div>
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2 class="dashboard-section-title">Recent Houses</h2>
+                            <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                            ${renderHouseCards(recentHouses, false)}
                         </div>
                     `;
                 } else if (viewType === 'houses') {
@@ -277,17 +280,12 @@
                             <h1>My Houses</h1>
                             <p>Manage your property listings and review status.</p>
                         </div>
-                        <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
-                            <div class="section-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                                <h2 class="dashboard-section-title">Houses</h2>
-                                <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
-                            </div>
-                            <div class="table-container">
-                                <table>
-                                    <thead><tr><th>House Name</th><th>Location</th><th>Price</th><th>Status</th><th>Views</th><th>Actions</th></tr></thead>
-                                    <tbody>${renderHouseRows(userHouses, true)}</tbody>
-                                </table>
-                            </div>
+                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2 class="dashboard-section-title">Houses</h2>
+                            <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                            ${renderHouseCards(userHouses, true)}
                         </div>
                     `;
                 } else if (viewType === 'add-house') {

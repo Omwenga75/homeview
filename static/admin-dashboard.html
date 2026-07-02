@@ -246,14 +246,25 @@
                     actionsHtml += `<button class="btn btn-sm delete-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600">Delete</button>`;
 
                     return `
-                    <tr>
-                        <td style="font-weight:600">${h.owner_name || 'Unknown'}</td>
-                        <td>${h.title}</td>
-                        <td>${h.location}</td>
-                        <td><span style="display:inline-block;padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.8rem;font-weight:600;background:${statusColor}20;color:${statusColor}">${statusLabel}</span></td>
-                        <td>${actionsHtml}</td>
-                    </tr>`;
-                }).join('') : `<tr><td colspan="5" style="text-align:center;padding:2.5rem;color:var(--text-muted)">No houses found in the system.</td></tr>`;
+                        <div style="background: white; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;">
+                            <div style="height: 140px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <span style="position: absolute; top: 1rem; right: 1rem; padding: 0.25rem 0.75rem; border-radius: 99px; font-size: 0.8rem; font-weight: 600; background: ${statusColor}20; color: ${statusColor};">${statusLabel}</span>
+                                <span style="font-size: 3rem; opacity: 0.5;">🏠</span>
+                            </div>
+                            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.75rem;">
+                                <div>
+                                    <h3 style="margin: 0; font-size: 1.1rem; color: var(--text-primary); font-weight: 600;">${h.title}</h3>
+                                    <div style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 0.25rem;">📍 ${h.location}</div>
+                                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.25rem;">👤 By ${h.owner_name || 'Unknown'}</div>
+                                </div>
+                                <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: auto; padding-top: 0.5rem;">Sh. ${Number(h.price).toLocaleString('en-US')}</div>
+                                <div style="border-top: 1px solid var(--border); margin-top: 0.75rem; padding-top: 0.75rem; display: flex; gap: 0.5rem;">
+                                    ${actionsHtml}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('') : `<div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-muted); background: white; border-radius: 16px; border: 1px solid var(--border);">No houses found in the system.</div>`;
 
                 if (viewType === 'overview' || viewType === 'approvals') {
                     const totalHouses = allHouses.length;
