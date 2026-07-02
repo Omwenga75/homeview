@@ -226,7 +226,7 @@
                 const allHousesRows = allHouses.length ? allHouses.map(h => {
                     const imgIndex = (Number(h.id) - 1) % IMAGES.length;
                     const imgSrc = isNaN(imgIndex) ? IMAGES[0] : IMAGES[imgIndex];
-                    const statusColor = h.status === 'approved' ? '#10b981' : (h.status === 'suspended' ? '#f59e0b' : (h.status === 'pending' ? '#3b82f6' : '#ef4444'));
+                    const statusColor = h.status === 'approved' ? 'var(--primary)' : (h.status === 'suspended' ? '#f59e0b' : (h.status === 'pending' ? '#3b82f6' : '#ef4444'));
                     const statusLabel = h.status ? h.status.charAt(0).toUpperCase() + h.status.slice(1) : 'Pending';
                     
                     let actionsHtml = '';
@@ -287,7 +287,7 @@
                             </div>
                             <div class="stat-card">
                                 <span class="label">Pending Reviews</span>
-                                <div class="value" style="color:${pendingHouses.length > 0 ? '#f59e0b' : '#10b981'}">${pendingHouses.length}</div>
+                                <div class="value" style="color:${pendingHouses.length > 0 ? '#f59e0b' : 'var(--primary)'}">${pendingHouses.length}</div>
                             </div>
                             <div class="stat-card">
                                 <span class="label">Total Revenue</span>
@@ -295,7 +295,7 @@
                             </div>
                             <div class="stat-card">
                                 <span class="label">System Health</span>
-                                <div class="value" style="color:#10b981">99.9%</div>
+                                <div class="value" style="color:var(--primary)">99.9%</div>
                             </div>
                             <div class="stat-card">
                                 <span class="label">Total Users</span>
@@ -512,7 +512,7 @@
 
                                 <!-- Authority Stats Cards -->
                                 <div>
-                                    <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-primary);">Authority Stats</h3>
+
                                     <div class="stats-grid" style="margin-bottom: 1.5rem;">
                                         <a href="index.html" class="stat-card" style="text-decoration: none; cursor: pointer;">
                                             <span class="label">Tenant View</span>
