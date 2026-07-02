@@ -308,16 +308,11 @@
                         <div class="dashboard-header" style="margin-bottom: 2rem;">
                             <h1>Houses Management</h1>
                         </div>
-                        <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
-                            <div class="section-header" style="margin-bottom: 1.5rem; display:flex; justify-content:space-between; align-items:center;">
-                                <h2>All Houses Management <span style="font-size:1rem;color:var(--primary);font-weight:600">(${allHouses.length})</span></h2>
-                            </div>
-                            <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
-                                <table>
-                                    <thead><tr><th>Caretaker</th><th>House Title</th><th>Location</th><th>Status</th><th>Actions</th></tr></thead>
-                                    <tbody>${allHousesRows}</tbody>
-                                </table>
-                            </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <h2 class="dashboard-section-title">All Houses <span style="font-size:1rem;color:var(--primary);font-weight:600">(${allHouses.length})</span></h2>
+                        </div>
+                        <div id="allHousesTableBody" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
+                            ${generateHouseRows(allHouses)}
                         </div>
                     `;
                 } else if (viewType === 'add-house') {
