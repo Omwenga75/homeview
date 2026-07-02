@@ -16,9 +16,9 @@ const roleConfig = {
       { id: "payments", label: "Payments (M-Pesa)", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>' },
     ],
     stats: [
-      { label: "Total Revenue", value: "KES 4.2M", icon: "M" },
-      { label: "Active Properties", value: "1,245", icon: "P" },
-      { label: "Pending Verifications", value: "32", icon: "V" }
+      { label: "Total Revenue", value: "KES 4.2M", icon: "M", trend: "+12.5%", trendUp: true },
+      { label: "Active Properties", value: "1,245", icon: "P", trend: "+3.2%", trendUp: true },
+      { label: "Pending Verifications", value: "32", icon: "V", trend: "-5.0%", trendUp: false }
     ]
   },
   caretaker: {
@@ -29,9 +29,9 @@ const roleConfig = {
       { id: "inquiries", label: "Inquiries", icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>' },
     ],
     stats: [
-      { label: "My Properties", value: "14", icon: "P" },
-      { label: "Total Views", value: "840", icon: "V" },
-      { label: "New Inquiries", value: "5", icon: "I" }
+      { label: "My Properties", value: "14", icon: "P", trend: "+2.0%", trendUp: true },
+      { label: "Total Views", value: "840", icon: "V", trend: "+15%", trendUp: true },
+      { label: "New Inquiries", value: "5", icon: "I", trend: "-1", trendUp: false }
     ]
   }
 };
@@ -86,8 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const statsGrid = document.getElementById('statsGrid');
   statsGrid.innerHTML = roleConfig[currentUser.role].stats.map(stat => `
     <div class="stat-card">
-      <div class="stat-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+      <div class="stat-header">
+        <div class="stat-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+        </div>
+        ${stat.trend ? `<div class="stat-trend ${stat.trendUp ? 'trend-up' : 'trend-down'}">${stat.trendUp ? '↑' : '↓'} ${stat.trend}</div>` : ''}
       </div>
       <div class="stat-info">
         <h3>${stat.value}</h3>
@@ -113,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </td>
       <td class="action-links">
         <a href="#">Edit</a>
-        <a href="#" style="color: #EF4444">Delete</a>
+        <a href="#" class="delete-btn">Delete</a>
       </td>
     </tr>
   `).join('');
