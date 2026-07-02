@@ -2016,6 +2016,7 @@ td.listings-loader::after {
     font-weight: 800;
     font-size: 0.98rem;
     color: #0F172A;
+    white-space: nowrap;
 }
 
 .listing-footer .period {
@@ -2023,6 +2024,17 @@ td.listings-loader::after {
     font-weight: 400;
     color: #64748B;
     margin-left: 2px;
+    white-space: nowrap;
+}
+
+.listing-price-block {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    white-space: nowrap;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .listing-footer .btn-sm {
@@ -5814,6 +5826,12 @@ button.bottom-nav-item {
         min-height: 92vh;
         padding: 120px 0 80px;
     }
+    .listing-footer .price {
+        font-size: 0.82rem;
+    }
+    .listing-footer .period {
+        font-size: 0.6rem;
+    }
 }
 
 @media (min-width: 1920px) {
@@ -5830,6 +5848,12 @@ button.bottom-nav-item {
     #hero {
         min-height: 92vh;
         padding: 130px 0 80px;
+    }
+    .listing-footer .price {
+        font-size: 0.75rem;
+    }
+    .listing-footer .period {
+        font-size: 0.56rem;
     }
 }
 
