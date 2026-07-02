@@ -508,12 +508,9 @@
                             </div>
 
                             <div class="profile-grid-sections" style="display: flex; flex-direction: column; gap: 2rem;">
-                                <!-- Official Identity Card -->
-                                <div class="profile-card-premium" style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md);">
-                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem;">
-                                        <span style="font-size: 1.5rem;"></span>
-                                        <h3 style="font-size: 1.25rem; margin: 0; color: var(--text-primary);">Official Identity</h3>
-                                    </div>
+                                <!-- Official Identity -->
+                                <div>
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-primary);">Official Identity</h3>
                                     
                                     <form id="profileEditForm">
                                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; margin-bottom: 2.5rem;">
@@ -546,28 +543,24 @@
                                     </form>
                                 </div>
 
-                                <!-- Authority Stats Card -->
-                                <div class="profile-card-premium" style="background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border); box-shadow: var(--shadow-md);">
-                                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; border-bottom: 1px solid #f1f5f9; padding-bottom: 1rem;">
-                                        <span style="font-size: 1.5rem;"></span>
-                                        <h3 style="font-size: 1.25rem; margin: 0; color: var(--text-primary);">Authority Stats</h3>
-                                    </div>
-                                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;">
-                                        <a href="index.html" style="text-decoration: none; display: block; background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; transition: all 0.2s ease; cursor: pointer;" onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
-                                            <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Tenant View</span>
-                                            <span style="font-size: 1.75rem; font-weight: 800; color: var(--primary);">Explore</span>
+                                <!-- Authority Stats Cards -->
+                                <div>
+                                    <h3 style="font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-primary);">Authority Stats</h3>
+                                    <div class="stats-grid" style="margin-bottom: 1.5rem;">
+                                        <a href="index.html" class="stat-card" style="text-decoration: none; cursor: pointer;">
+                                            <span class="label">Tenant View</span>
+                                            <div class="value" style="color: var(--primary);">Explore</div>
                                         </a>
-                                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center;">
-                                            <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Health Score</span>
-                                            <span style="font-size: 1.75rem; font-weight: 800; color: #10B981;">99.9%</span>
+                                        <div class="stat-card">
+                                            <span class="label">Health Score</span>
+                                            <div class="value" style="color: #10B981;">99.9%</div>
                                         </div>
-                                        <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center;">
-                                            <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">Level</span>
-                                            <span style="font-size: 1.75rem; font-weight: 800; color: #6366F1;">Master</span>
+                                        <div class="stat-card">
+                                            <span class="label">Level</span>
+                                            <div class="value" style="color: #6366F1;">Master</div>
                                         </div>
                                     </div>
-                                    <div style="margin-top: 2rem; background: #eff6ff; padding: 1.5rem; border-radius: 16px; display: flex; align-items: center; gap: 1rem; color: #1e40af;">
-                                        <span style="font-size: 1.5rem;"></span>
+                                    <div style="background: #eff6ff; padding: 1.5rem; border-radius: 12px; display: flex; align-items: center; gap: 1rem; color: #1e40af; border: 1px solid #bfdbfe;">
                                         <p style="margin: 0; font-size: 0.95rem; font-weight: 500;">These credentials define your administrative governance level across the HomeView ecosystem.</p>
                                     </div>
                                 </div>
