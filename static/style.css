@@ -5861,3 +5861,43 @@ button.bottom-nav-item {
         padding: 140px 0 80px;
     }
 }
+
+/* Custom Header Styling for Admin & Caretaker to match Sidebar */
+body.admin-dashboard header,
+body.admin-dashboard header.scrolled,
+body.caretaker-dashboard header,
+body.caretaker-dashboard header.scrolled {
+    background: var(--primary-dark) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+body.admin-dashboard header .logo .text,
+body.caretaker-dashboard header .logo .text,
+body.admin-dashboard header .mobile-nav-toggle,
+body.caretaker-dashboard header .mobile-nav-toggle,
+body.admin-dashboard header .user-greeting .greeting-text,
+body.caretaker-dashboard header .user-greeting .greeting-text,
+body.admin-dashboard header .user-greeting .user-name,
+body.caretaker-dashboard header .user-greeting .user-name {
+    color: white !important;
+}
+
+body.admin-dashboard header .user-dp,
+body.caretaker-dashboard header .user-dp {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+body.admin-dashboard header .mobile-link-chip,
+body.caretaker-dashboard header .mobile-link-chip {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.admin-dashboard header .mobile-link-chip:hover,
+body.caretaker-dashboard header .mobile-link-chip:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
