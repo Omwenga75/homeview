@@ -1,8 +1,8 @@
 :root {
-    --primary: #047857;
-    --primary-dark: #065F46;
-    --primary-light: rgba(4, 120, 87, 0.15);
-    --accent: #047857;
+    --primary: #064E3B;
+    --primary-dark: #022c22;
+    --primary-light: rgba(6, 78, 59, 0.15);
+    --accent: #064E3B;
     --bg: #F3F4F6;
     --white: #FFFFFF;
     --text-primary: #0F172A;
@@ -15,11 +15,11 @@
     --glass-bg: rgba(255, 255, 255, 0.98);
     --glass-border: rgba(0, 0, 0, 0.12);
     --danger: #EF4444;
-    --success: #047857;
-    --gradient: linear-gradient(135deg, #047857 0%, #065F46 100%);
-    --glass-bg-accent: rgba(4, 120, 87, 0.05);
-    --glass-border-accent: rgba(4, 120, 87, 0.1);
-    --shadow-primary: rgba(4, 120, 87, 0.4);
+    --success: #064E3B;
+    --gradient: linear-gradient(135deg, #064E3B 0%, #022c22 100%);
+    --glass-bg-accent: rgba(6, 78, 59, 0.05);
+    --glass-border-accent: rgba(6, 78, 59, 0.1);
+    --shadow-primary: rgba(6, 78, 59, 0.4);
 }
 
 /* Instant auth-state visibility (prevents flash of login/signup buttons) */
@@ -31,14 +31,14 @@ html:not(.hv-logged-in) #navUserProfile { display: none !important; }
 
 /* Tenant Dashboard Colors (default green) */
 .tenant-dashboard {
-    --primary: #047857;
-    --primary-dark: #065F46;
-    --primary-light: rgba(4, 120, 87, 0.15);
-    --accent: #047857;
-    --success: #047857;
-    --gradient: linear-gradient(135deg, #047857 0%, #065F46 100%);
-    --glass-border-accent: rgba(4, 120, 87, 0.1);
-    --shadow-primary: rgba(4, 120, 87, 0.4);
+    --primary: #064E3B;
+    --primary-dark: #022c22;
+    --primary-light: rgba(6, 78, 59, 0.15);
+    --accent: #064E3B;
+    --success: #064E3B;
+    --gradient: linear-gradient(135deg, #064E3B 0%, #022c22 100%);
+    --glass-border-accent: rgba(6, 78, 59, 0.1);
+    --shadow-primary: rgba(6, 78, 59, 0.4);
 }
 
 ::-webkit-scrollbar {
