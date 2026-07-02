@@ -814,7 +814,8 @@ body.mobile-drawer-open {
     border-radius: 24px;
     overflow: hidden;
     box-shadow: var(--shadow-lg);
-    max-width: 380px;
+    width: 100%;
+    max-width: 480px;
     margin-left: auto;
     margin-top: 40px;
     animation: float 15s ease-in-out infinite;
@@ -5794,6 +5795,12 @@ button.bottom-nav-item {
     .mockup-img {
         max-width: 700px;
     }
+    .image-wrapper {
+        max-width: 600px;
+    }
+    #hero {
+        min-height: 90vh;
+    }
 }
 
 @media (min-width: 1920px) {
@@ -5803,6 +5810,12 @@ button.bottom-nav-item {
     .mockup-img {
         max-width: 900px;
     }
+    .image-wrapper {
+        max-width: 820px;
+    }
+    #hero {
+        min-height: 90vh;
+    }
 }
 
 @media (min-width: 2560px) {
@@ -5811,5 +5824,11 @@ button.bottom-nav-item {
     }
     .mockup-img {
         max-width: 1200px;
+    }
+    .image-wrapper {
+        max-width: 1100px;
+    }
+    #hero {
+        min-height: 90vh;
     }
 }
