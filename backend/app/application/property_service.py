@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
-from ..domain.models import PropertyCreate, PropertyInDB, Location
+from ..domain.models import PropertyCreate, PropertyInDB, Location, UserInDB
 from ..infrastructure.property_repository import PropertyRepository
 from typing import List, Optional
 
@@ -108,13 +108,12 @@ class PropertyService:
         p = self.repo.create(property_in)
         return self.get_property(p.id)
 
-    def delete_property(self, property_id: str, current_user_id: str):
+    def delete_property(self, property_id: str, current_user: UserInDB):
         p = self.repo.get_by_id(property_id)
         if not p:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Property not found")
         
-        if p.owner_id != current_user_id:
-            # Here we could also check if user is admin
+        if p.owner_id != current_user.id and current_user.role not in ['admin', 'super_admin']:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized to delete this property")
             
         self.repo.delete(property_id)

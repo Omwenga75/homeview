@@ -43,6 +43,45 @@ const AuthManager = {
         return { success: true, redirect: `login.html?email=${encodeURIComponent(email)}` };
     },
 
+    async createUser(name, email, password, role) {
+        if (!HV_CONFIG.USE_MOCK) {
+            try {
+                const token = localStorage.getItem('hv_token');
+                const response = await fetch(`${HV_CONFIG.API_BASE}/auth/admin/users`, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
+                    body: JSON.stringify({ name, email, password, role })
+                });
+                const data = await response.json();
+                if (!response.ok) return { success: false, message: data.detail || data.error || 'User creation failed' };
+                return { success: true };
+            } catch (err) {
+                return { success: false, message: 'Backend unavailable. Please try again later.' };
+            }
+        }
+
+        // Mock mode fallback
+        const users = JSON.parse(localStorage.getItem('hv_users') || '[]');
+        if (users.find(u => u.email === email)) return { success: false, message: 'Email already exists' };
+        
+        const newUser = { 
+            id: Date.now().toString(), 
+            name, 
+            email, 
+            password, 
+            role, 
+            bio: '', 
+            phone: '',
+            joinedAt: new Date().toISOString()
+        };
+        users.push(newUser);
+        localStorage.setItem('hv_users', JSON.stringify(users));
+        return { success: true };
+    },
+
     async updateProfile(data) {
         const currentUser = this.getCurrentUser();
         if (!currentUser) return { success: false, message: 'Not logged in' };

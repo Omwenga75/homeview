@@ -57,4 +57,4 @@ def delete_property(
     service: PropertyService = Depends(get_property_service),
     current_user: UserInDB = Depends(get_current_active_user)
 ):
-    service.delete_property(property_id, current_user_id=current_user.id)
+    service.delete_property(property_id, current_user=current_user)

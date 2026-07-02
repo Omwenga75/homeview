@@ -6,6 +6,7 @@ from enum import Enum
 class RoleEnum(str, Enum):
     GUEST = "guest"
     USER = "user"
+    TENANT = "tenant"
     CARETAKER = "caretaker"
     LANDLORD = "landlord"
     AGENT = "agent"
