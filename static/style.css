@@ -5868,11 +5868,16 @@ body.admin-dashboard header.scrolled,
 body.caretaker-dashboard header,
 body.caretaker-dashboard header.scrolled {
     background: var(--primary-dark) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-bottom: none !important;
 }
 
 body.admin-dashboard header .logo .text,
-body.caretaker-dashboard header .logo .text,
+body.caretaker-dashboard header .logo .text {
+    color: white !important;
+    -webkit-text-fill-color: white !important;
+    background: none !important;
+}
+
 body.admin-dashboard header .mobile-nav-toggle,
 body.caretaker-dashboard header .mobile-nav-toggle,
 body.admin-dashboard header .user-greeting .greeting-text,
