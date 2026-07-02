@@ -531,7 +531,7 @@ header .container a {
     left: 0;
     width: min(280px, 85%);
     height: 100%;
-    background: var(--primary);
+    background: var(--primary-dark);
     transform: translateX(-110%);
     transition: transform 0.25s ease;
     z-index: 1305;
@@ -3425,7 +3425,7 @@ footer {
 
 .sidebar {
     width: 260px;
-    background: var(--primary);
+    background: var(--primary-dark);
     border-right: none;
     padding: 1rem 0.9rem 2rem;
     position: fixed;
