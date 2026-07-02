@@ -145,23 +145,33 @@ const AuthManager = {
     // Seed admin if not exists
     initAdmin() {
         let users = JSON.parse(localStorage.getItem('hv_users') || '[]');
+        if (!Array.isArray(users)) users = [];
         
         // --- Migration to update System Administrator to Admin ---
-        let adminUpdated = false;
-        users = users.map(u => {
-            if (u.role === 'admin' && u.name === 'System Administrator') {
-                u.name = 'Admin';
-                adminUpdated = true;
+        try {
+            let adminUpdated = false;
+            if (Array.isArray(users)) {
+                users = users.map(u => {
+                    if (u && u.role === 'admin' && u.name === 'System Administrator') {
+                        u.name = 'Admin';
+                        adminUpdated = true;
+                    }
+                    return u;
+                });
             }
-            return u;
-        });
-        if (adminUpdated) {
-            localStorage.setItem('hv_users', JSON.stringify(users));
-            const currentUser = JSON.parse(localStorage.getItem('hv_current_user'));
-            if (currentUser && currentUser.role === 'admin' && currentUser.name === 'System Administrator') {
-                currentUser.name = 'Admin';
-                localStorage.setItem('hv_current_user', JSON.stringify(currentUser));
+            if (adminUpdated) {
+                localStorage.setItem('hv_users', JSON.stringify(users));
+                const currentStr = localStorage.getItem('hv_current_user');
+                if (currentStr && currentStr !== "undefined") {
+                    const currentUser = JSON.parse(currentStr);
+                    if (currentUser && currentUser.role === 'admin' && currentUser.name === 'System Administrator') {
+                        currentUser.name = 'Admin';
+                        localStorage.setItem('hv_current_user', JSON.stringify(currentUser));
+                    }
+                }
             }
+        } catch (e) {
+            console.error("Migration failed:", e);
         }
         // -------------------------------------------------------
 
