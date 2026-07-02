@@ -605,8 +605,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initial Sync and UI update
     const init = async () => {
-        await AuthManager.syncSession();
-        updateNavbarAuth();
+        updateNavbarAuth(); // Immediate synchronous update to prevent flashing "Guest"
+        await AuthManager.syncSession(); // Fetch fresh data from backend
+        updateNavbarAuth(); // Final update after sync
     };
 
     init();
