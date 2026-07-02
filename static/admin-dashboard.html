@@ -575,11 +575,11 @@
                                 </div>
                                 <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 0;">
                                     <div>
-                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Dark Mode (Admin Panel)</p>
-                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Enable dark theme for the admin dashboard.</p>
+                                        <p style="margin: 0; font-weight: 600; color: var(--text-primary); font-size: 0.95rem;">Enable ChatBot</p>
+                                        <p style="margin: 0.25rem 0 0; font-size: 0.85rem; color: var(--text-muted);">Show the chatbot icon in the admin dashboard.</p>
                                     </div>
                                     <label style="position: relative; display: inline-block; width: 48px; height: 26px; cursor: pointer; flex-shrink: 0;">
-                                        <input type="checkbox" id="settDarkMode" style="opacity: 0; width: 0; height: 0;">
+                                        <input type="checkbox" id="settChatBot" ${localStorage.getItem('admin_chatbot_enabled') !== 'false' ? 'checked' : ''} style="opacity: 0; width: 0; height: 0;">
                                         <span class="settings-toggle" style="position: absolute; inset: 0; background: #cbd5e1; border-radius: 26px; transition: 0.3s;"></span>
                                     </label>
                                 </div>
@@ -672,6 +672,15 @@
                         update();
                         input.addEventListener('change', () => {
                             update();
+                            
+                            if (input.id === 'settChatBot') {
+                                localStorage.setItem('admin_chatbot_enabled', input.checked ? 'true' : 'false');
+                                const cTrigger = document.getElementById('chatbotTrigger');
+                                const cWindow = document.getElementById('chatWindow');
+                                if (cTrigger) cTrigger.style.display = input.checked ? 'flex' : 'none';
+                                if (cWindow && !input.checked) cWindow.classList.remove('active');
+                            }
+
                             // Auto-save: show brief toast confirmation
                             const label = input.closest('div[style*="flex"]').querySelector('p[style*="font-weight: 600"]');
                             const settingName = label ? label.textContent : 'Setting';

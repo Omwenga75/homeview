@@ -1309,11 +1309,17 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.insertAdjacentHTML('beforeend', chatbotHTML);
 
         const trigger = document.getElementById('chatbotTrigger');
-        const window = document.getElementById('chatWindow');
+        const windowChat = document.getElementById('chatWindow');
         const input = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendChat');
         const closeBtn = document.getElementById('closeChat');
         const chatBody = document.getElementById('chatBody');
+
+        if (trigger && windowChat && globalThis.location.pathname.includes('admin-dashboard.html')) {
+            if (localStorage.getItem('admin_chatbot_enabled') === 'false') {
+                trigger.style.display = 'none';
+            }
+        }
 
         if (input && chatBody) {
             input.addEventListener('focus', () => {
@@ -1324,15 +1330,15 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        if (trigger && window) {
+        if (trigger && windowChat) {
             trigger.addEventListener('click', () => {
-                window.classList.toggle('active');
+                windowChat.classList.toggle('active');
             });
 
             if (closeBtn) {
                 closeBtn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    window.classList.remove('active');
+                    windowChat.classList.remove('active');
                 });
             }
 
