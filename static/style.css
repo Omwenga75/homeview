@@ -41,6 +41,18 @@ html:not(.hv-logged-in) #navUserProfile { display: none !important; }
     --shadow-primary: rgba(6, 78, 59, 0.4);
 }
 
+/* Admin Dashboard Colors (Orange) */
+body.admin-dashboard {
+    --primary: #ea580c;
+    --primary-dark: #c2410c;
+    --primary-light: rgba(234, 88, 12, 0.15);
+    --accent: #ea580c;
+    --success: #ea580c;
+    --gradient: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+    --glass-border-accent: rgba(234, 88, 12, 0.1);
+    --shadow-primary: rgba(234, 88, 12, 0.4);
+}
+
 ::-webkit-scrollbar {
     display: none;
 }
