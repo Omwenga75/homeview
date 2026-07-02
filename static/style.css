@@ -41,16 +41,16 @@ html:not(.hv-logged-in) #navUserProfile { display: none !important; }
     --shadow-primary: rgba(6, 78, 59, 0.4);
 }
 
-/* Admin Dashboard Colors (Rich Orange) */
+/* Admin Dashboard Colors (Deep Indigo) */
 body.admin-dashboard {
-    --primary: #f57c00;
-    --primary-dark: #e65100;
-    --primary-light: rgba(245, 124, 0, 0.14);
-    --accent: #f57c00;
-    --success: #f57c00;
-    --gradient: linear-gradient(135deg, #f57c00 0%, #e65100 100%);
-    --glass-border-accent: rgba(245, 124, 0, 0.12);
-    --shadow-primary: rgba(245, 124, 0, 0.4);
+    --primary: #4338ca;
+    --primary-dark: #3730a3;
+    --primary-light: rgba(67, 56, 202, 0.14);
+    --accent: #4338ca;
+    --success: #4338ca;
+    --gradient: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+    --glass-border-accent: rgba(67, 56, 202, 0.12);
+    --shadow-primary: rgba(67, 56, 202, 0.4);
 }
 
 ::-webkit-scrollbar {
