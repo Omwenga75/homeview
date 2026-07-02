@@ -5803,7 +5803,7 @@ button.bottom-nav-item {
 /* Ultra-wide / Smart TV Scaling */
 @media (min-width: 1280px) {
     .image-wrapper {
-        max-width: 520px;
+        max-width: 420px;
         margin-top: 0;
     }
     .hero-image {
@@ -5816,7 +5816,7 @@ button.bottom-nav-item {
         font-size: 18px;
     }
     .image-wrapper {
-        max-width: 640px;
+        max-width: 500px;
         margin-top: 0;
     }
     .hero-image {
@@ -5839,7 +5839,7 @@ button.bottom-nav-item {
         font-size: 20px;
     }
     .image-wrapper {
-        max-width: 860px;
+        max-width: 660px;
         margin-top: 0;
     }
     .hero-image {
@@ -5862,7 +5862,7 @@ button.bottom-nav-item {
         font-size: 24px;
     }
     .image-wrapper {
-        max-width: 1150px;
+        max-width: 860px;
         margin-top: 0;
     }
     .hero-image {
