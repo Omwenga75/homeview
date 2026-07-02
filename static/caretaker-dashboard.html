@@ -193,20 +193,20 @@
                     const statusLabel = house.status === 'approved' ? 'Approved' : house.status === 'pending' ? 'Pending Review' : 'Rejected';
                     const statusClass = house.status === 'approved' ? 'status-approved' : house.status === 'pending' ? 'status-pending' : 'status-rejected';
                     return `
-                        <div style="background: white; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;">
-                            <div style="height: 160px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; position: relative;">
-                                <span style="position: absolute; top: 1rem; right: 1rem;" class="status-pill ${statusClass}">${statusLabel}</span>
-                                <span style="font-size: 3rem; opacity: 0.5;">🏠</span>
+                        <div style="background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;">
+                            <div style="height: 110px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; position: relative;">
+                                <span style="position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.75rem; padding: 0.2rem 0.5rem;" class="status-pill ${statusClass}">${statusLabel}</span>
+                                <span style="font-size: 2rem; opacity: 0.5;">🏠</span>
                             </div>
-                            <div style="padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.75rem;">
+                            <div style="padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.5rem;">
                                 <div>
-                                    <h3 style="margin: 0; font-size: 1.2rem; color: var(--text-primary); font-weight: 600;">${house.title}</h3>
-                                    <div style="color: var(--text-secondary); font-size: 0.95rem; margin-top: 0.25rem;">📍 ${house.location}</div>
+                                    <h3 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.3;">${house.title}</h3>
+                                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">📍 ${house.location}</div>
                                 </div>
-                                <div style="font-size: 1.25rem; font-weight: 700; color: var(--primary); margin-top: auto; padding-top: 0.5rem;">${formatHousePrice(house.price)}<span style="font-size:0.85rem; color:var(--text-muted); font-weight:400;">/mo</span></div>
-                                ${includeViews ? `<div style="color: var(--text-secondary); font-size: 0.85rem;">👁️ ${house.views || 0} views</div>` : ''}
-                                <div style="border-top: 1px solid var(--border); margin-top: 0.75rem; padding-top: 0.75rem;">
-                                    <button class="btn btn-sm" style="width: 100%; background: #f8fafc; color: var(--text-primary); border: 1px solid var(--border);">Edit Property</button>
+                                <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: auto; padding-top: 0.25rem;">${formatHousePrice(house.price)}<span style="font-size:0.75rem; color:var(--text-muted); font-weight:400;">/mo</span></div>
+                                ${includeViews ? `<div style="color: var(--text-secondary); font-size: 0.75rem;">👁️ ${house.views || 0} views</div>` : ''}
+                                <div style="border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 0.5rem;">
+                                    <button class="btn btn-sm" style="width: 100%; padding: 0.4rem; font-size: 0.85rem; background: #f8fafc; color: var(--text-primary); border: 1px solid var(--border);">Edit Property</button>
                                 </div>
                             </div>
                         </div>
@@ -270,7 +270,7 @@
                             <h2 class="dashboard-section-title">Recent Houses</h2>
                             <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
                             ${renderHouseCards(recentHouses, false)}
                         </div>
                     `;
@@ -284,7 +284,7 @@
                             <h2 class="dashboard-section-title">Houses</h2>
                             <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
                             ${renderHouseCards(userHouses, true)}
                         </div>
                     `;
