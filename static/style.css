@@ -340,17 +340,17 @@ header .container a {
 .nav-links {
     display: flex;
     list-style: none;
-    gap: 1.5rem;
+    gap: 2rem;
     align-items: center;
     flex-shrink: 0;
 }
 
 .nav-links a {
     color: var(--text-primary);
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.3s ease;
     white-space: nowrap;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     padding: 0;
     background: none;
     box-shadow: none;
