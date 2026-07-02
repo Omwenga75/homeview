@@ -41,7 +41,7 @@ def startup_event():
         if not admin:
             db_admin = models.User(
                 id="admin_root",
-                name="System Administrator",
+                name="Admin",
                 email="admin@homeview.com",
                 password="admin123",
                 role="admin",

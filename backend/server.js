@@ -53,7 +53,7 @@ const db = new sqlite3.Database(dbPath, (err) => {
             
             // Seed default admin
             db.run(`INSERT OR IGNORE INTO users (id, name, email, password, role, bio, phone) 
-                    VALUES ('admin_root', 'System Administrator', 'admin@homeview.com', 'admin123', 'admin', 'Global Platform Governance', '+254 700 000 000')`);
+                    VALUES ('admin_root', 'Admin', 'admin@homeview.com', 'admin123', 'admin', 'Global Platform Governance', '+254 700 000 000')`);
 
             // Seed sample approved houses if none exist
             db.get('SELECT COUNT(*) as count FROM houses WHERE status = "approved"', [], (err, row) => {

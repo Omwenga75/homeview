@@ -144,11 +144,31 @@ const AuthManager = {
 
     // Seed admin if not exists
     initAdmin() {
-        const users = JSON.parse(localStorage.getItem('hv_users') || '[]');
+        let users = JSON.parse(localStorage.getItem('hv_users') || '[]');
+        
+        // --- Migration to update System Administrator to Admin ---
+        let adminUpdated = false;
+        users = users.map(u => {
+            if (u.role === 'admin' && u.name === 'System Administrator') {
+                u.name = 'Admin';
+                adminUpdated = true;
+            }
+            return u;
+        });
+        if (adminUpdated) {
+            localStorage.setItem('hv_users', JSON.stringify(users));
+            const currentUser = JSON.parse(localStorage.getItem('hv_current_user'));
+            if (currentUser && currentUser.role === 'admin' && currentUser.name === 'System Administrator') {
+                currentUser.name = 'Admin';
+                localStorage.setItem('hv_current_user', JSON.stringify(currentUser));
+            }
+        }
+        // -------------------------------------------------------
+
         if (!users.find(u => u.role === 'admin')) {
             users.push({
                 id: 'admin_root',
-                name: 'System Administrator',
+                name: 'Admin',
                 email: 'admin@homeview.com',
                 password: 'admin123',
                 role: 'admin',
