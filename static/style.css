@@ -28,18 +28,6 @@ html.hv-logged-in #signupBtn { display: none !important; }
 html.hv-logged-in #navUserProfile { display: flex !important; }
 html:not(.hv-logged-in) #navUserProfile { display: none !important; }
 
-/* Admin & Caretaker Dashboard Colors */
-.admin-dashboard,
-.caretaker-dashboard {
-    --primary: #3B82F6;
-    --primary-dark: #1D4ED8;
-    --primary-light: rgba(59, 130, 246, 0.15);
-    --accent: #3B82F6;
-    --success: #3B82F6;
-    --gradient: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%);
-    --glass-border-accent: rgba(59, 130, 246, 0.1);
-    --shadow-primary: rgba(59, 130, 246, 0.4);
-}
 
 /* Tenant Dashboard Colors (default green) */
 .tenant-dashboard {
