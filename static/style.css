@@ -1421,10 +1421,10 @@ body.mobile-drawer-open {
 }
 
 .listings-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.35rem;
-        align-items: stretch;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.35rem;
+    align-items: stretch;
 }
 
 @media (max-width: 1024px) {

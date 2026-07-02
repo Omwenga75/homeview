@@ -2,7 +2,7 @@
 
 const HV_CONFIG = {
     USE_MOCK: false,
-    API_BASE: ''  // Empty = relative URLs (works on localhost and Vercel)
+    API_BASE: 'http://127.0.0.1:8000/api/v1'  // Pointing to FastAPI Clean Architecture backend
 };
 
 // --- Managers ---
@@ -18,10 +18,9 @@ const AuthManager = {
                 });
                 const data = await response.json();
                 if (!response.ok) return { success: false, message: data.detail || data.error || 'Signup failed' };
-                // Don't auto-login — redirect to login page with email pre-filled
                 return { success: true, redirect: `login.html?email=${encodeURIComponent(email)}` };
             } catch (err) {
-                return { success: false, message: 'Backend unavailable. Using local storage...' };
+                return { success: false, message: 'Backend unavailable. Please try again later.' };
             }
         }
 
@@ -50,9 +49,13 @@ const AuthManager = {
 
         if (!HV_CONFIG.USE_MOCK) {
             try {
+                const token = localStorage.getItem('hv_token');
                 const response = await fetch(`${HV_CONFIG.API_BASE}/auth/profile/${currentUser.id}`, {
                     method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` 
+                    },
                     body: JSON.stringify(data)
                 });
                 const result = await response.json();
@@ -86,16 +89,19 @@ const AuthManager = {
                 });
                 const result = await response.json();
                 if (response.ok) {
-                    const user = result.user || result;
+                    const user = result.user;
+                    const token = result.access_token;
                     localStorage.setItem('hv_current_user', JSON.stringify(user));
+                    localStorage.setItem('hv_token', token);
                     let redirect = 'index.html';
-                    if (user.role === 'admin') redirect = 'admin-dashboard.html';
+                    if (user.role === 'admin' || user.role === 'super_admin') redirect = 'admin-dashboard.html';
                     else if (user.role === 'caretaker') redirect = 'caretaker-dashboard.html';
                     return { success: true, redirect };
                 }
                 return { success: false, message: result.detail || result.error || 'Login failed' };
             } catch (err) {
-                console.warn("Backend login failed, trying local...");
+                console.warn("Backend login failed...");
+                return { success: false, message: 'Could not connect to server' };
             }
         }
 
@@ -115,6 +121,7 @@ const AuthManager = {
 
     logout() {
         localStorage.removeItem('hv_current_user');
+        localStorage.removeItem('hv_token');
         window.location.href = 'index.html';
     },
 

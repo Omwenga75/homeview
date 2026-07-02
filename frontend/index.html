@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HomeView - Find Your Perfect Home</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="#" class="nav-logo">
+          <span class="logo-text">Home<span class="logo-highlight">View</span></span>
+        </a>
+        <div class="nav-links">
+          <a href="#" class="nav-link active">Home</a>
+          <a href="#" class="nav-link">Listings</a>
+          <a href="#" class="nav-link">Caretakers</a>
+          <a href="#" class="nav-link">About Us</a>
+        </div>
+        <div class="nav-actions">
+          <button class="btn btn-ghost" id="loginBtn">Log In</button>
+          <button class="btn btn-primary" id="signupBtn">Sign Up</button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Find Your Next <br/> <span class="text-gradient">Perfect Home</span></h1>
+        <p class="hero-subtitle">Discover premium apartments, bespoke houses, and exclusive listings. Connect directly with verified caretakers.</p>
+        
+        <div class="search-bar">
+          <div class="search-input-group">
+            <label>Location</label>
+            <input type="text" placeholder="Nairobi, Westlands...">
+          </div>
+          <div class="search-input-group">
+            <label>Property Type</label>
+            <select>
+              <option>Apartment</option>
+              <option>House</option>
+              <option>Bedsitter</option>
+            </select>
+          </div>
+          <div class="search-input-group">
+            <label>Price Range</label>
+            <select>
+              <option>KES 10k - 30k</option>
+              <option>KES 30k - 60k</option>
+              <option>KES 60k+</option>
+            </select>
+          </div>
+          <button class="btn btn-search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured Properties -->
+    <section class="featured">
+      <div class="section-header">
+        <h2>Featured Listings</h2>
+        <p>Explore our most sought-after properties.</p>
+      </div>
+      <div class="property-grid" id="propertyGrid">
+        <!-- Properties will be injected via JS -->
+      </div>
+    </section>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
