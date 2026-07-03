@@ -4433,6 +4433,10 @@ footer {
 /* Footer Branding Refinement */
 footer .logo .text {
     color: #22c55e !important;
+    -webkit-text-fill-color: #22c55e !important;
+    background: none !important;
+    background-clip: unset !important;
+    -webkit-background-clip: unset !important;
     font-size: 1.6rem;
 }
 
