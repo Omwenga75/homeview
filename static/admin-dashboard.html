@@ -501,30 +501,28 @@
                     const messages = JSON.parse(localStorage.getItem('hv_admin_messages') || '[]');
                     mainContent.innerHTML = `
 
-                        <div class="section-card" style="background: white; padding: 2.5rem; border-radius: 20px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
-                            <div class="table-container" style="border: none; border-radius: 0; margin-top: 0;">
-                            <table>
+                        <div class="table-container" style="overflow-x: auto; background: white; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left;">
                                 <thead>
-                                    <tr>
-                                        <th>Sender</th>
-                                        <th>Email</th>
-                                        <th>Message</th>
-                                        <th>Date</th>
+                                    <tr style="border-bottom: 2px solid var(--border); background: #f8fafc;">
+                                        <th style="padding: 1rem;">Sender</th>
+                                        <th style="padding: 1rem;">Email</th>
+                                        <th style="padding: 1rem;">Message</th>
+                                        <th style="padding: 1rem;">Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${messages.reverse().map(msg => `
-                                        <tr>
-                                            <td style="font-weight: 600;">${msg.name}</td>
-                                            <td>${msg.email}</td>
-                                            <td style="max-width: 300px; white-space: normal; line-height: 1.4;">${msg.message}</td>
-                                            <td style="font-size: 0.85rem; color: var(--text-muted);">${new Date(msg.date).toLocaleDateString()}</td>
+                                        <tr style="border-bottom: 1px solid var(--border);">
+                                            <td style="padding: 1rem; font-weight: 500;">${msg.name}</td>
+                                            <td style="padding: 1rem;">${msg.email}</td>
+                                            <td style="padding: 1rem; max-width: 300px; white-space: normal; line-height: 1.4;">${msg.message}</td>
+                                            <td style="padding: 1rem; font-size: 0.85rem; color: var(--text-muted);">${new Date(msg.date).toLocaleDateString()}</td>
                                         </tr>
                                     `).join('')}
-                                    ${messages.length === 0 ? '<tr><td colspan="4" style="text-align: center; padding: 3rem; color: var(--text-muted);">No messages found.</td></tr>' : ''}
+                                    ${messages.length === 0 ? '<tr><td colspan="4" style="text-align: center; padding: 2rem;">No messages found</td></tr>' : ''}
                                 </tbody>
                             </table>
-                            </div>
                         </div>
                     `;
                 } else if (viewType === 'transactions') {
