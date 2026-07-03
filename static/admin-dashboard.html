@@ -152,6 +152,20 @@
                 }
             }
 
+            async function getUnlocks() {
+                if (typeof HV_CONFIG !== 'undefined' && HV_CONFIG.USE_MOCK) return [];
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 1500);
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/unlocks/`, { signal: controller.signal }).catch(() => null);
+                    clearTimeout(timeoutId);
+                    if (!res || !res.ok) return [];
+                    return await res.json();
+                } catch (error) {
+                    return [];
+                }
+            }
+
 
             async function saveHouse(house) {
                 try {
@@ -299,6 +313,9 @@
                     const totalCaretakers = allUsers.filter(u => u.role === 'caretaker').length;
                     const totalTenants = allUsers.filter(u => u.role === 'tenant').length;
 
+                    const allUnlocks = await getUnlocks();
+                    const unlockedSessions = allUnlocks.length;
+
                     mainContent.innerHTML = `
 
                         <div class="stats-grid">
@@ -336,7 +353,7 @@
                             </div>
                             <div class="stat-card">
                                 <span class="label">Unlocked Sessions</span>
-                                <div class="value" style="color:#3b82f6">342</div>
+                                <div class="value" style="color:#3b82f6">${unlockedSessions}</div>
                             </div>
                         </div>
                     `;

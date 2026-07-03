@@ -46,6 +46,13 @@ const db = new sqlite3.Database(dbPath, (err) => {
                 joinedAt DATETIME DEFAULT CURRENT_TIMESTAMP
             )`);
 
+            db.run(`CREATE TABLE IF NOT EXISTS unlocks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id TEXT,
+                house_id INTEGER,
+                unlocked_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            )`);
+
             // Add profile_pic column if it doesn't exist (for existing databases)
             db.run(`ALTER TABLE users ADD COLUMN profile_pic TEXT`, (err) => {
                 // Ignore error if column already exists
@@ -146,6 +153,40 @@ app.post('/auth/profile-pic/:id', (req, res) => {
     db.run(query, [profile_pic, req.params.id], function(err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ success: true });
+    });
+});
+
+// Users Route
+app.get('/users', (req, res) => {
+    const query = 'SELECT id, name, email, role, bio, phone, joinedAt FROM users ORDER BY joinedAt DESC';
+    db.all(query, [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+app.get('/users/', (req, res) => {
+    const query = 'SELECT id, name, email, role, bio, phone, joinedAt FROM users ORDER BY joinedAt DESC';
+    db.all(query, [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+// Unlocks Route
+app.get('/unlocks', (req, res) => {
+    const query = 'SELECT * FROM unlocks ORDER BY unlocked_at DESC';
+    db.all(query, [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+});
+
+app.get('/unlocks/', (req, res) => {
+    const query = 'SELECT * FROM unlocks ORDER BY unlocked_at DESC';
+    db.all(query, [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
     });
 });
 
