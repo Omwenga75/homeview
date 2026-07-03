@@ -1719,13 +1719,14 @@ td.listings-loader::after {
 }
 
 .legal-section {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .legal-section h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     color: var(--text-primary);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.6rem;
+    margin-top: 0.5rem;
     font-family: 'Outfit', sans-serif;
 }
 
