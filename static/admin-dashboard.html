@@ -359,10 +359,6 @@
                     `;
                 } else if (viewType === 'houses') {
                     mainContent.innerHTML = `
-
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-                            <h2 class="dashboard-section-title">All Houses <span style="font-size:1rem;color:var(--primary);font-weight:600">(${allHouses.length})</span></h2>
-                        </div>
                         <div id="allHousesTableBody" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
                             ${allHousesRows}
                         </div>
