@@ -36,15 +36,27 @@ const roleConfig = {
   }
 };
 
-// Mock Properties
-const propertiesData = [
-  { id: "PRP-101", title: "Emerald Luxury 2-Bedroom", location: "Westlands", price: 45000, status: "approved" },
-  { id: "PRP-102", title: "Modern Studio Apartment", location: "Kilimani", price: 25000, status: "approved" },
-  { id: "PRP-103", title: "Sunset Villas Plot", location: "Karen", price: 150000, status: "pending" },
-  { id: "PRP-104", title: "Cozy Ruaka Bedsitter", location: "Ruaka", price: 12000, status: "rejected" }
-];
+document.addEventListener('DOMContentLoaded', async () => {
+  let propertiesData = [];
+  try {
+    const response = await fetch('http://localhost:8000/houses');
+    if (response.ok) {
+      propertiesData = await response.json();
+    }
+  } catch (error) {
+    console.error('Error fetching properties:', error);
+  }
 
-document.addEventListener('DOMContentLoaded', () => {
+  // Update stats dynamically for admin
+  if (currentUser.role === 'admin') {
+    const activeCount = propertiesData.filter(p => p.status === 'approved').length;
+    const pendingCount = propertiesData.filter(p => p.status === 'pending').length;
+    const totalRevenue = propertiesData.filter(p => p.status === 'approved').reduce((acc, p) => acc + p.price, 0);
+
+    roleConfig.admin.stats[0].value = totalRevenue === 0 ? "0" : (totalRevenue >= 1000000 ? `KES ${(totalRevenue / 1000000).toFixed(1)}M` : `KES ${totalRevenue.toLocaleString()}`);
+    roleConfig.admin.stats[1].value = activeCount.toLocaleString();
+    roleConfig.admin.stats[2].value = pendingCount.toLocaleString();
+  }
   // Initialize User Info
   document.getElementById('userName').textContent = currentUser.name;
   document.getElementById('userRole').textContent = roleConfig[currentUser.role].title;
@@ -101,25 +113,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Render Properties Table
   const tableBody = document.getElementById('propertiesTableBody');
-  tableBody.innerHTML = propertiesData.map(prop => `
-    <tr>
-      <td>
-        <div style="font-weight: 500; color: var(--color-text)">${prop.title}</div>
-        <div style="font-size: 0.75rem; color: var(--color-text-muted)">ID: ${prop.id}</div>
-      </td>
-      <td>${prop.location}</td>
-      <td>${prop.price.toLocaleString()}</td>
-      <td>
-        <span class="status-badge status-${prop.status}">
-          ${prop.status.charAt(0).toUpperCase() + prop.status.slice(1)}
-        </span>
-      </td>
-      <td class="action-links">
-        <a href="#">Edit</a>
-        <a href="#" class="delete-btn">Delete</a>
-      </td>
-    </tr>
-  `).join('');
+  if (propertiesData.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; padding: 2rem;">0</td>
+      </tr>
+    `;
+  } else {
+    tableBody.innerHTML = propertiesData.map(prop => `
+      <tr>
+        <td>
+          <div style="font-weight: 500; color: var(--color-text)">${prop.title}</div>
+          <div style="font-size: 0.75rem; color: var(--color-text-muted)">ID: PRP-${prop.id}</div>
+        </td>
+        <td>${prop.location}</td>
+        <td>${prop.price.toLocaleString()}</td>
+        <td>
+          <span class="status-badge status-${prop.status}">
+            ${prop.status.charAt(0).toUpperCase() + prop.status.slice(1)}
+          </span>
+        </td>
+        <td class="action-links">
+          <a href="#">Edit</a>
+          <a href="#" class="delete-btn">Delete</a>
+        </td>
+      </tr>
+    `).join('');
+  }
 
   // Mock Activity List
   const activityList = document.getElementById('activityList');
