@@ -482,7 +482,7 @@
                             <td style="padding: 1rem;">${u.email}</td>
                             <td style="padding: 1rem;"><span style="padding: 0.3rem 0.8rem; border-radius: 99px; background: #f3f4f6; text-transform: capitalize; font-size: 0.85rem; font-weight: 500;">${u.role}</span></td>
                         </tr>
-                    `).join('') : '<tr><td colspan="3" style="text-align:center; padding: 2rem;">No users found</td></tr>';
+                    `).join('') : `<tr><td colspan="3" style="padding: 0;"><div style="padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;"><div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Users Found</h3><p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Registered tenants and caretakers will appear here once they sign up.</p></div></td></tr>`;
 
                     mainContent.innerHTML = `
 
@@ -524,7 +524,7 @@
                                             <td style="padding: 1rem; font-size: 0.85rem; color: var(--text-muted);">${new Date(msg.date).toLocaleDateString()}</td>
                                         </tr>
                                     `).join('')}
-                                    ${messages.length === 0 ? '<tr><td colspan="4" style="text-align: center; padding: 2rem;">No messages found</td></tr>' : ''}
+                                    ${messages.length === 0 ? `<tr><td colspan="4" style="padding: 0;"><div style="padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;"><div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Messages Yet</h3><p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Messages sent through the contact form will appear here.</p></div></td></tr>` : ''}
                                 </tbody>
                             </table>
                         </div>
@@ -532,10 +532,14 @@
                 } else if (viewType === 'transactions') {
                     mainContent.innerHTML = `
 
-                        <div class="section-card" style="background: white; padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md); text-align: center;">
-                            <p style="font-size: 3rem; margin-bottom: 1rem;">💰</p>
-                            <p style="color: var(--text-secondary); font-size: 1.1rem;">Transaction tracking coming soon</p>
-                            <p style="color: var(--text-muted); margin-top: 0.5rem;">Real-time payment processing and analytics.</p>
+                        <div style="background: white; border-radius: 20px; border: 1px solid var(--border); padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                            <div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
+                                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                </svg>
+                            </div>
+                            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Transactions Yet</h3>
+                            <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Unlock payments and location reveals will be tracked and displayed here.</p>
                         </div>
                     `;
                 } else if (viewType === 'profile') {
