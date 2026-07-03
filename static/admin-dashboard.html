@@ -138,6 +138,20 @@
                 return [];
             }
 
+            async function getUsers() {
+                if (typeof HV_CONFIG !== 'undefined' && HV_CONFIG.USE_MOCK) return [];
+                try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 1500);
+                    const res = await fetch(`${HV_CONFIG.API_BASE}/users/`, { signal: controller.signal }).catch(() => null);
+                    clearTimeout(timeoutId);
+                    if (!res || !res.ok) return [];
+                    return await res.json();
+                } catch (error) {
+                    return [];
+                }
+            }
+
 
             async function saveHouse(house) {
                 try {
@@ -280,6 +294,11 @@
                     const pendingHouses = allHouses.filter(h => h.status === 'pending');
                     const totalRevenue = approvedHouses.reduce((sum, h) => sum + (Number(h.price) || 0), 0);
 
+                    const allUsers = await getUsers();
+                    const totalUsers = allUsers.length;
+                    const totalCaretakers = allUsers.filter(u => u.role === 'caretaker').length;
+                    const totalTenants = allUsers.filter(u => u.role === 'tenant').length;
+
                     mainContent.innerHTML = `
 
                         <div class="stats-grid">
@@ -305,18 +324,18 @@
                             </div>
                             <div class="stat-card">
                                 <span class="label">Total Users</span>
-                                <div class="value">1,240</div>
+                                <div class="value">${totalUsers}</div>
                             </div>
                             <div class="stat-card">
                                 <span class="label">Total Caretakers</span>
-                                <div class="value">156</div>
+                                <div class="value">${totalCaretakers}</div>
                             </div>
                             <div class="stat-card">
                                 <span class="label">Total Tenants</span>
-                                <div class="value">1,084</div>
+                                <div class="value">${totalTenants}</div>
                             </div>
                             <div class="stat-card">
-                                <span class="label">Active Sessions</span>
+                                <span class="label">Unlocked Sessions</span>
                                 <div class="value" style="color:#3b82f6">342</div>
                             </div>
                         </div>
@@ -432,12 +451,36 @@
                         });
                     }
                 } else if (viewType === 'users') {
+                    const allUsers = await getUsers();
+                    const usersRows = allUsers.length ? allUsers.map(u => `
+                        <tr style="border-bottom: 1px solid var(--border);">
+                            <td style="padding: 1rem;">
+                                <div style="font-weight: 500;">${u.name}</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">${u.id}</div>
+                            </td>
+                            <td style="padding: 1rem;">${u.email}</td>
+                            <td style="padding: 1rem;"><span style="padding: 0.3rem 0.8rem; border-radius: 99px; background: #f3f4f6; text-transform: capitalize; font-size: 0.85rem; font-weight: 500;">${u.role}</span></td>
+                        </tr>
+                    `).join('') : '<tr><td colspan="3" style="text-align:center; padding: 2rem;">No users found</td></tr>';
+
                     mainContent.innerHTML = `
 
-                        <div class="section-card" style="background: white; padding: 4rem 2rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-md); text-align: center;">
-                            <p style="font-size: 3rem; margin-bottom: 1rem;"><svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></p>
-                            <p style="color: var(--text-secondary); font-size: 1.1rem;">User management features coming soon</p>
-                            <p style="color: var(--text-muted); margin-top: 0.5rem;">This will include caretaker and tenant account management.</p>
+                        <div class="section-card" style="background: white; padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
+                            <h2 style="margin-bottom: 1.5rem;">User Management</h2>
+                            <div class="table-container" style="overflow-x: auto;">
+                                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                                    <thead>
+                                        <tr style="border-bottom: 2px solid var(--border);">
+                                            <th style="padding: 1rem;">Name & ID</th>
+                                            <th style="padding: 1rem;">Email</th>
+                                            <th style="padding: 1rem;">Role</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${usersRows}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     `;
                 } else if (viewType === 'messages') {
