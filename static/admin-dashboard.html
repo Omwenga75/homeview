@@ -300,7 +300,15 @@
                             </div>
                         </div>
                     `;
-                }).join('') : `<div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: var(--text-muted); background: white; border-radius: 16px; border: 1px solid var(--border);">No houses found in the system.</div>`;
+                }).join('') : `<div style="grid-column: 1 / -1; background: white; border-radius: 20px; border: 1px solid var(--border); padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.04);">
+                    <div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
+                        <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>
+                        </svg>
+                    </div>
+                    <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Properties Listed</h3>
+                    <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">There are no houses in the system yet. Approved and pending listings will appear here.</p>
+                </div>`;
 
                 if (viewType === 'overview' || viewType === 'approvals') {
                     const totalHouses = allHouses.length;
