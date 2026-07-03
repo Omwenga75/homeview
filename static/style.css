@@ -2102,10 +2102,7 @@ footer {
     font-weight: 700;
     font-family: 'Outfit', sans-serif;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #22c55e;
 }
 .footer-links ul { list-style: none; }
 .footer-links ul li { margin-bottom: 1rem; }
@@ -4344,10 +4341,7 @@ footer {
     font-weight: 700;
     font-family: 'Outfit', sans-serif;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #22c55e;
 }
 
 .footer-links ul {
@@ -4376,11 +4370,9 @@ footer {
     font-weight: 700;
     font-family: 'Outfit', sans-serif;
     letter-spacing: -0.5px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: #22c55e;
 }
+
 
 .newsletter-form {
     display: flex;
