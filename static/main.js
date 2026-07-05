@@ -20,7 +20,7 @@ const AuthManager = {
                 if (!response.ok) {
                     let errorMsg = data.error || 'Signup failed';
                     if (data.detail) {
-                        if (Array.isArray(data.detail)) errorMsg = data.detail.map(e => e.msg || JSON.stringify(e)).join(', ');
+                        if (Array.isArray(data.detail)) errorMsg = data.detail.map(e => (e.loc ? e.loc.join('.') + ': ' : '') + (e.msg || JSON.stringify(e))).join(', ');
                         else if (typeof data.detail === 'object') errorMsg = JSON.stringify(data.detail);
                         else errorMsg = data.detail;
                     }
@@ -67,7 +67,7 @@ const AuthManager = {
                 let errorMsg = 'User creation failed';
                 if (data.detail) {
                     if (Array.isArray(data.detail)) {
-                        errorMsg = data.detail.map(e => e.msg || JSON.stringify(e)).join(', ');
+                        errorMsg = data.detail.map(e => (e.loc ? e.loc.join('.') + ': ' : '') + (e.msg || JSON.stringify(e))).join(', ');
                     } else if (typeof data.detail === 'object') {
                         errorMsg = JSON.stringify(data.detail);
                     } else {
@@ -160,7 +160,7 @@ const AuthManager = {
                 
                 let errorMsg = result.error || 'Login failed';
                 if (result.detail) {
-                    if (Array.isArray(result.detail)) errorMsg = result.detail.map(e => e.msg || JSON.stringify(e)).join(', ');
+                    if (Array.isArray(result.detail)) errorMsg = result.detail.map(e => (e.loc ? e.loc.join('.') + ': ' : '') + (e.msg || JSON.stringify(e))).join(', ');
                     else if (typeof result.detail === 'object') errorMsg = JSON.stringify(result.detail);
                     else errorMsg = result.detail;
                 }
