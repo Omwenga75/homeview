@@ -5923,3 +5923,634 @@ body.caretaker-dashboard header #userProfileToggle {
     border-radius: 999px;
     padding: 0.4rem 1.25rem 0.4rem 0.4rem;
 }
+
+/* =============================================================
+   GLOBAL RESPONSIVE OVERHAUL
+   Fixes overlapping, messy layouts across all screen sizes:
+   phones, tablets, desktops, large screens, TVs.
+   ============================================================= */
+
+/* ---- UNIVERSAL: prevent horizontal overflow on all pages ---- */
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
+
+/* ---- SMALL PHONES (≤480px) ---- */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 0.85rem !important;
+    }
+    .listing-info h3 {
+        font-size: 0.92rem !important;
+    }
+    .listing-meta {
+        font-size: 0.7rem !important;
+    }
+    .listing-footer .price {
+        font-size: 0.95rem !important;
+    }
+    .profile-meta-chips {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.4rem !important;
+    }
+    .profile-chip {
+        font-size: 0.72rem !important;
+    }
+    .legal-main {
+        padding: 1.25rem !important;
+    }
+    .summary-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+    .section-header h2 {
+        font-size: 1.1rem !important;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+}
+
+/* ---- PHONES (≤768px): core layout fixes ---- */
+@media (max-width: 768px) {
+
+    /* Make listings grid single-column, no horizontal scroll */
+    .listings-grid,
+    #featuredListingsGrid,
+    #listingsGrid {
+        grid-template-columns: 1fr !important;
+        overflow-x: visible !important;
+        scroll-snap-type: none !important;
+        padding-bottom: 0 !important;
+        gap: 1.25rem !important;
+    }
+    .listing-card,
+    .skeleton-card {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    /* Header: compact + no nav links */
+    header {
+        height: 60px !important;
+        padding: 0 1rem !important;
+    }
+    .nav-links,
+    .nav-group {
+        display: none !important;
+    }
+    .mobile-menu-toggle {
+        display: flex !important;
+        order: 1 !important;
+    }
+    .header-actions {
+        display: none !important; /* profile shown via #navUserProfile when logged in */
+    }
+    /* Show profile pill at far right on mobile for non-dashboard pages */
+    #navUserProfile {
+        order: 2 !important;
+        margin-left: auto !important;
+    }
+
+    /* Hero */
+    #hero {
+        padding-top: 90px !important;
+        padding-bottom: 40px !important;
+        min-height: auto !important;
+    }
+    #hero .container {
+        grid-template-columns: 1fr !important;
+        text-align: center !important;
+        gap: 1.5rem !important;
+        padding: 0 1rem !important;
+    }
+    .hero-content h1 {
+        font-size: clamp(1.75rem, 7vw, 2.2rem) !important;
+    }
+    .cta-group {
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 0.75rem !important;
+    }
+    .cta-group .btn {
+        width: 100% !important;
+        max-width: 300px !important;
+    }
+    .hero-image, .image-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 auto !important;
+    }
+
+    /* Stats */
+    #stats .container {
+        flex-wrap: wrap !important;
+        gap: 1rem !important;
+        justify-content: center !important;
+    }
+    .stat-item {
+        flex: 1 1 42% !important;
+        min-width: 130px !important;
+    }
+
+    /* Features */
+    .features-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Legal (Terms / Privacy) */
+    .legal-layout {
+        grid-template-columns: 1fr !important;
+    }
+    .legal-sidebar {
+        display: none !important;
+    }
+    .legal-main {
+        padding: 1.5rem !important;
+        border-radius: 16px !important;
+    }
+
+    /* Contact */
+    .contact-layout {
+        grid-template-columns: 1fr !important;
+        gap: 1.25rem !important;
+        padding: 0 1rem !important;
+    }
+    .contact-panel, .contact-form-card {
+        padding: 1.5rem !important;
+        border-radius: 18px !important;
+    }
+
+    /* About */
+    .about-grid, .page-hero-cards {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    /* Footer */
+    footer {
+        padding: 40px 0 calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+        margin-top: 0 !important;
+    }
+    .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+    .newsletter-form {
+        flex-direction: column !important;
+    }
+    .newsletter-form input,
+    .newsletter-form button {
+        width: 100% !important;
+    }
+
+    /* Dashboard main */
+    .dashboard-main {
+        margin-left: 0 !important;
+        padding: 1rem 0.85rem calc(80px + env(safe-area-inset-bottom, 0px)) !important;
+    }
+    .dashboard-container {
+        padding-top: 60px !important;
+    }
+    .stats-grid, .add-house-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .form-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .profile-form-grid, .profile-field-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Property detail */
+    .property-content-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .gallery-top {
+        grid-template-columns: 1fr !important;
+        grid-template-rows: 220px 130px !important;
+        height: auto !important;
+    }
+    .gallery-side {
+        grid-template-columns: 1fr 1fr !important;
+        grid-template-rows: 1fr !important;
+    }
+    .amenities-list {
+        grid-template-columns: 1fr 1fr !important;
+    }
+
+    /* Page hero inner pages */
+    .page-hero {
+        padding: 95px 0 24px !important;
+    }
+    .page-hero .section-title h1 {
+        font-size: clamp(1.5rem, 6vw, 1.9rem) !important;
+    }
+
+    /* General text safety */
+    p, h1, h2, h3, h4, h5, h6, span, a, label {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        max-width: 100%;
+    }
+}
+
+/* ---- TABLETS (769px – 1024px): the most problematic range ---- */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+    /* Header: show hamburger for dashboard pages, show nav for content pages */
+    header {
+        height: 70px !important;
+        padding: 0 1.5rem !important;
+    }
+    header .container {
+        gap: 1rem !important;
+    }
+
+    /* Nav visible on tablets for regular pages */
+    .nav-links {
+        display: flex !important;
+        gap: 1.2rem !important;
+    }
+    .nav-links a {
+        font-size: 0.9rem !important;
+    }
+    .nav-group {
+        display: flex !important;
+    }
+    /* Mobile toggle hidden on tablets for regular pages */
+    body:not(.tenant-dashboard):not(.admin-dashboard):not(.caretaker-dashboard) .mobile-menu-toggle {
+        display: none !important;
+    }
+    /* Dashboard pages: keep hamburger visible, hide full nav */
+    body.tenant-dashboard .nav-links,
+    body.admin-dashboard .nav-links,
+    body.caretaker-dashboard .nav-links {
+        display: none !important;
+    }
+    /* Show header-actions (Login/Signup or profile) on tablets */
+    .header-actions {
+        display: flex !important;
+        gap: 0.65rem !important;
+    }
+
+    /* Hero: 2-column on wider tablets */
+    #hero .container {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 2.5rem !important;
+        text-align: left !important;
+    }
+    .hero-content h1 {
+        font-size: clamp(2rem, 4vw, 2.8rem) !important;
+    }
+    .cta-group {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+    }
+
+    /* Listings grid: 2 columns on tablets (no horizontal scroll) */
+    .listings-grid,
+    #featuredListingsGrid,
+    #listingsGrid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        overflow-x: visible !important;
+        scroll-snap-type: none !important;
+        gap: 1.25rem !important;
+    }
+    .listing-card, .skeleton-card {
+        min-width: 0 !important;
+        width: 100% !important;
+    }
+
+    /* Stats: horizontal row */
+    #stats .container {
+        flex-wrap: wrap !important;
+        gap: 1.25rem !important;
+        justify-content: center !important;
+    }
+    .stat-item {
+        flex: 1 1 40% !important;
+        min-width: 160px !important;
+        max-width: 220px !important;
+    }
+
+    /* Features: 2 columns */
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* About cards: 2 columns */
+    .about-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Footer: 2 columns */
+    .footer-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 2.5rem !important;
+    }
+
+    /* Dashboard on tablets */
+    .dashboard-main {
+        margin-left: 0 !important;
+        padding: 1.5rem !important;
+        padding-bottom: 2rem !important;
+    }
+    .dashboard-container {
+        padding-top: 70px !important;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .form-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .profile-form-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+    .profile-field-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+
+    /* Legal layout: single column (sidebar hidden) */
+    .legal-layout {
+        grid-template-columns: 1fr !important;
+    }
+    .legal-sidebar {
+        display: none !important;
+    }
+
+    /* Contact layout: single column */
+    .contact-layout {
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
+    }
+
+    /* Property detail */
+    .property-content-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .gallery-top {
+        height: auto !important;
+        grid-template-rows: 320px 180px !important;
+    }
+
+    /* Page hero */
+    #hero, #listings, .page-hero, #property-detail {
+        padding-top: 110px !important;
+    }
+}
+
+/* ---- LARGE DESKTOP (1025px – 1279px) ---- */
+@media (min-width: 1025px) and (max-width: 1279px) {
+    /* Listings: 3 columns */
+    .listings-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        overflow-x: visible !important;
+    }
+    .container {
+        max-width: 96% !important;
+        padding: 0 2rem !important;
+    }
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1.5fr !important;
+        gap: 2.5rem !important;
+    }
+    /* Dashboard sidebar stays visible on desktop */
+    .sidebar {
+        position: sticky !important;
+        transform: none !important;
+    }
+    .dashboard-main {
+        margin-left: 260px !important;
+        padding: 2rem !important;
+    }
+}
+
+/* ---- DESKTOP (1280px – 1439px) ---- */
+@media (min-width: 1280px) and (max-width: 1439px) {
+    html {
+        font-size: 16px; /* Reset — don't scale up font on regular desktop */
+    }
+    .listings-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        overflow-x: visible !important;
+    }
+    .container {
+        max-width: 96% !important;
+    }
+}
+
+/* ---- LARGE SCREENS (1440px – 1919px) ---- */
+@media (min-width: 1440px) and (max-width: 1919px) {
+    html {
+        font-size: 16px !important; /* Prevent disproportionate rem scaling */
+    }
+    .listings-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
+        overflow-x: visible !important;
+        gap: 1.5rem !important;
+    }
+    .container {
+        max-width: 1400px !important;
+        margin: 0 auto !important;
+    }
+    header .container {
+        max-width: 1400px !important;
+        margin: 0 auto !important;
+    }
+    .listing-img {
+        height: 200px !important;
+    }
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1.5fr !important;
+    }
+    #hero .container {
+        max-width: 1400px !important;
+    }
+    #hero {
+        min-height: 90vh;
+    }
+    .listing-footer .price {
+        font-size: 1rem !important;
+    }
+    .listing-footer .period {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* ---- FULL HD / WIDESCREEN (1920px – 2559px) ---- */
+@media (min-width: 1920px) and (max-width: 2559px) {
+    html {
+        font-size: 17px !important;
+    }
+    .container {
+        max-width: 1800px !important;
+        margin: 0 auto !important;
+    }
+    header .container {
+        max-width: 1800px !important;
+        margin: 0 auto !important;
+    }
+    .listings-grid {
+        grid-template-columns: repeat(5, 1fr) !important;
+        overflow-x: visible !important;
+        gap: 1.75rem !important;
+    }
+    .listing-img {
+        height: 220px !important;
+    }
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1.5fr !important;
+        gap: 4rem !important;
+    }
+    #hero {
+        min-height: 88vh;
+    }
+    .listing-footer .price {
+        font-size: 1rem !important;
+    }
+    .listing-footer .period {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* ---- ULTRA-WIDE / TV (≥2560px) ---- */
+@media (min-width: 2560px) {
+    html {
+        font-size: 20px !important;
+    }
+    .container {
+        max-width: 2200px !important;
+        margin: 0 auto !important;
+    }
+    header .container {
+        max-width: 2200px !important;
+        margin: 0 auto !important;
+        padding: 0 2rem !important;
+    }
+    header {
+        height: 90px !important;
+    }
+    .listings-grid {
+        grid-template-columns: repeat(6, 1fr) !important;
+        overflow-x: visible !important;
+        gap: 2rem !important;
+    }
+    .listing-img {
+        height: 240px !important;
+    }
+    .footer-grid {
+        grid-template-columns: 2fr 1fr 1fr 1.5fr !important;
+        gap: 5rem !important;
+    }
+    #hero {
+        min-height: 85vh;
+    }
+    .nav-links {
+        gap: 3rem !important;
+    }
+    .nav-links a {
+        font-size: 1.1rem !important;
+    }
+    .listing-footer .price {
+        font-size: 0.9rem !important;
+    }
+    .listing-footer .period {
+        font-size: 0.65rem !important;
+    }
+    /* Dashboard at ultra-wide */
+    .dashboard-main {
+        margin-left: 320px !important;
+        padding: 3rem !important;
+    }
+    .sidebar {
+        width: 320px !important;
+    }
+}
+
+/* ---- TABLET-SPECIFIC: show bottom-nav hidden on desktop ---- */
+/* Bottom nav only for phones */
+@media (min-width: 769px) {
+    .bottom-nav,
+    .mobile-search-bar,
+    .mobile-filters,
+    .mobile-verified-banner {
+        display: none !important;
+    }
+}
+
+/* ---- ENSURE no horizontal scroll globally ---- */
+* {
+    box-sizing: border-box;
+}
+img, video, iframe, table {
+    max-width: 100%;
+}
+
+/* ---- TABLE OVERFLOW fix for all screens ---- */
+.table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+}
+.table-container table {
+    min-width: 600px;
+}
+
+/* ---- FIX: header-actions visibility on non-dashboard pages at tablet+ ---- */
+@media (min-width: 769px) {
+    /* On regular pages (non-dashboard), always show login/signup or profile on right */
+    body:not(.tenant-dashboard):not(.admin-dashboard):not(.caretaker-dashboard) .header-actions {
+        display: flex !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+}
+
+/* ---- FIX: profile chips wrap on small screens ---- */
+@media (max-width: 600px) {
+    .profile-meta-chips {
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 0.5rem !important;
+    }
+}
+
+/* ---- FIX: about page hero cards on tablet ---- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .page-hero-cards {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+}
+
+/* ---- FIX: contact form on tablet stays readable ---- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .contact-form-card h3,
+    .contact-panel h3 {
+        font-size: 1.5rem !important;
+    }
+}
+
+/* ---- FIX: legal main padding tablet ---- */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .legal-main {
+        padding: 2rem !important;
+    }
+}
+
+/* ---- FIX: profile header on small tablets ---- */
+@media (min-width: 769px) and (max-width: 900px) {
+    .profile-header-premium {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 1.5rem !important;
+        padding: 2rem !important;
+    }
+    .profile-meta-chips {
+        justify-content: center !important;
+    }
+}
