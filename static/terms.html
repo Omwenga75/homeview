@@ -15,17 +15,8 @@
 <body class="tenant-dashboard">
     <header id="navbar">
         <div class="container">
-            <div id="profileNavLink" style="cursor: pointer;">
-                <div class="user-dp">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
-                    </svg>
-                </div>
-                <div class="user-greeting">
-                    <span class="greeting-text">Good morning,</span>
-                    <span id="userName" class="user-name">Guest</span>
-                </div>
+            <div class="logo">
+                <span class="text">HomeView</span>
             </div>
             <div class="nav-group">
                 <nav>
@@ -37,6 +28,28 @@
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
                 </nav>
+            </div>
+            <div class="header-actions" id="headerActions">
+                <!-- Shown when NOT logged in -->
+                <a href="login.html" class="btn btn-auth-login" id="loginBtn">Log In</a>
+                <a href="signup.html" class="btn btn-auth-signup" id="signupBtn">Sign Up</a>
+                <!-- Shown when logged in -->
+                <div class="nav-user-profile" id="navUserProfile" style="display:none;">
+                    <div class="user-dp" id="navUserDp">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
+                    <div class="user-greeting">
+                        <span class="greeting-text">Good morning,</span>
+                        <span class="user-name" id="navUserName">Guest</span>
+                    </div>
+                    <div class="nav-user-menu" id="navUserMenu">
+                        <a href="tenant-dashboard.html" id="navDashboardLink">My Dashboard</a>
+                        <div id="navLogoutBtn">Sign Out</div>
+                    </div>
+                </div>
             </div>
             <button class="mobile-menu-toggle" id="menuToggle">
                 <span></span>
