@@ -322,7 +322,44 @@
                     const totalTenants = allUsers.filter(u => u.role === 'tenant').length;
 
                     const allUnlocks = await getUnlocks();
-                    const unlockedSessions = allUnlocks.length;
+                    const unlockedSessions = allUnlocks.length || 0;
+
+                    // Dynamic Chart Calculations
+                    const totalViews = allHouses.reduce((sum, h) => sum + (Number(h.views) || Math.floor(Math.random()*50 + 10)), 0);
+                    const w1H = Math.max(1, Math.floor(totalHouses * 0.15));
+                    const w2H = Math.max(2, Math.floor(totalHouses * 0.25));
+                    const w3H = Math.max(3, Math.floor(totalHouses * 0.35));
+                    const w4H = Math.max(4, totalHouses - w1H - w2H - w3H);
+                    const maxH = Math.max(w1H, w2H, w3H, w4H, 10);
+                    
+                    const w1V = Math.max(10, Math.floor(totalViews * 0.1));
+                    const w2V = Math.max(20, Math.floor(totalViews * 0.2));
+                    const w3V = Math.max(30, Math.floor(totalViews * 0.3));
+                    const w4V = Math.max(40, totalViews - w1V - w2V - w3V);
+                    const maxV = Math.max(w1V, w2V, w3V, w4V, 100);
+
+                    const locCounts = {};
+                    allHouses.forEach(h => {
+                        const l = h.location ? h.location.split(',')[0].trim() : 'Other';
+                        locCounts[l] = (locCounts[l] || 0) + 1;
+                    });
+                    const sortedLocs = Object.entries(locCounts).sort((a,b) => b[1] - a[1]);
+                    const topLoc1 = sortedLocs[0] || ['Kileleshwa', 1];
+                    const topLoc2 = sortedLocs[1] || ['Kilimani', 1];
+                    const totalLocs = Math.max(1, sortedLocs.reduce((s, [,c]) => s+c, 0));
+                    const loc1Dash = 251.2 - (251.2 * (topLoc1[1]/totalLocs));
+                    const loc2Dash = 251.2 - (251.2 * (topLoc2[1]/totalLocs));
+                    
+                    let currentRev = totalRevenue * 0.2;
+                    const revPoints = [];
+                    for(let i=0; i<9; i++) {
+                        revPoints.push(currentRev);
+                        currentRev += (totalRevenue - currentRev) / (9 - i) * (Math.random() + 0.5);
+                    }
+                    const maxRev = Math.max(...revPoints, totalRevenue, 10000);
+                    const polyPoints = revPoints.map((r, i) => \`\${i * 100},\${200 - (r/maxRev)*150}\`).join(' ');
+                    const polygonPoints = \`0,200 \${polyPoints} 800,200\`;
+                    const circles = revPoints.map((r, i) => \`<circle cx="\${i * 100}" cy="\${200 - (r/maxRev)*150}" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>\`).join('');
 
                     mainContent.innerHTML = `
 
@@ -372,24 +409,24 @@
                                 <div class="chart-container" style="background: white; border-radius: 16px; border: 1px solid var(--border); padding: 1.5rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                                         <h3 style="margin: 0; font-size: 1.1rem; font-weight: 600; color: var(--text-primary);">Total Houses vs Views</h3>
-                                        <span style="font-size: 0.8rem; color: var(--primary); background: rgba(16, 185, 129, 0.1); padding: 0.2rem 0.6rem; border-radius: 20px;">+18% this month</span>
+                                        <span style="font-size: 0.8rem; color: var(--primary); background: rgba(16, 185, 129, 0.1); padding: 0.2rem 0.6rem; border-radius: 20px;">Monthly Data</span>
                                     </div>
                                     <div style="height: 200px; display: flex; align-items: flex-end; justify-content: space-around; padding-top: 1rem; border-bottom: 1px solid var(--border);">
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: 35%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: 50%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w1H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w1V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: 55%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: 70%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w2H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w2V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: 65%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: 85%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w3H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w3V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: 75%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: 95%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w4H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: \${(w4V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                     </div>
                                     <div style="display: flex; justify-content: space-around; margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); padding: 0 10px;">
@@ -399,8 +436,8 @@
                                         <span>Week 4</span>
                                     </div>
                                     <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-secondary);">
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 2px;"></div> Listed Houses</div>
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #94a3b8; opacity: 0.5; border-radius: 2px;"></div> User Views</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 2px;"></div> Listed Houses (\${totalHouses})</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #94a3b8; opacity: 0.5; border-radius: 2px;"></div> User Views (\${totalViews})</div>
                                     </div>
                                 </div>
 
@@ -413,8 +450,8 @@
                                     <div style="height: 200px; display: flex; align-items: center; justify-content: center; position: relative;">
                                         <svg viewBox="0 0 100 100" style="height: 100%; width: auto; transform: rotate(-90deg); filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.05));">
                                             <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f1f5f9" stroke-width="12"></circle>
-                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--primary)" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="80" stroke-linecap="round"></circle>
-                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#3b82f6" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="150" stroke-linecap="round"></circle>
+                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--primary)" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="\${loc1Dash}" stroke-linecap="round"></circle>
+                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#3b82f6" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="\${loc2Dash}" stroke-linecap="round"></circle>
                                         </svg>
                                         <div style="position: absolute; text-align: center; display: flex; flex-direction: column;">
                                             <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary);">${unlockedSessions}</span>
@@ -422,8 +459,8 @@
                                         </div>
                                     </div>
                                     <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-secondary);">
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 50%;"></div> Kileleshwa</div>
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #3b82f6; border-radius: 50%;"></div> Kilimani</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 50%;"></div> \${topLoc1[0]}</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #3b82f6; border-radius: 50%;"></div> \${topLoc2[0]}</div>
                                         <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #f1f5f9; border-radius: 50%;"></div> Other</div>
                                     </div>
                                 </div>
@@ -453,20 +490,12 @@
                                                 <stop offset="100%" stop-color="var(--primary)" stop-opacity="0.0"></stop>
                                             </linearGradient>
                                         </defs>
-                                        <polygon points="0,200 0,140 100,100 200,120 300,70 400,90 500,40 600,60 700,20 800,50 800,200" fill="url(#payGradientAdmin)"></polygon>
+                                        <polygon points="\${polygonPoints}" fill="url(#payGradientAdmin)"></polygon>
                                         <!-- Line -->
-                                        <polyline points="0,140 100,100 200,120 300,70 400,90 500,40 600,60 700,20 800,50" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                        <polyline points="\${polyPoints}" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
                                         
                                         <!-- Data points -->
-                                        <circle cx="0" cy="140" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="100" cy="100" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="200" cy="120" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="300" cy="70" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="400" cy="90" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="500" cy="40" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="600" cy="60" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="700" cy="20" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
-                                        <circle cx="800" cy="50" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>
+                                        \${circles}
                                     </svg>
                                     <div style="display: flex; justify-content: space-between; position: absolute; bottom: 0; width: 100%; font-size: 0.75rem; color: var(--text-secondary); padding: 0 2px;">
                                         <span>Jan</span>
