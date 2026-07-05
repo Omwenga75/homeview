@@ -2,7 +2,7 @@
 
 const HV_CONFIG = {
     USE_MOCK: false,
-    API_BASE: 'http://127.0.0.1:8000/api/v1'  // Pointing to FastAPI Clean Architecture backend
+    API_BASE: 'http://127.0.0.1:8000', // Pointing to backend
 };
 
 // --- Managers ---
