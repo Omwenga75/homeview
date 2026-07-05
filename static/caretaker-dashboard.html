@@ -238,10 +238,7 @@
 
                 if (viewType === 'dashboard') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Welcome back, <span>${user.name.split(' ')[0]}</span></h1>
-                            <p>Manage your properties and track your performance.</p>
-                        </div>
+
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <span class="label">Your Listings</span>
@@ -278,10 +275,7 @@
                     `;
                 } else if (viewType === 'houses') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>My Houses</h1>
-                            <p>Manage your property listings and review status.</p>
-                        </div>
+
                                                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                             <h2 class="dashboard-section-title">Houses</h2>
                             <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
@@ -292,10 +286,7 @@
                     `;
                 } else if (viewType === 'add-house') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Add New House</h1>
-                            <p>Submit a new property listing for review.</p>
-                        </div>
+
                         <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
                             <form id="houseForm" style="max-width: 600px;">
                                 <div class="form-group">
@@ -457,10 +448,7 @@
                     }
                 } else if (viewType === 'messages') {
                     mainContent.innerHTML = `
-                        <div class="dashboard-header" style="margin-bottom: 2rem;">
-                            <h1>Messages</h1>
-                            <p>Communicate with renters interested in your properties.</p>
-                        </div>
+
                         <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; padding: 4rem 2rem;">
                             <p style="font-size: 3rem; margin-bottom: 1rem;">💬</p>
                             <p style="color: var(--text-secondary); font-size: 1.1rem;">No messages yet</p>
