@@ -649,3 +649,18 @@
 .mt-4 {
   margin-top: 1rem;
 }
+/* Simple Light Empty Card */
+.simple-empty-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: #64748b;
+  font-size: 1.05rem;
+  font-weight: 400;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+.section-header h2 {
+  color: #0f172a; /* Force dark text for headers if needed by the light theme mockup */
+}

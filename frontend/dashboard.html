@@ -83,15 +83,12 @@
         </div>
 
         <div class="view-section" id="propertiesView">
-          <div class="section-header flex-between">
-            <div>
-              <h2>Properties Management</h2>
-              <p>Manage listings, approve properties, and monitor performance.</p>
-            </div>
-            <button class="btn btn-primary">+ Add Property</button>
+          <div class="section-header flex-between" style="align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="font-size: 1.75rem;">Houses</h2>
+            <button class="btn btn-primary" style="background: #0a5c44; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer;">+ Add New House</button>
           </div>
           
-          <div class="table-container">
+          <div class="table-container" id="propertiesTableContainer">
             <table class="data-table">
               <thead>
                 <tr>
@@ -110,9 +107,8 @@
         </div>
 
         <div class="view-section" id="inquiriesView">
-          <div class="section-header">
-            <h2>Inquiries & Messages</h2>
-            <p>Communicate with potential tenants and clients.</p>
+          <div class="section-header flex-between" style="align-items: center; margin-bottom: 1.5rem;">
+            <h2 style="font-size: 1.75rem;">Messages</h2>
           </div>
           
           <div class="empty-state-container">
