@@ -6460,7 +6460,9 @@ html, body {
         font-size: 0.9rem !important;
     }
     .listing-footer .period {
-        font-size: 0.65rem !important;
+        font-size: 0.55rem !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.2px !important;
     }
     /* Dashboard at ultra-wide */
     .dashboard-main {
@@ -6571,7 +6573,9 @@ img, video, iframe, table {
     
     body.admin-dashboard .bottom-nav-item,
     body.caretaker-dashboard .bottom-nav-item {
-        font-size: 0.65rem !important;
+        font-size: 0.55rem !important;
+        white-space: nowrap !important;
+        letter-spacing: -0.2px !important;
         gap: 3px !important;
         padding: 0 2px !important;
         min-width: 0 !important;
