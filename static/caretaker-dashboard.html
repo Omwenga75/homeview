@@ -187,7 +187,19 @@
 
             function renderHouseCards(houses, includeViews = false) {
                 if (!houses.length) {
-                    return `<div style="grid-column: 1 / -1; padding: 3rem; text-align: center; color: #64748B; background: white; border-radius: 16px; border: 1px solid var(--border);">No house listings yet. Submit a new property and it will be sent for review.</div>`;
+                    return `
+                        <div class="empty-state-card" style="grid-column: 1 / -1; padding: 4rem 2rem; text-align: center; background: white; border-radius: 16px; border: 1px solid var(--border);">
+                            <div style="width: 80px; height: 80px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="40" height="40">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </div>
+                            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">No Listings Yet</h3>
+                            <p style="color: var(--text-secondary); max-width: 400px; margin: 0 auto 2rem; line-height: 1.6;">You haven't added any properties yet. Submit your first house to get it listed on HomeView.</p>
+                            <button class="btn btn-primary js-add-house-btn" style="padding: 0.8rem 2rem; border-radius: 12px; font-weight: 600;">+ Add New House</button>
+                        </div>
+                    `;
                 }
 
                 const IMAGES = ['images/prop1.png','images/prop2.png','images/prop3.png','images/prop4.png'];
@@ -666,11 +678,14 @@
                     }
                 } else if (viewType === 'messages') {
                     mainContent.innerHTML = `
-
-                        <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; padding: 4rem 2rem;">
-                            <p style="font-size: 3rem; margin-bottom: 1rem;">💬</p>
-                            <p style="color: var(--text-secondary); font-size: 1.1rem;">No messages yet</p>
-                            <p style="color: var(--text-muted); margin-top: 0.5rem;">When renters reach out about your properties, messages will appear here.</p>
+                        <div class="empty-state-card" style="padding: 4rem 2rem; text-align: center; background: white; border-radius: 16px; border: 1px solid var(--border); margin-top: 2rem;">
+                            <div style="width: 80px; height: 80px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="40" height="40">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                                </svg>
+                            </div>
+                            <h3 style="font-size: 1.5rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">No Messages Yet</h3>
+                            <p style="color: var(--text-secondary); max-width: 400px; margin: 0 auto; line-height: 1.6;">When renters reach out about your properties, their messages will appear here.</p>
                         </div>
                     `;
                 } else if (viewType === 'payments') {
