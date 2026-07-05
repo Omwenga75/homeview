@@ -83,12 +83,15 @@
         </div>
 
         <div class="view-section" id="propertiesView">
-          <div class="section-header flex-between" style="align-items: center; margin-bottom: 1.5rem;">
-            <h2 style="font-size: 1.75rem;">Houses</h2>
-            <button class="btn btn-primary" style="background: #0a5c44; color: white; border: none; padding: 0.75rem 1.25rem; border-radius: 8px; font-weight: 600; cursor: pointer;">+ Add New House</button>
+          <div class="section-header flex-between">
+            <div>
+              <h2>My Listings</h2>
+              <p>Manage your property listings and track their status.</p>
+            </div>
+            <button class="btn btn-primary">+ Add New House</button>
           </div>
           
-          <div class="table-container" id="propertiesTableContainer">
+          <div class="table-container">
             <table class="data-table">
               <thead>
                 <tr>
@@ -100,25 +103,43 @@
                 </tr>
               </thead>
               <tbody id="propertiesTableBody">
-                <!-- Table rows injected here -->
+                <!-- Rows injected by JS -->
               </tbody>
             </table>
           </div>
         </div>
 
         <div class="view-section" id="inquiriesView">
-          <div class="section-header flex-between" style="align-items: center; margin-bottom: 1.5rem;">
-            <h2 style="font-size: 1.75rem;">Messages</h2>
+          <div class="section-header">
+            <h2>Inquiries & Messages</h2>
+            <p>Communicate with potential tenants and clients.</p>
           </div>
           
-          <div class="empty-state-container">
-            <div class="empty-state">
-              <div class="empty-state-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M21 15V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14l4-4h14a2 2 0 0 0 2-2z"></path></svg>
-              </div>
-              <h3>No Messages Yet</h3>
-              <p>Your inbox is empty. When users inquire about your properties, their messages will appear here.</p>
-            </div>
+          <div class="table-container">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Sender</th>
+                  <th>Property</th>
+                  <th>Message</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td colspan="5" style="padding: 4rem 2rem;">
+                    <div class="empty-state">
+                      <div class="empty-state-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                      </div>
+                      <h3>No Messages Yet</h3>
+                      <p>Your inbox is empty. When tenants inquire about your properties, messages will appear here.</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
         <div class="view-section" id="paymentsView">
