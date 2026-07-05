@@ -223,16 +223,34 @@
 
             async function renderView(viewType) {
                 mainContent.innerHTML = `
-                    <div style="padding: 1rem; animation: skeletonPulse 1.5s infinite ease-in-out;">
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
-                            ${[1, 2, 3, 4, 5, 6].map(() => `<div style="height: 100px; background: var(--border); border-radius: 16px; opacity: 0.5;"></div>`).join('')}
+                    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 60vh; gap: 1.5rem;">
+                        <div style="position: relative; width: 80px; height: 80px;">
+                            <svg viewBox="0 0 80 80" style="width: 80px; height: 80px; transform: rotate(-90deg);">
+                                <circle cx="40" cy="40" r="34" fill="none" stroke="#e2e8f0" stroke-width="7"></circle>
+                                <circle cx="40" cy="40" r="34" fill="none" stroke="var(--primary)" stroke-width="7"
+                                    stroke-dasharray="213.6" stroke-dashoffset="213.6"
+                                    style="animation: circProgress 1.4s ease-in-out infinite; stroke-linecap: round;">
+                                </circle>
+                            </svg>
+                            <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+                                <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                                </svg>
+                            </div>
                         </div>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
-                            <div style="height: 250px; background: var(--border); border-radius: 16px; opacity: 0.5;"></div>
-                            <div style="height: 250px; background: var(--border); border-radius: 16px; opacity: 0.5;"></div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 1rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">Loading Dashboard</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary);">Fetching your property data...</div>
                         </div>
                     </div>
-                    <style>@keyframes skeletonPulse { 0% { opacity: 1; } 50% { opacity: 0.6; } 100% { opacity: 1; } }</style>
+                    <style>
+                        @keyframes circProgress {
+                            0% { stroke-dashoffset: 213.6; }
+                            50% { stroke-dashoffset: 53.4; }
+                            100% { stroke-dashoffset: 213.6; }
+                        }
+                    </style>
                 `;
                 const userHouses = await getCurrentUserHouses();
                 const recentHouses = userHouses.slice(0, 3);
@@ -420,9 +438,9 @@
                 } else if (viewType === 'houses') {
                     mainContent.innerHTML = `
 
-                                                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
                             <h2 class="dashboard-section-title">Houses</h2>
-                            <button class="btn btn-sm btn-primary js-add-house-btn">Add New House</button>
+                            <button class="btn btn-primary js-add-house-btn" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.4rem; border-radius: 12px; font-weight: 600; font-size: 0.9rem; box-shadow: 0 4px 12px rgba(16,185,129,0.25);"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add New House</button>
                         </div>
                         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
                             ${renderHouseCards(userHouses, true)}
@@ -430,117 +448,142 @@
                     `;
                 } else if (viewType === 'add-house') {
                     mainContent.innerHTML = `
+                        <style>
+                            .add-house-wrapper { max-width: 860px; margin: 0 auto; }
+                            .add-house-header { margin-bottom: 2rem; }
+                            .add-house-header h2 { font-size: 1.6rem; font-weight: 700; color: var(--text-primary); margin: 0 0 0.4rem; }
+                            .add-house-header p { color: var(--text-secondary); font-size: 0.95rem; margin: 0; }
+                            .add-house-card { background: white; border-radius: 20px; border: 1px solid var(--border); box-shadow: 0 4px 24px rgba(0,0,0,0.06); overflow: hidden; }
+                            .add-house-section { padding: 2rem; border-bottom: 1px solid var(--border); }
+                            .add-house-section:last-of-type { border-bottom: none; }
+                            .section-label { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.2rem; }
+                            .section-label .step-num { width: 28px; height: 28px; background: var(--primary); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; flex-shrink: 0; }
+                            .section-label span { font-size: 1rem; font-weight: 600; color: var(--text-primary); }
+                            .photo-grid-premium { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.75rem; }
+                            .photo-box-premium { aspect-ratio: 1; border: 2px dashed #cbd5e1; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; cursor: pointer; transition: all 0.2s; background: #f8fafc; overflow: hidden; position: relative; }
+                            .photo-box-premium:hover { border-color: var(--primary); background: rgba(16,185,129,0.04); }
+                            .photo-box-premium.has-image { border-style: solid; border-color: var(--primary); }
+                            .photo-box-premium input { display: none; }
+                            .photo-box-premium .ph-icon { font-size: 1.4rem; color: #94a3b8; }
+                            .photo-box-premium .ph-label { font-size: 0.7rem; color: #94a3b8; font-weight: 500; }
+                            .photo-box-premium img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+                            .premium-input { width: 100%; padding: 0.75rem 1rem; border: 1.5px solid var(--border); border-radius: 12px; font-size: 0.95rem; color: var(--text-primary); background: #f8fafc; outline: none; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box; }
+                            .premium-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(16,185,129,0.12); background: white; }
+                            .premium-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2.5rem; }
+                            .field-label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.4rem; letter-spacing: 0.02em; }
+                            .amenity-pill { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 0.9rem; border: 1.5px solid var(--border); border-radius: 99px; cursor: pointer; font-size: 0.85rem; color: var(--text-secondary); transition: all 0.2s; background: white; white-space: nowrap; user-select: none; }
+                            .amenity-pill:hover { border-color: var(--primary); color: var(--primary); background: rgba(16,185,129,0.05); }
+                            .amenity-pill.selected { border-color: var(--primary); background: rgba(16,185,129,0.1); color: var(--primary); font-weight: 600; }
+                            .amenity-pills-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+                            .submit-bar { padding: 1.5rem 2rem; background: #f8fafc; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+                            .submit-hint { font-size: 0.82rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.4rem; }
+                            .btn-submit-approval { display: inline-flex; align-items: center; gap: 0.6rem; padding: 0.85rem 2rem; background: var(--primary); color: white; border: none; border-radius: 14px; font-size: 0.95rem; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(16,185,129,0.35); transition: all 0.2s; letter-spacing: 0.01em; }
+                            .btn-submit-approval:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(16,185,129,0.45); }
+                            .btn-submit-approval:active { transform: translateY(0); }
+                            @media (max-width: 600px) { .photo-grid-premium { grid-template-columns: repeat(3, 1fr); } .fields-3col { grid-template-columns: 1fr !important; } }
+                        </style>
 
-                        <div class="section-card" style="background: white; padding: 2rem; border-radius: 16px; border: 1px solid var(--border);">
-                            <form id="houseForm" style="max-width: 600px;">
-                                <div class="form-group">
-                                    <label>Property Photos (minimum 5)</label>
-                                    <div class="photo-upload-grid">
-                                        <label class="photo-upload-box">
-                                            <input type="file" id="photo1" name="photo1" accept="image/*" required>
-                                        </label>
-                                        <label class="photo-upload-box">
-                                            <input type="file" id="photo2" name="photo2" accept="image/*" required>
-                                        </label>
-                                        <label class="photo-upload-box">
-                                            <input type="file" id="photo3" name="photo3" accept="image/*" required>
-                                        </label>
-                                        <label class="photo-upload-box">
-                                            <input type="file" id="photo4" name="photo4" accept="image/*" required>
-                                        </label>
-                                        <label class="photo-upload-box">
-                                            <input type="file" id="photo5" name="photo5" accept="image/*" required>
-                                        </label>
-                                    </div>
-                                    <small style="display: block; margin-top: 0.5rem; color: var(--text-secondary);">Click each square to upload at least 5 property images. This listing will be sent for review before it goes live.</small>
-                                </div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
-                                    <div class="form-group">
-                                        <label for="houseType">House Type</label>
-                                        <select id="houseType" required>
-                                            <option value="" disabled selected>Select Type</option>
-                                            <option value="Bedsitter">Bedsitter</option>
-                                            <option value="Single Room">Single Room</option>
-                                            <option value="Double Room">Double Room</option>
-                                            <option value="Studio">Studio</option>
-                                            <option value="1 Bedroom">1 Bedroom</option>
-                                            <option value="2 Bedroom">2 Bedroom</option>
-                                            <option value="3 Bedroom">3 Bedroom</option>
-                                            <option value="4 Bedroom">4 Bedroom</option>
-                                            <option value="Penthouse">Penthouse</option>
-                                            <option value="Townhouse">Townhouse</option>
-                                            <option value="Villa">Villa</option>
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="estate">Estate / Area</label>
-                                        <input type="text" id="estate" placeholder="e.g. Kileleshwa" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="county">County / City</label>
-                                        <input type="text" id="county" placeholder="e.g. Nairobi" required>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="price">Monthly Price (Sh.)</label>
-                                    <input type="number" id="price" placeholder="45000" required>
-                                </div>
-                                <div class="form-group" style="grid-column: 1 / -1; margin-top: 1rem;">
-                                    <label>Amenities (Select all that apply)</label>
-                                    <div class="amenities-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-top: 0.5rem;">
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="WiFi" style="display: none;">
-                                            <div class="amenity-content">📶 WiFi</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Parking" style="display: none;">
-                                            <div class="amenity-content">🚗 Parking</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Water" style="display: none;">
-                                            <div class="amenity-content">💧 Water</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Security" style="display: none;">
-                                            <div class="amenity-content">🛡️ Security</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Borehole" style="display: none;">
-                                            <div class="amenity-content">🚰 Borehole</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Balcony" style="display: none;">
-                                            <div class="amenity-content">🌅 Balcony</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Gym" style="display: none;">
-                                            <div class="amenity-content">🏋️ Gym</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Pool" style="display: none;">
-                                            <div class="amenity-content">🏊 Pool</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="CCTV" style="display: none;">
-                                            <div class="amenity-content">📹 CCTV</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Tokens" style="display: none;">
-                                            <div class="amenity-content">⚡ Tokens</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Generator" style="display: none;">
-                                            <div class="amenity-content">🔋 Generator</div>
-                                        </label>
-                                        <label class="amenity-card">
-                                            <input type="checkbox" name="amenity" value="Elevator" style="display: none;">
-                                            <div class="amenity-content">🛗 Elevator</div>
-                                        </label>
-                                    </div>
-                                </div>
+                        <div class="add-house-wrapper">
+                            <div class="add-house-header">
+                                <h2>List a New Property</h2>
+                                <p>Fill in your property details below. Once submitted, our team will review and approve your listing.</p>
+                            </div>
 
-                                <button type="submit" class="btn btn-primary">Submit for Approval</button>
-                            </form>
+                            <div class="add-house-card">
+                                <form id="houseForm">
+
+                                    <!-- Section 1: Photos -->
+                                    <div class="add-house-section">
+                                        <div class="section-label">
+                                            <div class="step-num">1</div>
+                                            <span>Property Photos <span style="color:#94a3b8; font-weight:400;">(minimum 5)</span></span>
+                                        </div>
+                                        <div class="photo-grid-premium" id="photoGrid">
+                                            ${[1,2,3,4,5].map(n => `
+                                            <label class="photo-box-premium" id="photoBox${n}">
+                                                <input type="file" id="photo${n}" name="photo${n}" accept="image/*">
+                                                <span class="ph-icon">📷</span>
+                                                <span class="ph-label">Photo ${n}</span>
+                                            </label>`).join('')}
+                                        </div>
+                                        <p style="margin-top:0.75rem; font-size:0.8rem; color:var(--text-secondary); display:flex; align-items:center; gap:0.4rem;">
+                                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                                            Click each square to upload a photo. Listings with clear photos get more views.
+                                        </p>
+                                    </div>
+
+                                    <!-- Section 2: Details -->
+                                    <div class="add-house-section">
+                                        <div class="section-label">
+                                            <div class="step-num">2</div>
+                                            <span>Property Details</span>
+                                        </div>
+                                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem;" class="fields-3col">
+                                            <div>
+                                                <label class="field-label">House Type</label>
+                                                <select id="houseType" class="premium-input premium-select" required>
+                                                    <option value="" disabled selected>Select Type</option>
+                                                    <option>Bedsitter</option>
+                                                    <option>Single Room</option>
+                                                    <option>Double Room</option>
+                                                    <option>Studio</option>
+                                                    <option>1 Bedroom</option>
+                                                    <option>2 Bedroom</option>
+                                                    <option>3 Bedroom</option>
+                                                    <option>4 Bedroom</option>
+                                                    <option>Penthouse</option>
+                                                    <option>Townhouse</option>
+                                                    <option>Villa</option>
+                                                </select>
+                                            </div>
+                                            <div>
+                                                <label class="field-label">Estate / Area</label>
+                                                <input type="text" id="estate" class="premium-input" placeholder="e.g. Kileleshwa" required>
+                                            </div>
+                                            <div>
+                                                <label class="field-label">County / City</label>
+                                                <input type="text" id="county" class="premium-input" placeholder="e.g. Nairobi" required>
+                                            </div>
+                                        </div>
+                                        <div style="margin-top:1rem;">
+                                            <label class="field-label">Monthly Rent (Ksh.)</label>
+                                            <div style="position:relative;">
+                                                <span style="position:absolute; left:1rem; top:50%; transform:translateY(-50%); color:#94a3b8; font-weight:600; font-size:0.9rem;">Sh.</span>
+                                                <input type="number" id="price" class="premium-input" style="padding-left:2.6rem;" placeholder="e.g. 45000" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Section 3: Amenities -->
+                                    <div class="add-house-section">
+                                        <div class="section-label">
+                                            <div class="step-num">3</div>
+                                            <span>Amenities & Features</span>
+                                        </div>
+                                        <div class="amenity-pills-wrap" id="amenityPills">
+                                            ${[
+                                                ['📶','WiFi'],['🚗','Parking'],['💧','Water'],['🛡️','Security'],
+                                                ['🚰','Borehole'],['🌅','Balcony'],['🏋️','Gym'],['🏊','Pool'],
+                                                ['📹','CCTV'],['⚡','Tokens'],['🔋','Generator'],['🛗','Elevator']
+                                            ].map(([icon,name]) => `
+                                            <div class="amenity-pill" data-value="${name}" onclick="this.classList.toggle('selected')">${icon} ${name}</div>`).join('')}
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit Bar -->
+                                    <div class="submit-bar">
+                                        <div class="submit-hint">
+                                            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                            Your listing will be reviewed before going live.
+                                        </div>
+                                        <button type="submit" class="btn-submit-approval">
+                                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline></svg>
+                                            Submit for Approval
+                                        </button>
+                                    </div>
+
+                                </form>
+                            </div>
                         </div>
                     `;
 
@@ -548,6 +591,31 @@
 
                     const houseForm = document.getElementById('houseForm');
                     if (houseForm) {
+                        // Photo preview
+                        [1,2,3,4,5].forEach(n => {
+                            const input = document.getElementById(`photo${n}`);
+                            const box = document.getElementById(`photoBox${n}`);
+                            if (input && box) {
+                                input.addEventListener('change', () => {
+                                    const file = input.files[0];
+                                    if (file) {
+                                        const reader = new FileReader();
+                                        reader.onload = e => {
+                                            box.classList.add('has-image');
+                                            box.querySelector('.ph-icon').style.display = 'none';
+                                            box.querySelector('.ph-label').style.display = 'none';
+                                            const existing = box.querySelector('img');
+                                            if (existing) existing.remove();
+                                            const img = document.createElement('img');
+                                            img.src = e.target.result;
+                                            box.appendChild(img);
+                                        };
+                                        reader.readAsDataURL(file);
+                                    }
+                                });
+                            }
+                        });
+
                         houseForm.addEventListener('submit', async (event) => {
                             event.preventDefault();
                             const houseType = houseForm.querySelector('#houseType').value;
@@ -555,8 +623,8 @@
                             const county = houseForm.querySelector('#county').value.trim();
                             const price = houseForm.querySelector('#price').value.trim();
                             
-                            const amenityCheckboxes = houseForm.querySelectorAll('input[name="amenity"]:checked');
-                            const amenities = Array.from(amenityCheckboxes).map(cb => cb.value);
+                            // Read amenity pills
+                            const amenities = Array.from(document.querySelectorAll('.amenity-pill.selected')).map(el => el.dataset.value);
                             
                             let description = `A beautiful ${houseType} located in ${estate}, ${county}. Available for Sh. ${price} per month.`;
                             if (amenities.length > 0) {
@@ -571,6 +639,11 @@
                             const title = `${houseType} in ${estate}`;
                             const location = `${estate}, ${county}`;
 
+                            const submitBtn = houseForm.querySelector('.btn-submit-approval');
+                            submitBtn.disabled = true;
+                            submitBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg> Submitting...`;
+                            submitBtn.style.opacity = '0.8';
+
                             const newHouse = {
                                 ownerName: user.name,
                                 ownerEmail: user.email,
@@ -579,14 +652,18 @@
                                 rawPrice: Number(price),
                                 description,
                                 amenities,
-                                photos: [] // For now, empty; can add file upload later
+                                photos: []
                             };
 
                             const saved = await saveHouse(newHouse);
                             if (saved) {
                                 alert('Your house listing has been submitted for review. It will appear on your dashboard once approved.');
-                                setActiveSidebar('houses');
+                                setActiveNavigation('houses');
                                 await renderView('houses');
+                            } else {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = `<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 2 15 22 11 13 2 9 22 2"></polyline></svg> Submit for Approval`;
+                                submitBtn.style.opacity = '1';
                             }
                         });
                     }
