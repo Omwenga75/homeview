@@ -17,7 +17,15 @@ const AuthManager = {
                     body: JSON.stringify({ name, email, password, role })
                 });
                 const data = await response.json();
-                if (!response.ok) return { success: false, message: data.detail || data.error || 'Signup failed' };
+                if (!response.ok) {
+                    let errorMsg = data.error || 'Signup failed';
+                    if (data.detail) {
+                        if (Array.isArray(data.detail)) errorMsg = data.detail.map(e => e.msg || JSON.stringify(e)).join(', ');
+                        else if (typeof data.detail === 'object') errorMsg = JSON.stringify(data.detail);
+                        else errorMsg = data.detail;
+                    }
+                    return { success: false, message: errorMsg };
+                }
                 return { success: true, redirect: `login.html?email=${encodeURIComponent(email)}` };
             } catch (err) {
                 return { success: false, message: 'Backend unavailable. Please try again later.' };
@@ -56,7 +64,19 @@ const AuthManager = {
                     body: JSON.stringify({ name, email, password, role })
                 });
                 const data = await response.json();
-                if (!response.ok) return { success: false, message: data.detail || data.error || 'User creation failed' };
+                let errorMsg = 'User creation failed';
+                if (data.detail) {
+                    if (Array.isArray(data.detail)) {
+                        errorMsg = data.detail.map(e => e.msg || JSON.stringify(e)).join(', ');
+                    } else if (typeof data.detail === 'object') {
+                        errorMsg = JSON.stringify(data.detail);
+                    } else {
+                        errorMsg = data.detail;
+                    }
+                } else if (data.error) {
+                    errorMsg = data.error;
+                }
+                if (!response.ok) return { success: false, message: errorMsg };
                 return { success: true };
             } catch (err) {
                 return { success: false, message: 'Backend unavailable. Please try again later.' };
@@ -137,7 +157,14 @@ const AuthManager = {
                     else if (user.role === 'caretaker') redirect = 'caretaker-dashboard.html';
                     return { success: true, redirect };
                 }
-                return { success: false, message: result.detail || result.error || 'Login failed' };
+                
+                let errorMsg = result.error || 'Login failed';
+                if (result.detail) {
+                    if (Array.isArray(result.detail)) errorMsg = result.detail.map(e => e.msg || JSON.stringify(e)).join(', ');
+                    else if (typeof result.detail === 'object') errorMsg = JSON.stringify(result.detail);
+                    else errorMsg = result.detail;
+                }
+                return { success: false, message: errorMsg };
             } catch (err) {
                 console.warn("Backend login failed...");
                 return { success: false, message: 'Could not connect to server' };
