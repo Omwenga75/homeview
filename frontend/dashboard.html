@@ -109,6 +109,22 @@
           </div>
         </div>
 
+        <div class="view-section" id="inquiriesView">
+          <div class="section-header">
+            <h2>Inquiries & Messages</h2>
+            <p>Communicate with potential tenants and clients.</p>
+          </div>
+          
+          <div class="empty-state-container">
+            <div class="empty-state">
+              <div class="empty-state-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M21 15V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14l4-4h14a2 2 0 0 0 2-2z"></path></svg>
+              </div>
+              <h3>No Messages Yet</h3>
+              <p>Your inbox is empty. When users inquire about your properties, their messages will appear here.</p>
+            </div>
+          </div>
+        </div>
         <div class="view-section" id="paymentsView">
           <div class="section-header">
             <h2>Payments (M-Pesa)</h2>
@@ -128,7 +144,15 @@
               </thead>
               <tbody id="paymentsTableBody">
                 <tr>
-                  <td colspan="5" style="text-align: center; padding: 2rem;">0</td>
+                  <td colspan="5" style="padding: 4rem 2rem;">
+                    <div class="empty-state">
+                      <div class="empty-state-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                      </div>
+                      <h3>No Payments Found</h3>
+                      <p>You don't have any transaction history yet.</p>
+                    </div>
+                  </td>
                 </tr>
               </tbody>
             </table>
