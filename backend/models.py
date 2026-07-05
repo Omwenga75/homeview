@@ -26,9 +26,12 @@ class User(Base):
     id = Column(String, primary_key=True, index=True)
     name = Column(String)
     email = Column(String, unique=True, index=True)
-    password = Column(String)
+    password = Column(String)          # new column added via ALTER TABLE
+    hashed_password = Column(String)   # legacy column kept for compatibility
     role = Column(String, default="tenant")
     bio = Column(Text, default="")
     phone = Column(String, default="")
     profile_pic = Column(Text, default="")
+    is_active = Column(Boolean, default=True)
+    is_verified = Column(Boolean, default=False)
     joined_at = Column(DateTime(timezone=True), server_default=func.now())

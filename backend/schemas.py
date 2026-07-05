@@ -55,10 +55,10 @@ class ProfilePicUpdate(BaseModel):
 
 class User(UserBase):
     id: str
-    bio: str
-    phone: str
-    profile_pic: str
-    joined_at: datetime
+    bio: Optional[str] = ""
+    phone: Optional[str] = ""
+    profile_pic: Optional[str] = ""
+    joined_at: Optional[datetime] = None
 
     class Config:
         from_attributes = True

@@ -104,7 +104,7 @@ def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
 @app.post("/auth/login", response_model=schemas.User)
 def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
-    if not db_user or db_user.password != user.password:
+    if not db_user or (db_user.password != user.password and db_user.hashed_password != user.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
     return db_user
 
