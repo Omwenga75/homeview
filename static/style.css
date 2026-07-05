@@ -6554,3 +6554,32 @@ img, video, iframe, table {
         justify-content: center !important;
     }
 }
+
+
+/* Mobile fixes for Admin Dashboard */
+@media (max-width: 768px) {
+    body.admin-dashboard .header-actions,
+    body.caretaker-dashboard .header-actions {
+        display: none !important;
+    }
+    
+    body.admin-dashboard .bottom-nav-item,
+    body.caretaker-dashboard .bottom-nav-item {
+        font-size: 0.65rem !important;
+        gap: 3px !important;
+        padding: 0 2px !important;
+        min-width: 0 !important;
+    }
+    
+    body.admin-dashboard .bottom-nav-icon,
+    body.caretaker-dashboard .bottom-nav-icon {
+        font-size: 1.25rem !important;
+    }
+    
+    body.admin-dashboard .bottom-nav-icon svg,
+    body.caretaker-dashboard .bottom-nav-icon svg {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
+
