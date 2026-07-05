@@ -276,9 +276,9 @@
                         currentRev += (totalRevenue - currentRev) / (9 - i) * (Math.random() + 0.5);
                     }
                     const maxRev = Math.max(...revPoints, totalRevenue, 10000);
-                    const polyPoints = revPoints.map((r, i) => \`\${i * 100},\${200 - (r/maxRev)*150}\`).join(' ');
-                    const polygonPoints = \`0,200 \${polyPoints} 800,200\`;
-                    const circles = revPoints.map((r, i) => \`<circle cx="\${i * 100}" cy="\${200 - (r/maxRev)*150}" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>\`).join('');
+                    const polyPoints = revPoints.map((r, i) => `${i * 100},${200 - (r/maxRev)*150}`).join(' ');
+                    const polygonPoints = `0,200 ${polyPoints} 800,200`;
+                    const circles = revPoints.map((r, i) => `<circle cx="${i * 100}" cy="${200 - (r/maxRev)*150}" r="5" fill="white" stroke="var(--primary)" stroke-width="2"></circle>`).join('');
 
                     mainContent.innerHTML = `
 
@@ -318,20 +318,20 @@
                                     </div>
                                     <div style="height: 200px; display: flex; align-items: flex-end; justify-content: space-around; padding-top: 1rem; border-bottom: 1px solid var(--border);">
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: \${(w1H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: \${(w1V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w1H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w1V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: \${(w2H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: \${(w2V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w2H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w2V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: \${(w3H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: \${(w3V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w3H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w3V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                         <div style="display: flex; gap: 6px; height: 100%; align-items: flex-end;">
-                                            <div style="width: 20px; height: \${(w4H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
-                                            <div style="width: 20px; height: \${(w4V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w4H/maxH)*90}%; background: var(--primary); border-radius: 4px 4px 0 0; transition: height 0.3s ease;"></div>
+                                            <div style="width: 20px; height: ${(w4V/maxV)*90}%; background: #94a3b8; border-radius: 4px 4px 0 0; opacity: 0.5; transition: height 0.3s ease;"></div>
                                         </div>
                                     </div>
                                     <div style="display: flex; justify-content: space-around; margin-top: 0.5rem; font-size: 0.75rem; color: var(--text-secondary); padding: 0 10px;">
@@ -341,8 +341,8 @@
                                         <span>Week 4</span>
                                     </div>
                                     <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-secondary);">
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 2px;"></div> Houses (\${totalHouses})</div>
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #94a3b8; opacity: 0.5; border-radius: 2px;"></div> Views (\${totalViews})</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 2px;"></div> Houses (${totalHouses})</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #94a3b8; opacity: 0.5; border-radius: 2px;"></div> Views (${totalViews})</div>
                                     </div>
                                 </div>
 
@@ -355,17 +355,17 @@
                                     <div style="height: 200px; display: flex; align-items: center; justify-content: center; position: relative;">
                                         <svg viewBox="0 0 100 100" style="height: 100%; width: auto; transform: rotate(-90deg); filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.05));">
                                             <circle cx="50" cy="50" r="40" fill="transparent" stroke="#f1f5f9" stroke-width="12"></circle>
-                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--primary)" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="\${loc1Dash}" stroke-linecap="round"></circle>
-                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#3b82f6" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="\${loc2Dash}" stroke-linecap="round"></circle>
+                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="var(--primary)" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="${loc1Dash}" stroke-linecap="round"></circle>
+                                            <circle cx="50" cy="50" r="40" fill="transparent" stroke="#3b82f6" stroke-width="12" stroke-dasharray="251.2" stroke-dashoffset="${loc2Dash}" stroke-linecap="round"></circle>
                                         </svg>
                                         <div style="position: absolute; text-align: center; display: flex; flex-direction: column;">
-                                            <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary);">\${unlockedSessions}</span>
+                                            <span style="font-size: 1.8rem; font-weight: 700; color: var(--text-primary);">${unlockedSessions}</span>
                                             <span style="font-size: 0.75rem; color: var(--text-secondary);">Total Unlocks</span>
                                         </div>
                                     </div>
                                     <div style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-secondary);">
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 50%;"></div> \${topLoc1[0]}</div>
-                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #3b82f6; border-radius: 50%;"></div> \${topLoc2[0]}</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: var(--primary); border-radius: 50%;"></div> ${topLoc1[0]}</div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #3b82f6; border-radius: 50%;"></div> ${topLoc2[0]}</div>
                                         <div style="display: flex; align-items: center; gap: 0.4rem;"><div style="width: 10px; height: 10px; background: #f1f5f9; border-radius: 50%;"></div> Other</div>
                                     </div>
                                 </div>
@@ -395,12 +395,12 @@
                                                 <stop offset="100%" stop-color="var(--primary)" stop-opacity="0.0"></stop>
                                             </linearGradient>
                                         </defs>
-                                        <polygon points="\${polygonPoints}" fill="url(#payGradient)"></polygon>
+                                        <polygon points="${polygonPoints}" fill="url(#payGradient)"></polygon>
                                         <!-- Line -->
-                                        <polyline points="\${polyPoints}" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
+                                        <polyline points="${polyPoints}" fill="none" stroke="var(--primary)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></polyline>
                                         
                                         <!-- Data points -->
-                                        \${circles}
+                                        ${circles}
                                     </svg>
                                     <div style="display: flex; justify-content: space-between; position: absolute; bottom: 0; width: 100%; font-size: 0.75rem; color: var(--text-secondary); padding: 0 2px;">
                                         <span>Jan</span>
