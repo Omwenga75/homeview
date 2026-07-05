@@ -6563,6 +6563,12 @@ img, video, iframe, table {
         display: none !important;
     }
     
+    body.admin-dashboard .mobile-nav-toggle,
+    body.caretaker-dashboard .mobile-nav-toggle {
+        background: rgba(255, 255, 255, 0.15) !important;
+        border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+    
     body.admin-dashboard .bottom-nav-item,
     body.caretaker-dashboard .bottom-nav-item {
         font-size: 0.65rem !important;
@@ -6582,4 +6588,3 @@ img, video, iframe, table {
         height: 20px !important;
     }
 }
-
