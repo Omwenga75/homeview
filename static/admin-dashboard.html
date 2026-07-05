@@ -943,7 +943,7 @@
                     <option value="caretaker">Caretaker</option>
                 </select>
             </div>
-            <div><label style="font-size:0.8rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:0.5rem;">Full Name</label><input id="userName" type="text" placeholder="e.g. John Doe" required autocomplete="off" style="width:100%; padding:0.9rem 1rem; border:1.5px solid #e2e8f0; border-radius:12px; font-size:1rem; outline:none; box-sizing:border-box;"></div>
+            <div><label style="font-size:0.8rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:0.5rem;">Full Name</label><input id="newUserFullName" type="text" placeholder="e.g. John Doe" required autocomplete="off" style="width:100%; padding:0.9rem 1rem; border:1.5px solid #e2e8f0; border-radius:12px; font-size:1rem; outline:none; box-sizing:border-box;"></div>
             <div><label style="font-size:0.8rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:0.5rem;">Email</label><input id="userEmail" type="email" placeholder="jondoe@gmail.com" required autocomplete="off" style="width:100%; padding:0.9rem 1rem; border:1.5px solid #e2e8f0; border-radius:12px; font-size:1rem; outline:none; box-sizing:border-box;"></div>
 
             <div><label style="font-size:0.8rem; font-weight:700; color:#64748b; text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:0.5rem;">Password</label>
@@ -994,7 +994,7 @@ document.getElementById('createUserForm').addEventListener('submit', async funct
     const msg = document.getElementById('userMsg');
     const role = document.getElementById('userRole').value;
     try {
-        const res = await AuthManager.createUser(document.getElementById('userName').value, document.getElementById('userEmail').value, document.getElementById('userPassword').value, role);
+        const res = await AuthManager.createUser(document.getElementById('newUserFullName').value, document.getElementById('userEmail').value, document.getElementById('userPassword').value, role);
         msg.style.display = 'block';
         if (res.success) { msg.style.background='#ecfdf5'; msg.style.color='var(--primary)'; msg.textContent= role.charAt(0).toUpperCase()+role.slice(1)+' account created successfully!'; e.target.reset(); }
         else { msg.style.background='#fef2f2'; msg.style.color='#dc2626'; msg.textContent = res.message || 'Failed to add user.'; }
