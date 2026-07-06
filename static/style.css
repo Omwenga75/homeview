@@ -3506,6 +3506,24 @@ footer {
     width: 100%;
 }
 
+/* Large screen empty states — fill the content area, centered vertically */
+@media (min-width: 1280px) {
+    .empty-state-card {
+        max-width: 100% !important;
+        width: 100% !important;
+        min-height: calc(100vh - 200px);
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #f8faf9 !important;
+        border-radius: 20px !important;
+        border: 1px solid var(--border) !important;
+        padding: 5rem 2rem !important;
+        box-shadow: none !important;
+    }
+}
+
 /* Stats Cards */
 .stats-grid {
     display: grid;
