@@ -3524,7 +3524,7 @@ footer {
         flex-direction: column !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #f8faf9 !important;
+        background: #ffffff !important;
         border-radius: 20px !important;
         border: 1px solid var(--border) !important;
         padding: 5rem 2rem !important;
@@ -6370,14 +6370,38 @@ html, body {
         grid-template-columns: 2fr 1fr 1fr 1.5fr !important;
         gap: 2.5rem !important;
     }
-    /* Dashboard sidebar stays visible on desktop */
+    /* Dashboard: keep sidebar FIXED (not sticky) to avoid double-offset with margin-left */
     .sidebar {
-        position: sticky !important;
+        position: fixed !important;
         transform: none !important;
+        left: 0 !important;
+        width: 260px !important;
     }
     .dashboard-main {
         margin-left: 260px !important;
-        padding: 2rem !important;
+        padding: 1.5rem !important;
+        overflow-x: hidden !important;
+        max-width: calc(100vw - 260px) !important;
+        box-sizing: border-box !important;
+    }
+    /* Stats grid: 3 balanced columns on laptop */
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    /* Empty state cards: fill content area and center vertically */
+    .empty-state-card {
+        max-width: 100% !important;
+        width: 100% !important;
+        min-height: calc(100vh - 200px) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #ffffff !important;
+        border-radius: 20px !important;
+        border: 1px solid var(--border) !important;
+        padding: 5rem 2rem !important;
+        box-shadow: none !important;
     }
 }
 
@@ -6392,6 +6416,15 @@ html, body {
     }
     .container {
         max-width: 96% !important;
+    }
+    /* Dashboard: prevent horizontal overflow, 4-column stats grid */
+    .dashboard-main {
+        overflow-x: hidden !important;
+        max-width: calc(100vw - 260px) !important;
+        box-sizing: border-box !important;
+    }
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr) !important;
     }
 }
 
