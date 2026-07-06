@@ -5842,15 +5842,15 @@ button.bottom-nav-item {
 @media (min-width: 1280px) {
     .image-wrapper {
         max-width: 420px;
-        margin-top: 40px;
+        margin-top: 0;
     }
     .hero-image {
         justify-content: flex-end;
-        align-items: flex-start;
-        padding-top: 2rem;
+        align-items: center;
+        padding-top: 0;
     }
     #hero {
-        min-height: 100vh;
+        min-height: calc(100vh - 80px);
     }
 }
 
@@ -5860,16 +5860,16 @@ button.bottom-nav-item {
     }
     .image-wrapper {
         max-width: 500px;
-        margin-top: 40px;
+        margin-top: 0;
     }
     .hero-image {
         justify-content: flex-end;
-        align-items: flex-start;
-        padding-top: 2rem;
+        align-items: center;
+        padding-top: 0;
     }
     #hero {
-        min-height: 100vh;
-        padding: 120px 0 80px;
+        min-height: calc(100vh - 80px);
+        padding: 100px 0 80px;
     }
     .listing-footer .price {
         font-size: 0.82rem;
@@ -5885,16 +5885,16 @@ button.bottom-nav-item {
     }
     .image-wrapper {
         max-width: 660px;
-        margin-top: 50px;
+        margin-top: 0;
     }
     .hero-image {
         justify-content: flex-end;
-        align-items: flex-start;
-        padding-top: 2rem;
+        align-items: center;
+        padding-top: 0;
     }
     #hero {
-        min-height: 100vh;
-        padding: 130px 0 80px;
+        min-height: calc(100vh - 80px);
+        padding: 100px 0 80px;
     }
     .listing-footer .price {
         font-size: 0.75rem;
@@ -5910,15 +5910,15 @@ button.bottom-nav-item {
     }
     .image-wrapper {
         max-width: 860px;
-        margin-top: 60px;
+        margin-top: 0;
     }
     .hero-image {
         justify-content: flex-end;
-        align-items: flex-start;
-        padding-top: 3rem;
+        align-items: center;
+        padding-top: 0;
     }
     #hero {
-        min-height: 100vh;
+        min-height: calc(100vh - 80px);
         padding: 140px 0 80px;
     }
 }
@@ -6423,14 +6423,14 @@ html, body {
         max-width: 1400px !important;
     }
     #hero {
-        min-height: 100vh;
+        min-height: calc(100vh - 80px) !important;
     }
     .image-wrapper {
-        margin-top: 40px !important;
+        margin-top: 0 !important;
     }
     .hero-image {
-        align-items: flex-start !important;
-        padding-top: 2rem !important;
+        align-items: center !important;
+        padding-top: 0 !important;
     }
     .listing-footer .price {
         font-size: 1rem !important;
@@ -6466,14 +6466,14 @@ html, body {
         gap: 4rem !important;
     }
     #hero {
-        min-height: 100vh;
+        min-height: calc(100vh - 80px) !important;
     }
     .image-wrapper {
-        margin-top: 50px !important;
+        margin-top: 0 !important;
     }
     .hero-image {
-        align-items: flex-start !important;
-        padding-top: 2rem !important;
+        align-items: center !important;
+        padding-top: 0 !important;
     }
     .listing-footer .price {
         font-size: 1rem !important;
@@ -6513,14 +6513,14 @@ html, body {
         gap: 5rem !important;
     }
     #hero {
-        min-height: 100vh;
+        min-height: calc(100vh - 80px) !important;
     }
     .image-wrapper {
-        margin-top: 60px !important;
+        margin-top: 0 !important;
     }
     .hero-image {
-        align-items: flex-start !important;
-        padding-top: 3rem !important;
+        align-items: center !important;
+        padding-top: 0 !important;
     }
     .nav-links {
         gap: 3rem !important;
