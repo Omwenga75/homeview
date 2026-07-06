@@ -273,6 +273,9 @@
 .view-section {
   display: none;
   animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .view-section.active {

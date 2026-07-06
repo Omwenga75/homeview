@@ -119,13 +119,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (tableBody) {
       tableBody.innerHTML = `
         <tr>
-          <td colspan="5" style="padding: 4rem 2rem;">
-            <div class="empty-state">
-              <div class="empty-state-icon">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <td colspan="5" style="padding: 2rem;">
+            <div class="empty-state-container">
+              <div class="empty-state">
+                <div class="empty-state-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                </div>
+                <h3>No Listings Found</h3>
+                <p>You haven't added any properties yet. Click "Add New House" to get started.</p>
               </div>
-              <h3>No Listings Found</h3>
-              <p>You haven't added any properties yet. Click "Add New House" to get started.</p>
             </div>
           </td>
         </tr>
