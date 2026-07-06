@@ -3492,6 +3492,20 @@ footer {
     padding: 2rem;
 }
 
+.dashboard-main > div {
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-state-card {
+    max-width: 600px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    justify-self: center;
+    width: 100%;
+}
+
 /* Stats Cards */
 .stats-grid {
     display: grid;
