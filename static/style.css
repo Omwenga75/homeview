@@ -818,7 +818,7 @@ body.mobile-drawer-open {
     width: 100%;
     max-width: 480px;
     margin-left: auto;
-    margin-top: 40px;
+    margin-top: 0;
     animation: float 15s ease-in-out infinite;
 }
 
@@ -839,6 +839,14 @@ body.mobile-drawer-open {
 
     #hero .container {
         gap: 3rem;
+    }
+}
+
+/* Lift mockup slightly on typical laptop screen widths for better vertical centering */
+@media (min-width: 993px) and (max-width: 1400px) {
+    .image-wrapper {
+        /* negative top margin moves the image up without affecting the float animation transform */
+        margin-top: -30px;
     }
 }
 
