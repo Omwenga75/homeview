@@ -5816,10 +5816,15 @@ button.bottom-nav-item {
 @media (min-width: 1280px) {
     .image-wrapper {
         max-width: 420px;
-        margin-top: 0;
+        margin-top: 40px;
     }
     .hero-image {
         justify-content: flex-end;
+        align-items: flex-start;
+        padding-top: 2rem;
+    }
+    #hero {
+        min-height: 100vh;
     }
 }
 
@@ -5829,13 +5834,15 @@ button.bottom-nav-item {
     }
     .image-wrapper {
         max-width: 500px;
-        margin-top: 0;
+        margin-top: 40px;
     }
     .hero-image {
         justify-content: flex-end;
+        align-items: flex-start;
+        padding-top: 2rem;
     }
     #hero {
-        min-height: 92vh;
+        min-height: 100vh;
         padding: 120px 0 80px;
     }
     .listing-footer .price {
@@ -5852,13 +5859,15 @@ button.bottom-nav-item {
     }
     .image-wrapper {
         max-width: 660px;
-        margin-top: 0;
+        margin-top: 50px;
     }
     .hero-image {
         justify-content: flex-end;
+        align-items: flex-start;
+        padding-top: 2rem;
     }
     #hero {
-        min-height: 92vh;
+        min-height: 100vh;
         padding: 130px 0 80px;
     }
     .listing-footer .price {
@@ -5875,13 +5884,15 @@ button.bottom-nav-item {
     }
     .image-wrapper {
         max-width: 860px;
-        margin-top: 0;
+        margin-top: 60px;
     }
     .hero-image {
         justify-content: flex-end;
+        align-items: flex-start;
+        padding-top: 3rem;
     }
     #hero {
-        min-height: 90vh;
+        min-height: 100vh;
         padding: 140px 0 80px;
     }
 }
@@ -6386,7 +6397,14 @@ html, body {
         max-width: 1400px !important;
     }
     #hero {
-        min-height: 90vh;
+        min-height: 100vh;
+    }
+    .image-wrapper {
+        margin-top: 40px !important;
+    }
+    .hero-image {
+        align-items: flex-start !important;
+        padding-top: 2rem !important;
     }
     .listing-footer .price {
         font-size: 1rem !important;
@@ -6422,7 +6440,14 @@ html, body {
         gap: 4rem !important;
     }
     #hero {
-        min-height: 88vh;
+        min-height: 100vh;
+    }
+    .image-wrapper {
+        margin-top: 50px !important;
+    }
+    .hero-image {
+        align-items: flex-start !important;
+        padding-top: 2rem !important;
     }
     .listing-footer .price {
         font-size: 1rem !important;
@@ -6462,7 +6487,14 @@ html, body {
         gap: 5rem !important;
     }
     #hero {
-        min-height: 85vh;
+        min-height: 100vh;
+    }
+    .image-wrapper {
+        margin-top: 60px !important;
+    }
+    .hero-image {
+        align-items: flex-start !important;
+        padding-top: 3rem !important;
     }
     .nav-links {
         gap: 3rem !important;
