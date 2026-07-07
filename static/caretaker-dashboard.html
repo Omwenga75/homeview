@@ -533,21 +533,11 @@
                     `;
                 } else if (viewType === 'houses') {
                     mainContent.innerHTML = `
-                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
-                            <div>
-                                <h2 style="margin: 0 0 0.2rem; font-size: 1.4rem; font-weight: 800; color: var(--text-primary);">My Properties</h2>
-                                <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">${userHouses.length} listing${userHouses.length !== 1 ? 's' : ''} found</p>
-                            </div>
-                            <button class="btn btn-primary js-add-house-btn" style="display: flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 4px 14px rgba(16,185,129,0.3);">
-                                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                                Add House
-                            </button>
-                        </div>
                         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;">
                             ${renderHouseCards(userHouses, true)}
                         </div>
                     `;
-                    // Bind Add House buttons
+                    // Bind Add House buttons (from empty state card)
                     mainContent.querySelectorAll('.js-add-house-btn').forEach(btn => btn.addEventListener('click', () => {
                         setActiveNavigation('add-house');
                         renderView('add-house');
