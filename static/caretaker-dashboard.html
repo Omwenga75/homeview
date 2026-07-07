@@ -124,7 +124,7 @@
             document.getElementById('userName').textContent = user.name.split(' ')[0];
 
             // Sidebar Navigation with event delegation
-            const API_BASE = '';
+            const API_BASE = (typeof HV_CONFIG !== 'undefined') ? HV_CONFIG.API_BASE : '';
             const sidebarMenu = document.querySelector('.sidebar-menu');
             const mainContent = document.querySelector('.dashboard-main');
 

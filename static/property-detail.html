@@ -217,7 +217,7 @@
     (async function() {
         const params = new URLSearchParams(window.location.search);
         const houseId = params.get('id');
-        const API_BASE = '';
+        const API_BASE = (typeof HV_CONFIG !== 'undefined') ? HV_CONFIG.API_BASE : '';
         const IMAGES = ['images/prop1.png','images/prop2.png','images/prop3.png','images/prop4.png'];
 
         let house = null;
