@@ -197,24 +197,40 @@
             }
 
             async function updateHouseStatus(houseId, status) {
-                // Try real API first
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 2000);
-                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/${houseId}`, {
-                        method: 'PUT',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ status }),
-                        signal: controller.signal
-                    }).catch(() => null);
-                    clearTimeout(timeoutId);
-                    if (res && res.ok) return true;
-                } catch (err) {}
+                // Try real API first (only if we have a real backend URL)
+                if (HV_CONFIG.API_BASE) {
+                    try {
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 2000);
+                        const res = await fetch(`${HV_CONFIG.API_BASE}/houses/${houseId}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ status }),
+                            signal: controller.signal
+                        }).catch(() => null);
+                        clearTimeout(timeoutId);
+                        if (res && res.ok) return true;
+                    } catch (err) {}
+                }
 
                 // Fallback: update in localStorage (mock_houses)
                 try {
-                    const houses = JSON.parse(localStorage.getItem('mock_houses') || '[]');
-                    const idx = houses.findIndex(h => String(h.id) === String(houseId));
+                    let houses = JSON.parse(localStorage.getItem('mock_houses') || '[]');
+
+                    // If house not in localStorage, re-fetch the full list and sync it in
+                    let idx = houses.findIndex(h => String(h.id) === String(houseId));
+                    if (idx === -1) {
+                        try {
+                            const freshRes = await fetch(`${HV_CONFIG.API_BASE}/houses/`).catch(() => null);
+                            if (freshRes && freshRes.ok) {
+                                const freshHouses = await freshRes.json();
+                                localStorage.setItem('mock_houses', JSON.stringify(freshHouses));
+                                houses = freshHouses;
+                                idx = houses.findIndex(h => String(h.id) === String(houseId));
+                            }
+                        } catch(e) {}
+                    }
+
                     if (idx === -1) {
                         alert('House not found. It may have already been removed.');
                         return false;
@@ -232,14 +248,27 @@
             }
 
             async function deleteHouse(houseId) {
+                // Try real API first (only if we have a real backend URL)
+                if (HV_CONFIG.API_BASE) {
+                    try {
+                        const res = await fetch(`${HV_CONFIG.API_BASE}/houses/${houseId}`, {
+                            method: 'DELETE'
+                        });
+                        if (res.ok) return true;
+                    } catch (err) {
+                        console.error('Failed to delete house via API:', err);
+                    }
+                }
+
+                // Fallback: remove from localStorage (mock_houses)
                 try {
-                    const res = await fetch(`${HV_CONFIG.API_BASE}/houses/${houseId}`, {
-                        method: 'DELETE'
-                    });
-                    if (!res.ok) throw new Error('Delete failed');
+                    let houses = JSON.parse(localStorage.getItem('mock_houses') || '[]');
+                    const filtered = houses.filter(h => String(h.id) !== String(houseId));
+                    localStorage.setItem('mock_houses', JSON.stringify(filtered));
+                    localStorage.removeItem('hv_cached_houses');
                     return true;
-                } catch (err) {
-                    console.error('Failed to delete house:', err);
+                } catch (e) {
+                    console.error('Failed to delete house from localStorage:', e);
                     alert('Failed to delete house. Please try again.');
                     return false;
                 }
