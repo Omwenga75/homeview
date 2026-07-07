@@ -209,19 +209,26 @@
                     const statusLabel = house.status === 'approved' ? 'Approved' : house.status === 'pending' ? 'Pending Review' : 'Rejected';
                     const statusClass = house.status === 'approved' ? 'status-approved' : house.status === 'pending' ? 'status-pending' : 'status-rejected';
                     return `
-                        <div style="background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;">
-                            <div style="height: 110px; background: url('${imgSrc}') center/cover no-repeat; position: relative;">
-                                <span style="position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.75rem; padding: 0.2rem 0.5rem;" class="status-pill ${statusClass}">${statusLabel}</span>
-                            </div>
-                            <div style="padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.5rem;">
-                                <div>
-                                    <h3 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.3;">${house.title}</h3>
-                                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">📍 ${house.location}</div>
+                        <div style="background: white; border-radius: 20px; border: 1px solid #e8edf5; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s; box-shadow: 0 2px 12px rgba(15,23,42,0.07);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 32px rgba(15,23,42,0.13)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(15,23,42,0.07)'">
+                            <div style="height: 160px; background: url('${imgSrc}') center/cover no-repeat; position: relative;">
+                                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,15,30,0.55) 0%, transparent 55%);"></div>
+                                <span style="position: absolute; top: 0.75rem; right: 0.75rem; padding: 0.25rem 0.7rem; border-radius: 99px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; background: rgba(255,255,255,0.95); backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgba(0,0,0,0.12);" class="status-pill ${statusClass}">${statusLabel}</span>
+                                <div style="position: absolute; bottom: 0.75rem; left: 0.85rem; right: 0.85rem;">
+                                    <h3 style="margin: 0; font-size: 0.97rem; color: white; font-weight: 700; line-height: 1.3; text-shadow: 0 1px 4px rgba(0,0,0,0.4);">${house.title}</h3>
                                 </div>
-                                <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: auto; padding-top: 0.25rem;">${formatHousePrice(house.price)}<span style="font-size:0.75rem; color:var(--text-muted); font-weight:400;">/mo</span></div>
-                                ${includeViews ? `<div style="color: var(--text-secondary); font-size: 0.75rem;">👁️ ${house.views || 0} views</div>` : ''}
-                                <div style="border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 0.5rem;">
-                                    <button class="btn btn-sm" style="width: 100%; padding: 0.4rem; font-size: 0.85rem; background: #f8fafc; color: var(--text-primary); border: 1px solid var(--border);">Edit Property</button>
+                            </div>
+                            <div style="padding: 1rem 1rem 0.85rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.55rem;">
+                                <div style="display: flex; align-items: center; gap: 0.35rem; color: #64748b; font-size: 0.8rem;">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    ${house.location}
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 0.25rem;">
+                                    <span style="font-size: 1.15rem; font-weight: 800; color: var(--primary); letter-spacing: -0.01em;">${formatHousePrice(house.price)}</span>
+                                    <span style="font-size: 0.72rem; color: #94a3b8; font-weight: 500;">/mo</span>
+                                </div>
+                                ${includeViews ? `<div style="display:flex;align-items:center;gap:0.3rem;color:#94a3b8;font-size:0.75rem;"><svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>${house.views || 0} views</div>` : ''}
+                                <div style="border-top: 1px solid #f1f5f9; margin-top: 0.25rem; padding-top: 0.65rem;">
+                                    <button class="btn btn-sm" style="width: 100%; padding: 0.5rem; font-size: 0.83rem; background: #f8fafc; color: var(--text-primary); border: 1px solid #e2e8f0; border-radius: 10px; font-weight: 600; cursor: pointer; transition: background 0.2s;">Edit Property</button>
                                 </div>
                             </div>
                         </div>

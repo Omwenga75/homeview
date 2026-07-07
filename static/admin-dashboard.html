@@ -307,18 +307,30 @@
                     actionsHtml += `<button class="btn btn-sm delete-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.4rem 1rem;border-radius:8px;cursor:pointer;font-weight:600">Delete</button>`;
 
                     return `
-                        <div style="background: white; border-radius: 12px; border: 1px solid var(--border); overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s;">
-                            <div style="height: 110px; background: url('${imgSrc}') center/cover no-repeat; position: relative;">
-                                <span style="position: absolute; top: 0.5rem; right: 0.5rem; padding: 0.2rem 0.5rem; border-radius: 99px; font-size: 0.75rem; font-weight: 600; background: white; color: ${statusColor}; border: 1px solid ${statusColor}40; z-index: 1;">${statusLabel}</span>
-                            </div>
-                            <div style="padding: 1rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.5rem;">
-                                <div>
-                                    <h3 style="margin: 0; font-size: 1rem; color: var(--text-primary); font-weight: 600; line-height: 1.3;">${h.title}</h3>
-                                    <div style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.2rem;">📍 ${h.location}</div>
-                                    <div style="color: var(--text-secondary); font-size: 0.75rem; margin-top: 0.2rem;">👤 By ${h.owner_name || 'Unknown'}</div>
+                        <div style="background: white; border-radius: 20px; border: 1px solid #e8edf5; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s; box-shadow: 0 2px 12px rgba(15,23,42,0.07);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 32px rgba(15,23,42,0.13)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(15,23,42,0.07)'">
+                            <div style="height: 160px; background: url('${imgSrc}') center/cover no-repeat; position: relative;">
+                                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,15,30,0.55) 0%, transparent 55%);"></div>
+                                <span style="position: absolute; top: 0.75rem; right: 0.75rem; padding: 0.25rem 0.7rem; border-radius: 99px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; background: rgba(255,255,255,0.95); color: ${statusColor}; backdrop-filter: blur(6px); box-shadow: 0 2px 8px rgba(0,0,0,0.12);">${statusLabel}</span>
+                                <div style="position: absolute; bottom: 0.75rem; left: 0.85rem; right: 0.85rem;">
+                                    <h3 style="margin: 0; font-size: 0.97rem; color: white; font-weight: 700; line-height: 1.3; text-shadow: 0 1px 4px rgba(0,0,0,0.4);">${h.title}</h3>
                                 </div>
-                                <div style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-top: auto; padding-top: 0.25rem;">Sh. ${Number(h.price).toLocaleString('en-US')}</div>
-                                <div style="border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 0.5rem; display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                            </div>
+                            <div style="padding: 1rem 1rem 0.85rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.55rem;">
+                                <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.35rem; color: #64748b; font-size: 0.8rem;">
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                        ${h.location}
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.35rem; color: #94a3b8; font-size: 0.75rem;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        ${h.owner_name || 'Unknown'}
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 0.25rem; margin-top: 0.1rem;">
+                                    <span style="font-size: 1.15rem; font-weight: 800; color: var(--primary); letter-spacing: -0.01em;">Sh. ${Number(h.price).toLocaleString('en-US')}</span>
+                                    <span style="font-size: 0.72rem; color: #94a3b8; font-weight: 500;">/mo</span>
+                                </div>
+                                <div style="border-top: 1px solid #f1f5f9; margin-top: 0.25rem; padding-top: 0.65rem; display: flex; gap: 0.4rem; flex-wrap: wrap;">
                                     ${actionsHtml}
                                 </div>
                             </div>
