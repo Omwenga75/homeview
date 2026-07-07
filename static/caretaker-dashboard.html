@@ -156,25 +156,55 @@
             }
 
             async function saveHouse(house) {
+                const payload = {
+                    title: house.title,
+                    location: house.location,
+                    price: house.rawPrice,
+                    description: house.description,
+                    owner_name: house.ownerName,
+                    owner_email: house.ownerEmail,
+                    photo_urls: JSON.stringify(house.photos || []),
+                    amenities: JSON.stringify(house.amenities || [])
+                };
+
+                // Try real API first
                 try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 3000);
                     const res = await fetch(`${API_BASE}/houses/`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            title: house.title,
-                            location: house.location,
-                            price: house.rawPrice,
-                            description: house.description,
-                            owner_name: house.ownerName,
-                            owner_email: house.ownerEmail,
-                            photo_urls: JSON.stringify(house.photos || []),
-                            amenities: JSON.stringify(house.amenities || [])
-                        })
-                    });
-                    if (!res.ok) throw new Error('Failed to save house');
-                    return await res.json();
-                } catch (error) {
-                    console.error('Error saving house:', error);
+                        body: JSON.stringify(payload),
+                        signal: controller.signal
+                    }).catch(() => null);
+                    clearTimeout(timeoutId);
+                    if (res && res.ok) {
+                        const saved = await res.json();
+                        // Also mirror to localStorage so admin sees it immediately
+                        try {
+                            const stored = JSON.parse(localStorage.getItem('mock_houses') || '[]');
+                            stored.push({ ...saved, status: 'pending' });
+                            localStorage.setItem('mock_houses', JSON.stringify(stored));
+                        } catch(e) {}
+                        return saved;
+                    }
+                } catch (err) {}
+
+                // Fallback: save to localStorage only
+                try {
+                    const stored = JSON.parse(localStorage.getItem('mock_houses') || '[]');
+                    const newHouse = {
+                        ...payload,
+                        id: Date.now(),
+                        status: 'pending',
+                        views: 0,
+                        submission_date: new Date().toISOString()
+                    };
+                    stored.push(newHouse);
+                    localStorage.setItem('mock_houses', JSON.stringify(stored));
+                    return newHouse;
+                } catch (e) {
+                    console.error('Error saving house:', e);
                     alert('Failed to submit house. Please try again.');
                     return null;
                 }

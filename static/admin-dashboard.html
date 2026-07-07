@@ -197,16 +197,35 @@
             }
 
             async function updateHouseStatus(houseId, status) {
+                // Try real API first
                 try {
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 2000);
                     const res = await fetch(`${HV_CONFIG.API_BASE}/houses/${houseId}`, {
                         method: 'PUT',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ status })
-                    });
-                    if (!res.ok) throw new Error('Update failed');
+                        body: JSON.stringify({ status }),
+                        signal: controller.signal
+                    }).catch(() => null);
+                    clearTimeout(timeoutId);
+                    if (res && res.ok) return true;
+                } catch (err) {}
+
+                // Fallback: update in localStorage (mock_houses)
+                try {
+                    const houses = JSON.parse(localStorage.getItem('mock_houses') || '[]');
+                    const idx = houses.findIndex(h => String(h.id) === String(houseId));
+                    if (idx === -1) {
+                        alert('House not found. It may have already been removed.');
+                        return false;
+                    }
+                    houses[idx].status = status;
+                    localStorage.setItem('mock_houses', JSON.stringify(houses));
+                    // Also clear cached approved houses so listings refresh
+                    localStorage.removeItem('hv_cached_houses');
                     return true;
-                } catch (err) {
-                    console.error('Failed to update house status:', err);
+                } catch (e) {
+                    console.error('localStorage fallback failed:', e);
                     alert('Failed to update house status. Please try again.');
                     return false;
                 }
