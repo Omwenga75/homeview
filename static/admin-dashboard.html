@@ -45,7 +45,7 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="#" class="sidebar-link active" data-view="overview">Overview</a></li>
-                <li><a href="#" class="sidebar-link" data-view="houses">Houses</a></li>
+                <li><a href="#" class="sidebar-link" data-view="houses" style="display:flex;align-items:center;justify-content:space-between;">New Houses <span id="pendingBadge" style="display:none;background:#f59e0b;color:white;font-size:0.7rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:99px;min-width:20px;text-align:center;">0</span></a></li>
                 <li><a href="#" class="sidebar-link" data-view="users">User Management</a></li>
                 <li><a href="#" class="sidebar-link" data-view="messages">Messages</a></li>
                 <li><a href="#" class="sidebar-link" data-view="transactions">Transactions</a></li>
@@ -67,11 +67,12 @@
             </span>
             <span>Dashboard</span>
         </a>
-        <a href="#" class="bottom-nav-item" data-view="houses">
+        <a href="#" class="bottom-nav-item" data-view="houses" style="position:relative;">
             <span class="bottom-nav-icon">
                 <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
             </span>
-            <span>Houses</span>
+            <span id="bottomNavPendingBadge" style="display:none;position:absolute;top:2px;right:6px;background:#f59e0b;color:white;font-size:0.6rem;font-weight:700;padding:0.1rem 0.4rem;border-radius:99px;">0</span>
+            <span>New</span>
         </a>
         <a href="#" class="bottom-nav-item" data-view="users">
             <span class="bottom-nav-icon">
@@ -225,6 +226,17 @@
                 const value = Number(price);
                 return isNaN(value) ? price : `Sh. ${value.toLocaleString('en-US')}`;
             }
+
+            // Update pending badge in sidebar on load
+            async function updatePendingBadge() {
+                const allH = await getHouses();
+                const pCount = allH.filter(h => h.status === 'pending').length;
+                const badge = document.getElementById('pendingBadge');
+                const bottomBadge = document.getElementById('bottomNavPendingBadge');
+                if (badge) { badge.textContent = pCount; badge.style.display = pCount > 0 ? 'inline-block' : 'none'; }
+                if (bottomBadge) { bottomBadge.textContent = pCount; bottomBadge.style.display = pCount > 0 ? 'inline-block' : 'none'; }
+            }
+            updatePendingBadge();
 
             const adminProfilePanel = document.getElementById('adminProfilePanel');
             if (adminProfilePanel) {
@@ -545,9 +557,62 @@
                         </div>
                     `;
                 } else if (viewType === 'houses') {
+                    const pendingHousesList = allHouses.filter(h => h.status === 'pending');
+                    const pendingRows = pendingHousesList.length ? pendingHousesList.map(h => {
+                        const imgIndex = (Number(h.id) - 1) % IMAGES.length;
+                        const imgSrc = isNaN(imgIndex) ? IMAGES[0] : IMAGES[imgIndex];
+                        return `
+                        <div style="background: white; border-radius: 20px; border: 1px solid #e8edf5; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s; box-shadow: 0 2px 12px rgba(15,23,42,0.07);" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 12px 32px rgba(15,23,42,0.13)'" onmouseout="this.style.transform='';this.style.boxShadow='0 2px 12px rgba(15,23,42,0.07)'">
+                            <div style="height: 160px; background: url('${imgSrc}') center/cover no-repeat; position: relative;">
+                                <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,15,30,0.6) 0%, transparent 55%);"></div>
+                                <span style="position: absolute; top: 0.75rem; right: 0.75rem; padding: 0.25rem 0.7rem; border-radius: 99px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; background: #f59e0b; color: white; box-shadow: 0 2px 8px rgba(245,158,11,0.4);">✦ NEW</span>
+                                <div style="position: absolute; bottom: 0.75rem; left: 0.85rem; right: 0.85rem;">
+                                    <h3 style="margin: 0; font-size: 0.97rem; color: white; font-weight: 700; line-height: 1.3; text-shadow: 0 1px 4px rgba(0,0,0,0.4);">${h.title}</h3>
+                                </div>
+                            </div>
+                            <div style="padding: 1rem 1rem 0.85rem; display: flex; flex-direction: column; flex-grow: 1; gap: 0.5rem;">
+                                <div style="display: flex; flex-direction: column; gap: 0.2rem;">
+                                    <div style="display: flex; align-items: center; gap: 0.35rem; color: #64748b; font-size: 0.8rem;">
+                                        <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                        ${h.location}
+                                    </div>
+                                    <div style="display: flex; align-items: center; gap: 0.35rem; color: #94a3b8; font-size: 0.75rem;">
+                                        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        ${h.owner_name || 'Unknown'}
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: baseline; gap: 0.25rem;">
+                                    <span style="font-size: 1.1rem; font-weight: 800; color: var(--primary);">Sh. ${Number(h.price).toLocaleString('en-US')}</span>
+                                    <span style="font-size: 0.72rem; color: #94a3b8;">/mo</span>
+                                </div>
+                                <div style="border-top: 1px solid #f1f5f9; padding-top: 0.65rem; display: flex; gap: 0.4rem; flex-wrap: wrap;">
+                                    <button class="approve-btn" data-id="${h.id}" style="flex:1;background:#dcfce7;color:#166534;border:none;padding:0.45rem 0.6rem;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.8rem;">✓ Approve</button>
+                                    <button class="reject-btn" data-id="${h.id}" style="flex:1;background:#fee2e2;color:#dc2626;border:none;padding:0.45rem 0.6rem;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.8rem;">✕ Reject</button>
+                                    <button class="delete-btn" data-id="${h.id}" style="background:#f1f5f9;color:#64748b;border:none;padding:0.45rem 0.7rem;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.8rem;">🗑</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('') : `<div class="empty-state-card" style="grid-column:1/-1;padding:5rem 2rem;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;">
+                        <div style="width:80px;height:80px;background:#fef3c7;border-radius:50%;display:flex;align-items:center;justify-content:center;">
+                            <svg viewBox="0 0 24 24" width="40" height="40" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                        </div>
+                        <h3 style="margin:0;font-size:1.25rem;font-weight:700;color:var(--text-primary);">All Caught Up!</h3>
+                        <p style="margin:0;color:var(--text-muted);font-size:0.95rem;max-width:320px;line-height:1.6;">No pending houses awaiting review. New submissions from caretakers will appear here.</p>
+                    </div>`;
+
                     mainContent.innerHTML = `
-                        <div id="allHousesTableBody" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;">
-                            ${allHousesRows}
+                        <div style="margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+                            <div>
+                                <h2 style="margin:0;font-size:1.4rem;font-weight:800;color:var(--text-primary);display:flex;align-items:center;gap:0.6rem;">
+                                    <span style="background:#fef3c7;color:#92400e;padding:0.25rem 0.7rem;border-radius:8px;font-size:0.8rem;font-weight:700;">✦ NEW</span>
+                                    New Houses
+                                    ${pendingHousesList.length > 0 ? `<span style="background:#f59e0b;color:white;font-size:0.75rem;font-weight:700;padding:0.2rem 0.65rem;border-radius:99px;">${pendingHousesList.length} pending</span>` : ''}
+                                </h2>
+                                <p style="margin:0.25rem 0 0;font-size:0.85rem;color:var(--text-muted);">Houses submitted by caretakers awaiting your approval</p>
+                            </div>
+                        </div>
+                        <div id="allHousesTableBody" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem;">
+                            ${pendingRows}
                         </div>
                     `;
                 } else if (viewType === 'add-house') {
@@ -652,6 +717,37 @@
                     }
                 } else if (viewType === 'users') {
                     const allUsers = await getUsers();
+                    const allHousesForUsers = await getHouses();
+
+                    function buildUserHouseCards(userEmail) {
+                        const userHouses = allHousesForUsers.filter(h => h.owner_email === userEmail);
+                        if (!userHouses.length) return `<p style="color:var(--text-muted);font-size:0.85rem;padding:0.5rem 0;">No properties listed yet.</p>`;
+                        return `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0.75rem;margin-top:0.75rem;">${userHouses.map(h => {
+                            const imgIndex = (Number(h.id)-1) % IMAGES.length;
+                            const imgSrc = isNaN(imgIndex) ? IMAGES[0] : IMAGES[imgIndex];
+                            const statusColor = h.status==='approved'?'#16a34a':(h.status==='suspended'?'#d97706':'#3b82f6');
+                            const statusLabel = h.status ? h.status.charAt(0).toUpperCase()+h.status.slice(1) : 'Pending';
+                            let actions = '';
+                            if (h.status==='pending') actions = `<button class="approve-btn" data-id="${h.id}" style="flex:1;background:#dcfce7;color:#166534;border:none;padding:0.35rem 0.5rem;border-radius:8px;cursor:pointer;font-weight:700;font-size:0.75rem;">✓ Approve</button>`;
+                            else if (h.status==='approved') actions = `<button class="suspend-btn" data-id="${h.id}" style="flex:1;background:#fef3c7;color:#92400e;border:none;padding:0.35rem 0.5rem;border-radius:8px;cursor:pointer;font-weight:700;font-size:0.75rem;">Suspend</button>`;
+                            else if (h.status==='suspended') actions = `<button class="activate-btn" data-id="${h.id}" style="flex:1;background:#dcfce7;color:#166534;border:none;padding:0.35rem 0.5rem;border-radius:8px;cursor:pointer;font-weight:700;font-size:0.75rem;">Activate</button>`;
+                            actions += `<button class="delete-btn" data-id="${h.id}" style="background:#fee2e2;color:#dc2626;border:none;padding:0.35rem 0.55rem;border-radius:8px;cursor:pointer;font-weight:700;font-size:0.75rem;">🗑</button>`;
+                            return `<div style="background:#f8fafc;border-radius:14px;border:1px solid #e8edf5;overflow:hidden;">
+                                <div style="height:100px;background:url('${imgSrc}') center/cover no-repeat;position:relative;">
+                                    <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(10,15,30,0.5) 0%,transparent 60%);"></div>
+                                    <span style="position:absolute;top:0.5rem;right:0.5rem;padding:0.2rem 0.55rem;border-radius:99px;font-size:0.68rem;font-weight:700;background:white;color:${statusColor};">${statusLabel}</span>
+                                    <div style="position:absolute;bottom:0.5rem;left:0.6rem;right:0.6rem;">
+                                        <div style="font-size:0.82rem;color:white;font-weight:600;text-shadow:0 1px 3px rgba(0,0,0,0.4);">${h.title}</div>
+                                    </div>
+                                </div>
+                                <div style="padding:0.6rem 0.75rem;">
+                                    <div style="font-size:0.8rem;font-weight:700;color:var(--primary);margin-bottom:0.4rem;">Sh. ${Number(h.price).toLocaleString('en-US')}<span style="font-size:0.7rem;color:#94a3b8;font-weight:400;">/mo</span></div>
+                                    <div style="display:flex;gap:0.35rem;flex-wrap:wrap;">${actions}</div>
+                                </div>
+                            </div>`;
+                        }).join('')}</div>`;
+                    }
+
                     mainContent.innerHTML = allUsers.length === 0 ? `
                         <div class="empty-state-card" style="padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;">
                             <div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
@@ -661,30 +757,48 @@
                             <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Registered tenants and caretakers will appear here once they sign up.</p>
                         </div>
                     ` : `
-                        <div class="table-container" style="overflow-x: auto; background: white; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
-                            <table style="width: 100%; border-collapse: collapse; text-align: left;">
-                                <thead>
-                                    <tr style="border-bottom: 2px solid var(--border); background: #f8fafc;">
-                                        <th style="padding: 1rem;">Name & ID</th>
-                                        <th style="padding: 1rem;">Email</th>
-                                        <th style="padding: 1rem;">Role</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    ${allUsers.map(u => `
-                                        <tr style="border-bottom: 1px solid var(--border);">
-                                            <td style="padding: 1rem;">
-                                                <div style="font-weight: 500;">${u.name}</div>
-                                                <div style="font-size: 0.75rem; color: var(--text-muted);">${u.id}</div>
-                                            </td>
-                                            <td style="padding: 1rem;">${u.email}</td>
-                                            <td style="padding: 1rem;"><span style="padding: 0.3rem 0.8rem; border-radius: 99px; background: #f3f4f6; text-transform: capitalize; font-size: 0.85rem; font-weight: 500;">${u.role}</span></td>
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table>
+                        <div style="display:flex;flex-direction:column;gap:0.75rem;">
+                            ${allUsers.map((u, idx) => {
+                                const uHouses = allHousesForUsers.filter(h => h.owner_email === u.email);
+                                const roleColor = u.role==='caretaker'?'#3b82f6':(u.role==='admin'?'#7c3aed':'#16a34a');
+                                const roleBg = u.role==='caretaker'?'#eff6ff':(u.role==='admin'?'#f5f3ff':'#f0fdf4');
+                                return `<div style="background:white;border-radius:16px;border:1px solid #e8edf5;box-shadow:0 1px 6px rgba(15,23,42,0.05);overflow:hidden;">
+                                    <div class="user-row-toggle" data-idx="${idx}" style="display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;cursor:pointer;transition:background 0.15s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+                                        <div style="width:44px;height:44px;border-radius:50%;background:${roleBg};color:${roleColor};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-weight:800;font-size:1rem;">${u.name.charAt(0).toUpperCase()}</div>
+                                        <div style="flex:1;min-width:0;">
+                                            <div style="font-weight:700;color:var(--text-primary);font-size:0.95rem;">${u.name}</div>
+                                            <div style="font-size:0.8rem;color:var(--text-muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${u.email}</div>
+                                        </div>
+                                        <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
+                                            <span style="padding:0.25rem 0.75rem;border-radius:99px;background:${roleBg};color:${roleColor};font-size:0.75rem;font-weight:700;text-transform:capitalize;">${u.role}</span>
+                                            ${uHouses.length > 0 ? `<span style="background:#f1f5f9;color:var(--text-secondary);font-size:0.75rem;font-weight:600;padding:0.25rem 0.6rem;border-radius:99px;">${uHouses.length} ${uHouses.length===1?'house':'houses'}</span>` : ''}
+                                            <svg id="chevron-${idx}" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#94a3b8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.25s;"><polyline points="6 9 12 15 18 9"/></svg>
+                                        </div>
+                                    </div>
+                                    <div id="user-houses-${idx}" style="display:none;padding:0 1.25rem 1.25rem;border-top:1px solid #f1f5f9;">
+                                        <div id="user-houses-inner-${idx}">Loading...</div>
+                                    </div>
+                                </div>`;
+                            }).join('')}
                         </div>
                     `;
+
+                    // Attach toggle logic for user rows
+                    document.querySelectorAll('.user-row-toggle').forEach(row => {
+                        row.addEventListener('click', () => {
+                            const idx = row.getAttribute('data-idx');
+                            const panel = document.getElementById(`user-houses-${idx}`);
+                            const chevron = document.getElementById(`chevron-${idx}`);
+                            const inner = document.getElementById(`user-houses-inner-${idx}`);
+                            const isOpen = panel.style.display !== 'none';
+                            panel.style.display = isOpen ? 'none' : 'block';
+                            chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+                            if (!isOpen) {
+                                const u = allUsers[Number(idx)];
+                                inner.innerHTML = buildUserHouseCards(u.email);
+                            }
+                        });
+                    });
                 } else if (viewType === 'messages') {
                     const messages = JSON.parse(localStorage.getItem('hv_admin_messages') || '[]');
                     mainContent.innerHTML = messages.length === 0 ? `
