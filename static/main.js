@@ -674,6 +674,91 @@ document.addEventListener('DOMContentLoaded', () => {
         updateNavbarAuth(); // Immediate synchronous update to prevent flashing "Guest"
         await AuthManager.syncSession(); // Fetch fresh data from backend
         updateNavbarAuth(); // Final update after sync
+        
+        // Populate featured listings on index.html
+        const featuredGrid = document.getElementById('featuredListingsGrid');
+        if (featuredGrid) {
+            try {
+                let houses = [];
+                if (HV_CONFIG.USE_MOCK) {
+                    houses = [];
+                } else {
+                    const cached = localStorage.getItem('hv_cached_houses');
+                    if (cached) {
+                        houses = JSON.parse(cached);
+                    } else {
+                        const res = await fetch(`${HV_CONFIG.API_BASE}/houses/`);
+                        if (res.ok) {
+                            const allHouses = await res.json();
+                            houses = allHouses.filter(h => h.status === 'approved');
+                            localStorage.setItem('hv_cached_houses', JSON.stringify(houses));
+                        }
+                    }
+                }
+                
+                const topHouses = houses.slice(0, 3);
+                if (topHouses.length === 0) {
+                    featuredGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 3rem;">No featured houses available at the moment.</p>';
+                    return;
+                }
+                
+                let html = '';
+                const IMAGES = ['images/prop1.png','images/prop2.png','images/prop3.png','images/prop4.png'];
+                topHouses.forEach(house => {
+                    let imgSrc = 'images/prop1.png';
+                    try {
+                        const photos = JSON.parse(house.photo_urls || '[]');
+                        if (photos && photos.length > 0) imgSrc = photos[0];
+                    } catch(e) {}
+                    if (imgSrc === 'images/prop1.png') {
+                        const imgIndex = (Number(house.id) - 1) % IMAGES.length;
+                        imgSrc = isNaN(imgIndex) ? IMAGES[0] : IMAGES[imgIndex];
+                    }
+
+                    const isUnlocked = typeof PropertyManager !== 'undefined' && PropertyManager.isUnlocked(String(house.id));
+                    const locationText = isUnlocked ? house.location : '🔒 Location Locked';
+
+                    html += `
+                        <a href="property-detail.html?id=${house.id}" style="text-decoration: none; color: inherit; display: block;">
+                            <div style="background: white; border-radius: 20px; border: 1px solid #e8edf5; overflow: hidden; display: flex; flex-direction: column; height: 100%; transition: transform 0.25s cubic-bezier(.4,0,.2,1), box-shadow 0.25s; box-shadow: 0 4px 16px rgba(15,23,42,0.06);" onmouseover="this.style.transform='translateY(-6px)';this.style.boxShadow='0 16px 40px rgba(15,23,42,0.12)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(15,23,42,0.06)'">
+                                <div style="height: 190px; background: url('${imgSrc}') center/cover no-repeat; position: relative;">
+                                    <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,23,42,0.85) 0%, rgba(15,23,42,0.2) 50%, transparent 100%);"></div>
+                                    <span style="position: absolute; top: 1rem; right: 1rem; padding: 0.35rem 0.85rem; border-radius: 99px; font-size: 0.75rem; font-weight: 800; letter-spacing: 0.04em; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); color: var(--primary);">Apartment</span>
+                                    <div style="position: absolute; bottom: 1.1rem; left: 1.1rem; right: 1.1rem;">
+                                        <h3 style="margin: 0 0 0.35rem 0; font-size: 1.15rem; color: white; font-weight: 800; line-height: 1.3; text-shadow: 0 2px 6px rgba(0,0,0,0.6);">${house.title}</h3>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem; color: #cbd5e1; font-size: 0.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.6); font-weight: 500;">
+                                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                            ${locationText}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="padding: 1.25rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; gap: 1.1rem;">
+                                    <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                        <div style="display: flex; align-items: center; justify-content: space-between;">
+                                            <div style="display: flex; align-items: baseline; gap: 0.25rem;">
+                                                <span style="font-size: 1.3rem; font-weight: 800; color: var(--primary); letter-spacing: -0.02em;">Sh. ${Number(house.price).toLocaleString('en-US')}</span>
+                                                <span style="font-size: 0.8rem; color: #64748b; font-weight: 600;">/mo</span>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; align-items: center; gap: 0.4rem; color: #64748b; font-size: 0.8rem; margin-top: 0.25rem;">
+                                            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                            ${house.owner_name || 'Verified Host'}
+                                        </div>
+                                    </div>
+                                    <div style="border-top: 1px solid #f1f5f9; padding-top: 1rem;">
+                                        <button class="btn btn-sm" style="width: 100%; padding: 0.7rem; font-size: 0.9rem; background: var(--primary); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(79,70,229,0.25);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 16px rgba(79,70,229,0.35)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 12px rgba(79,70,229,0.25)'">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    `;
+                });
+                featuredGrid.innerHTML = html;
+                document.getElementById('listings').style.display = 'block';
+            } catch (err) {
+                console.error('Failed to load featured houses', err);
+            }
+        }
     };
 
     init();
