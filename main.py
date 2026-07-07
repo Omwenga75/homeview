@@ -272,6 +272,20 @@ async def update_profile_pic(user_id: str, profile_pic: schemas.ProfilePicUpdate
     return {"success": True}
 
 
+@app.get("/api/stats")
+async def get_stats(db: Session = Depends(get_db)):
+    properties_count = db.query(models.House).filter(models.House.status == "approved").count()
+    hosts_count = db.query(models.House.owner_email).filter(models.House.status == "approved").distinct().count()
+    renters_count = db.query(models.User).filter(models.User.role == "tenant").count()
+    
+    return {
+        "properties": properties_count,
+        "hosts": hosts_count,
+        "renters": renters_count,
+        "rating": 4.9
+    }
+
+
 # For local development only: serve static files
 if not os.environ.get("VERCEL"):
     app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")

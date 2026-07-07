@@ -1015,21 +1015,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 } catch (e) {}
             }
+            // Unconditionally update with real data if fetched successfully
+            if (props !== undefined) document.getElementById('stat-properties').setAttribute('data-target', props);
+            if (hosts !== undefined) document.getElementById('stat-hosts').setAttribute('data-target', hosts);
+            if (renters !== undefined) document.getElementById('stat-renters').setAttribute('data-target', renters);
             
-            if (props > 0) document.getElementById('stat-properties').setAttribute('data-target', props);
-            if (hosts > 0) document.getElementById('stat-hosts').setAttribute('data-target', hosts);
-            if (renters > 0) document.getElementById('stat-renters').setAttribute('data-target', renters);
-            
-            if (props > 0 || hosts > 0 || renters > 0) {
-                document.getElementById('stat-properties').setAttribute('data-suffix', '');
-                document.getElementById('stat-hosts').setAttribute('data-suffix', '');
-                document.getElementById('stat-renters').setAttribute('data-suffix', '');
-            }
+            // Remove the '+' suffix because this is exact data now
+            document.getElementById('stat-properties').setAttribute('data-suffix', '');
+            document.getElementById('stat-hosts').setAttribute('data-suffix', '');
+            document.getElementById('stat-renters').setAttribute('data-suffix', '');
             
             if (hasAnimated) {
-                if (props > 0) document.getElementById('stat-properties').textContent = props;
-                if (hosts > 0) document.getElementById('stat-hosts').textContent = hosts;
-                if (renters > 0) document.getElementById('stat-renters').textContent = renters;
+                if (props !== undefined) document.getElementById('stat-properties').textContent = props;
+                if (hosts !== undefined) document.getElementById('stat-hosts').textContent = hosts;
+                if (renters !== undefined) document.getElementById('stat-renters').textContent = renters;
             }
         };
         fetchStats();
