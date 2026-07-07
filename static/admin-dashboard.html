@@ -674,8 +674,15 @@
                     `;
                 } else if (viewType === 'messages') {
                     const messages = JSON.parse(localStorage.getItem('hv_admin_messages') || '[]');
-                    mainContent.innerHTML = `
-
+                    mainContent.innerHTML = messages.length === 0 ? `
+                        <div class="empty-state-card" style="padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;">
+                            <div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
+                                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                            </div>
+                            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Messages Yet</h3>
+                            <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Messages sent through the contact form will appear here.</p>
+                        </div>
+                    ` : `
                         <div class="table-container" style="overflow-x: auto; background: white; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
                             <table style="width: 100%; border-collapse: collapse; text-align: left;">
                                 <thead>
@@ -695,7 +702,6 @@
                                             <td style="padding: 1rem; font-size: 0.85rem; color: var(--text-muted);">${new Date(msg.date).toLocaleDateString()}</td>
                                         </tr>
                                     `).join('')}
-                                    ${messages.length === 0 ? `<tr><td colspan="4" style="padding: 0;"><div class="empty-state-card" style="padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;"><div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Messages Yet</h3><p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Messages sent through the contact form will appear here.</p></div></td></tr>` : ''}
                                 </tbody>
                             </table>
                         </div>
