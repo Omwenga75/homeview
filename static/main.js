@@ -681,7 +681,11 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 let houses = [];
                 if (HV_CONFIG.USE_MOCK) {
-                    houses = [];
+                    try {
+                        houses = JSON.parse(localStorage.getItem('mock_houses') || '[]').filter(h => h.status === 'approved');
+                    } catch (e) {
+                        houses = [];
+                    }
                 } else {
                     const cached = localStorage.getItem('hv_cached_houses');
                     if (cached) {

@@ -198,7 +198,11 @@
             }
 
             function getMockHouses() {
-                return [];
+                try {
+                    return JSON.parse(localStorage.getItem('mock_houses') || '[]');
+                } catch(e) {
+                    return [];
+                }
             }
 
             function showEmptyState() {
