@@ -52,77 +52,7 @@ def startup_event():
             db.commit()
             print("Seeded admin user.")
 
-        # Seed sample approved houses if none exist
-        existing_houses = db.query(models.House).filter(
-            models.House.status == "approved"
-        ).count()
-        if existing_houses == 0:
-            sample_houses = [
-                models.House(
-                    title="Emerald Luxury 2-Bedroom",
-                    location="Westlands, Nairobi",
-                    price=45000,
-                    description="Experience luxury living in the heart of Westlands. This stunning 2-bedroom apartment features modern amenities, an open-concept living space, and breathtaking city views.",
-                    owner_name="Nelson Omwenga",
-                    owner_email="nelson@caretaker.com",
-                    status="approved",
-                    photo_urls="[]"
-                ),
-                models.House(
-                    title="Modern Studio Apartment",
-                    location="Kilimani, Nairobi",
-                    price=25000,
-                    description="A sleek, fully furnished studio in the heart of Kilimani. Perfect for young professionals looking for affordable luxury with great city connectivity.",
-                    owner_name="Peris Wanjiku",
-                    owner_email="peris@caretaker.com",
-                    status="approved",
-                    photo_urls="[]"
-                ),
-                models.House(
-                    title="Sapphire Penthouse Suite",
-                    location="Kileleshwa, Nairobi",
-                    price=85000,
-                    description="Live above it all in this spectacular penthouse with panoramic city views. Premium finishes, private terrace, and full concierge services included.",
-                    owner_name="Nelson Omwenga",
-                    owner_email="nelson@caretaker.com",
-                    status="approved",
-                    photo_urls="[]"
-                ),
-                models.House(
-                    title="Garden View 1-Bedroom",
-                    location="Lavington, Nairobi",
-                    price=35000,
-                    description="A warm and cozy 1-bedroom flat in the serene Lavington area. Features a private garden, modern kitchen, and secure underground parking.",
-                    owner_name="Jane Doe",
-                    owner_email="jane@caretaker.com",
-                    status="approved",
-                    photo_urls="[]"
-                ),
-                models.House(
-                    title="Executive 3-Bedroom Townhouse",
-                    location="Karen, Nairobi",
-                    price=120000,
-                    description="Expansive executive townhouse in the prestigious Karen suburb. Features 3 bedrooms, a private swimming pool, home office, and lush garden.",
-                    owner_name="John Kamau",
-                    owner_email="john@caretaker.com",
-                    status="approved",
-                    photo_urls="[]"
-                ),
-                models.House(
-                    title="Bedsitter with Balcony",
-                    location="Ruaka, Nairobi",
-                    price=12000,
-                    description="Affordable and comfortable bedsitter with a beautiful balcony overlooking the lush Ruaka hills. Perfect for students and young professionals.",
-                    owner_name="Jane Doe",
-                    owner_email="jane@caretaker.com",
-                    status="approved",
-                    photo_urls="[]"
-                ),
-            ]
-            for house in sample_houses:
-                db.add(house)
-            db.commit()
-            print("Seeded 6 sample approved houses.")
+
     except Exception as e:
         print(f"Startup error: {e}")
     finally:
