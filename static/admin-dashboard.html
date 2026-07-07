@@ -644,19 +644,15 @@
                     }
                 } else if (viewType === 'users') {
                     const allUsers = await getUsers();
-                    const usersRows = allUsers.length ? allUsers.map(u => `
-                        <tr style="border-bottom: 1px solid var(--border);">
-                            <td style="padding: 1rem;">
-                                <div style="font-weight: 500;">${u.name}</div>
-                                <div style="font-size: 0.75rem; color: var(--text-muted);">${u.id}</div>
-                            </td>
-                            <td style="padding: 1rem;">${u.email}</td>
-                            <td style="padding: 1rem;"><span style="padding: 0.3rem 0.8rem; border-radius: 99px; background: #f3f4f6; text-transform: capitalize; font-size: 0.85rem; font-weight: 500;">${u.role}</span></td>
-                        </tr>
-                    `).join('') : `<tr><td colspan="3" style="padding: 0;"><div style="padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;"><div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;"><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Users Found</h3><p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Registered tenants and caretakers will appear here once they sign up.</p></div></td></tr>`;
-
-                    mainContent.innerHTML = `
-
+                    mainContent.innerHTML = allUsers.length === 0 ? `
+                        <div class="empty-state-card" style="padding: 5rem 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem; text-align: center;">
+                            <div style="width: 72px; height: 72px; background: #f0fdf4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
+                                <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                            <h3 style="margin: 0; font-size: 1.25rem; font-weight: 700; color: var(--text-primary);">No Users Found</h3>
+                            <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem; max-width: 320px; line-height: 1.6;">Registered tenants and caretakers will appear here once they sign up.</p>
+                        </div>
+                    ` : `
                         <div class="table-container" style="overflow-x: auto; background: white; border-radius: 16px; border: 1px solid var(--border); box-shadow: var(--shadow-sm);">
                             <table style="width: 100%; border-collapse: collapse; text-align: left;">
                                 <thead>
@@ -667,7 +663,16 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    ${usersRows}
+                                    ${allUsers.map(u => `
+                                        <tr style="border-bottom: 1px solid var(--border);">
+                                            <td style="padding: 1rem;">
+                                                <div style="font-weight: 500;">${u.name}</div>
+                                                <div style="font-size: 0.75rem; color: var(--text-muted);">${u.id}</div>
+                                            </td>
+                                            <td style="padding: 1rem;">${u.email}</td>
+                                            <td style="padding: 1rem;"><span style="padding: 0.3rem 0.8rem; border-radius: 99px; background: #f3f4f6; text-transform: capitalize; font-size: 0.85rem; font-weight: 500;">${u.role}</span></td>
+                                        </tr>
+                                    `).join('')}
                                 </tbody>
                             </table>
                         </div>
