@@ -866,6 +866,15 @@
                                     <div class="value" style="font-size: 1.25rem; color: #ea580c;">Add Admin</div>
                                 </div>
                             </div>
+                            <div class="stat-card" style="display: flex; align-items: center; gap: 1rem; cursor: pointer;" onclick="setActiveSidebar('settings'); renderAdminView('settings');">
+                                <div style="width: 48px; height: 48px; border-radius: 50%; background: #f3f4f6; color: #4b5563; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                                    <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                </div>
+                                <div>
+                                    <span class="label" style="font-size: 0.75rem; text-transform: uppercase;">System</span>
+                                    <div class="value" style="font-size: 1.25rem; color: #4b5563;">Settings</div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="stats-grid">
@@ -880,6 +889,10 @@
                             <div class="stat-card">
                                 <span class="label">Level</span>
                                 <div class="value" style="color: #6366F1;">Master</div>
+                            </div>
+                            <div class="stat-card">
+                                <span class="label">Active Sessions</span>
+                                <div class="value" style="color: #ec4899;">142</div>
                             </div>
                         </div>
 
